@@ -19,13 +19,35 @@ public class Bid implements Serializable
     @GeneratedValue(strategy=GenerationType.TABLE,generator="gen")
     private int id;
 
-    private double value;
+    public int getId() {
+		return id;
+	}
 
-    private User seller;
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    private User buyer;
+	private double value;
+
+    //private User seller;
+
+    //private User buyer;
 
     private Date time;
 
+    public double getValue() {
+        return value;
+    }
 
+    public void setValue(double value) {
+        this.value = value;
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
 }

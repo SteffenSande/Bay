@@ -1,14 +1,15 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.hvl.Bay</groupId>
-  <artifactId>Bay</artifactId>
-  <packaging>war</packaging>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>Bay Maven Webapp</name>
-  <url>http://maven.apache.org</url>
-  	<dependencies>
-		<!-- Needed to build web applications with request/response workflow -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.hvl.dat250</groupId>
+	<artifactId>Bay</artifactId>
+	<packaging>war</packaging>
+	<version>1.0.0</version>
+	<name>Simple auction application using Java ee</name>
+	<url>http://maven.apache.org</url>
+	<dependencies>
+		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
@@ -36,46 +37,27 @@
 			<version>8.0</version>
 			<scope>provided</scope>
 		</dependency>
-		<!-- Dependency for RESTful APIs -->
-		<dependency>
-			<groupId>javax.ws.rs</groupId>
-			<artifactId>javax.ws.rs-api</artifactId>
-			<version>2.0-m09</version>
-			<scope>test</scope>
-		</dependency>
-		<!-- RESTful Web Services using Jersey -->
-		<dependency>
-			<groupId>org.glassfish.jersey.core</groupId>
-			<artifactId>jersey-client</artifactId>
-			<version>2.0-m05</version>
-			<scope>test</scope>
-		</dependency>
 		<!-- For the management for persistence and object/relational mapping -->
 		<dependency>
 			<groupId>javax.persistence</groupId>
 			<artifactId>persistence-api</artifactId>
 			<version>1.0.2</version>
 		</dependency>
-		<!-- For using JSON -->
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>2.8.5</version>
-		</dependency>
 	</dependencies>
-  <build>
-    <finalName>Bay</finalName>
-    	<pluginManagement>
+	<build>
+		<finalName>Bay</finalName>
+		<pluginManagement>
 			<plugins>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
 					<configuration>
-						<source>1.5</source>
-						<target>1.5</target>
+						<source>1.8</source>
+						<target>1.8</target>
 					</configuration>
 				</plugin>
+
 			</plugins>
 		</pluginManagement>
-  </build>
+	</build>
 </project>
