@@ -1,0 +1,17 @@
+
+
+
+Ting å titte på:
+
+Reflection eller annotation 
+Tangle iota. Whitepaper på facebook. 
+Microtjenester - Springboot framework for mikrotjenester. 
+    Hva deler av applikasjone er det lurt å trekke ut i egne mikrotjenester
+    Kan bruke docker compose som også bestemmer antall instanser. Bestemmer mye! 
+    Kan hive inn tangle her også. Blir kanskje for mye med tanke på rapport. 
+
+
+
+
+
+
