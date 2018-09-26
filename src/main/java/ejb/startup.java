@@ -12,8 +12,10 @@ import java.util.Date;
 @Singleton
 public class startup {
 
-    @EJB
+    //Ejb hive declaration for this object
+	@EJB
     private BidDao bd;
+    
     private Bid bid = new Bid();
 
     @PostConstruct

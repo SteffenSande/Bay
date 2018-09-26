@@ -30,9 +30,12 @@ public class BidDao {
     // Retrieves all the tweets:
     @SuppressWarnings("unchecked")
 	public List<Bid> getAllBids() {
-        Query query = em.createQuery("SELECT t FROM Bid t");
+        
+    	Query query = em.createQuery("SELECT bid FROM Bid bid");
+        
         List<Bid> tweets = new ArrayList<>();
         tweets = query.getResultList();
+       
         return tweets;
     }
 }
