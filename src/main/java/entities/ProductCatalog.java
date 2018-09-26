@@ -22,9 +22,9 @@ public class ProductCatalog  implements Serializable
 
     
     @OneToOne(mappedBy ="productCatalog")
-    private User seller;
-  
-    @OneToMany(mappedBy="productCatalog")
+    private AppUser seller;
+    
+    @OneToMany(mappedBy = "catalog")
     private List <Product> products = new ArrayList<>();
     
 	public List<Product> getProducts() {
@@ -35,11 +35,11 @@ public class ProductCatalog  implements Serializable
 		this.products = products;
 	}
 
-	public User getSeller() {
+	public AppUser getSeller() {
 		return seller;
 	}
 
-	public void setSeller(User seller) {
+	public void setSeller(AppUser seller) {
 		this.seller = seller;
 	}
 	

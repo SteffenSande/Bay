@@ -12,6 +12,10 @@ public class ContactInformation  implements Serializable
 {
     private static final long serialVersionUID = 1L;
     
+	private String name;
+	private String phone;
+	private String email;
+    
 	@Embedded
 	private Address address;
 
@@ -33,8 +37,12 @@ public class ContactInformation  implements Serializable
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	private String name;
-	private String phone;
-	private String email;
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
 
 }

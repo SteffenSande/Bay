@@ -25,23 +25,22 @@ public class Product implements Serializable
     private String name;
     
     
-    @ManyToOne
-    @JoinColumn(name= "productCatalog")
-    private ProductCatalog productCatalog;
-    
+    @ManyToOne	
+    @JoinColumn(name= "product_catalog_product_fk")
+    private ProductCatalog catalog;
     
     //Make some entityy relations between this object and these variable
     
 	public ProductCatalog getProductCatalog() {
-		return productCatalog;
+		return catalog;
 	}
 
 	public void setProductCatalog(ProductCatalog productCatalog) {
-		this.productCatalog = productCatalog;
+		this.catalog = productCatalog;
 	}
 
 	@OneToMany
-	@JoinColumn(name= "bid_fk")
+	@JoinColumn(name= "product_fk")
 	private List <Bid> bids;
     
 

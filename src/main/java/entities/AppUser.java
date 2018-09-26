@@ -10,7 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Entity
-public class User implements Serializable
+public class AppUser implements Serializable
 {
     private static final long serialVersionUID = 1L;
     @Id
@@ -18,7 +18,7 @@ public class User implements Serializable
     private int id;	
     
     @OneToOne
-	@JoinColumn(name= "productCatalog_fk")
+	@JoinColumn(name= "productcatalog_fk")
 	private ProductCatalog productCatalog;
 
     @Embedded

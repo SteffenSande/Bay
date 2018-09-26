@@ -18,9 +18,9 @@ public class Description  implements Serializable
 	private double rating;
 	private Date endDate;
 	
-	@OneToMany
-	@JoinColumn(name="feature_id")
-	private List <Feature> features = new ArrayList<>();
+	//@OneToMany
+	//@JoinColumn(name="feature_id")
+	//private List <Feature> features = new ArrayList<>();
 	
 	public String getTitle() {
 		return title;
@@ -40,11 +40,11 @@ public class Description  implements Serializable
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-	public List <Feature> getFeatures() {
-		return features;
-	}
-	public void setFeatures(List <Feature> features) {
-		this.features = features;
-	}
+//	public List <Feature> getFeatures() {
+//		return features;
+//	}
+//	public void setFeatures(List <Feature> features) {
+//		this.features = features;
+//	}
 
 }
