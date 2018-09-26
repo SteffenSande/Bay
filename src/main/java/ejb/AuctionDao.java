@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import entities.Bid;
+import entities.Feedback;
 
 
 
@@ -17,17 +18,20 @@ import entities.Bid;
  */
 
 @Stateless
-public class BidDao {
+public class AuctionDao {
     // Injected database connection:
 	@PersistenceContext(unitName="Bay")
     private EntityManager em;
 
-    // Stores a new tweet:
     public void persist(Bid bid) {
         em.persist(bid);
     }
-
-    // Retrieves all the tweets:
+    
+    public void persist(Feedback feed) {
+		em.persist(feed);
+	}
+    
+    
     @SuppressWarnings("unchecked")
 	public List<Bid> getAllBids() {
         
@@ -38,4 +42,6 @@ public class BidDao {
        
         return tweets;
     }
+
+	
 }

@@ -22,7 +22,7 @@ public class BidController implements Serializable {
 
 	// Injected DAO EJB:
 	@EJB
-	private BidDao bidDao;
+	private AuctionDao bidDao;
 	
 	private Bid bid;
 

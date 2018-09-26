@@ -9,16 +9,12 @@ import java.util.Date;
 public class Bid implements Serializable
 {
     private static final long serialVersionUID = 1L;
-
-    //Create elements ids automatically, incremented 1 by 1
-    @TableGenerator(
-            name = "gen",
-            allocationSize = 1,
-            initialValue = 1)
+    
     @Id
-    @GeneratedValue(strategy=GenerationType.TABLE,generator="gen")
+    @GeneratedValue
     private int id;
-
+    
+    
     public int getId() {
 		return id;
 	}
@@ -29,12 +25,12 @@ public class Bid implements Serializable
 
 	private double value;
 
-    //private User seller;
-
-    //private User buyer;
-
+	
+	@Temporal(TemporalType.TIMESTAMP)
     private Date time;
 
+	
+	
     public double getValue() {
         return value;
     }

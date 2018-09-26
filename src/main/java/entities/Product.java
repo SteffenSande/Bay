@@ -5,6 +5,9 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 
 @Entity
@@ -16,16 +19,64 @@ public class Product implements Serializable
     @GeneratedValue
     private int id;
     
-    private boolean published;
-    private String picturePath;
+    private boolean published; 
+
+	private String picturePath;
     private String name;
     
     
+    @ManyToOne
+    @JoinColumn(name= "productCatalog")
+    private ProductCatalog productCatalog;
     
-    //Make some entityy relations between this object and these variables
-    private User seller;
-    private List <Bid> bids;
-   
+    
+    //Make some entityy relations between this object and these variable
+    
+	public ProductCatalog getProductCatalog() {
+		return productCatalog;
+	}
+
+	public void setProductCatalog(ProductCatalog productCatalog) {
+		this.productCatalog = productCatalog;
+	}
+
+	@OneToMany
+	@JoinColumn(name= "bid_fk")
+	private List <Bid> bids;
+    
+
+	public boolean isPublished() {
+		return published;
+	}
+
+	public void setPublished(boolean published) {
+		this.published = published;
+	}
+
+    public String getPicturePath() {
+		return picturePath;
+	}
+
+	public void setPicturePath(String picturePath) {
+		this.picturePath = picturePath;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public List<Bid> getBids() {
+		return bids;
+	}
+
+	public void setBids(List<Bid> bids) {
+		this.bids = bids;
+	}
+
 
 	public int getId() {
 		return id;
