@@ -15,6 +15,12 @@ public class User implements Serializable
     @GeneratedValue
     private int id;
 
+	@Embedded
+	private ContactInformation contactInformation;
+
+	private String username;
+
+
 	public int getId() {
 		return id;
 	}
@@ -22,8 +28,4 @@ public class User implements Serializable
 	public void setId(int id) {
 		this.id = id;
 	}
-
-
-
-
 }

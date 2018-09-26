@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+@Embeddable
 public class Address  implements Serializable
 {
     private static final long serialVersionUID = 1L;
@@ -13,6 +14,11 @@ public class Address  implements Serializable
     @GeneratedValue
     private int id;
 
+    private String street;
+	private String city;
+    private int zip;
+
+
 	public int getId() {
 		return id;
 	}
@@ -20,5 +26,6 @@ public class Address  implements Serializable
 	public void setId(int id) {
 		this.id = id;
 	}
+
 
 }
