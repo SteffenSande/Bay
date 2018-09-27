@@ -10,7 +10,7 @@ import javax.persistence.Query;
 
 import entities.Bid;
 import entities.Feedback;
-
+import entities.Product;
 
 
 /**
@@ -34,13 +34,40 @@ public class AuctionDao {
     
     @SuppressWarnings("unchecked")
 	public List<Bid> getAllBids() {
-        
     	Query query = em.createQuery("SELECT bid FROM Bid bid");
-        List<Bid> tweets = new ArrayList<>();
-        tweets = query.getResultList();
-       
-        return tweets;
+        List<Bid> bids = new ArrayList<>();
+        bids = query.getResultList();
+        return bids;
     }
 
-	
+
+    //Get all products
+    public List<Product> getAllProducts() {
+        Query query = em.createQuery("SELECT p FROM Product p");
+        List<Product> products = new ArrayList<>();
+        products = query.getResultList();
+        return products;
+    }
+
+    //Get all bids for specific product by Id
+    public List<Bid> getAllBidsForProduct(int i) {
+        Query query = em.createQuery("SELECT p FROM Product p WHERE p.id = i");
+        List<Bid> bids = new ArrayList<>();
+        bids = query.getResultList();
+        return bids;
+    }
+
+    //Get specific bids for specific product by Id
+    public Bid getSpecificBidOnProduct(int aid, int bidId) {
+        Query query = em.createQuery("SELECT p FROM Product p WHERE p.id = aid");
+        Product p = (Product) query.getSingleResult();
+        return p.getBidById(bidId);
+    }
+
+
+
+    public Product getProductByID(int i) {
+        Query query = em.createQuery("SELECT p FROM Product p WHERE p.id = i");
+        return (Product) query.getSingleResult();
+    }
 }
