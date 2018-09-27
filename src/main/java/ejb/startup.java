@@ -3,6 +3,8 @@ package ejb;
 import entities.Bid;
 import entities.Feedback;
 
+import java.util.Date;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
@@ -24,6 +26,7 @@ public class startup {
         bid.setValue(1234);
         feed.setContent("Kult produkt");
         feed.setRating(5.6);
+        feed.setTime(new Date());
         bd.persist(bid); 	
         bd.persist(feed);
     }
