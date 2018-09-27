@@ -5,6 +5,7 @@ import entities.Bid;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.*;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -23,10 +24,11 @@ public class RestService {
 
     /** return a representation with references to all current auctions (ongoing/completed) in the system. */
     @GET
-    @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-    public List<Product> getAllProducts(){
+    @Produces({MediaType.TEXT_XML,MediaType.APPLICATION_JSON})
+    public Response getAllProducts(){
 	    List<Product> products = auctionDao.getAllProducts();
-	    return products;
+        GenericEntity<List<Product>> entity = new GenericEntity<List<Product>>(products) {};
+	    return Response.ok().entity(entity).build();
     }
 
     /** returns a representation of the auction/product identified by id */
