@@ -98,6 +98,6 @@ public class Product implements Serializable
 
 	@Override
 	public String toString() {
-			return "Product id " + id + " published: " + published + " name " + name + "ProductCatalog" + productCatalog + "\n";
+			return "Product id " + id + " published: " + published + " name " + name + "bids:" + this.bids.size() + "\n";
 	}
 }

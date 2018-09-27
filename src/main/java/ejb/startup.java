@@ -41,7 +41,7 @@ public class startup {
         product.setId(1);
 
 
-        List testBids = new ArrayList();
+        List <Bid> testBids = new ArrayList<>();
         
         for (int i = 0; i < 10; i++) {
         	 bid = new Bid();
@@ -50,13 +50,16 @@ public class startup {
              bd.persist(bid);
              testBids.add(bid);
 		}
+        
         product.setBids(testBids);
+        
         bd.persist(product);
 
         
         feed.setContent("Kult produkt");
         feed.setRating(5.6);
         feed.setTime(new Date());
+        
         bd.persist(feed);
     }
 }
