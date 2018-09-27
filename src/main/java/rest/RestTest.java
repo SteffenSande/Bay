@@ -9,13 +9,12 @@ import javax.ws.rs.core.Response;
  * Created by knutandersstokke on 27 27.09.2018.
  */
 
-@ApplicationScoped
 @Path("/test")
 public class RestTest {
 
     @GET
     public Response test() {
-        return Response.ok().build();
+        return Response.ok("Something").build();
     }
 
 }

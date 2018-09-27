@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Entity
 @NamedQuery(name="Bid.findAll", query="SELECT b FROM Bid b")
-public class Bid implements Serializable
+public class Bid implements Serializable, Comparable <Bid>
 {
     private static final long serialVersionUID = 1L;
     
@@ -50,4 +50,14 @@ public class Bid implements Serializable
     public void setTime(Date time) {
         this.time = time;
     }
+    
+    @Override
+    public String toString() {
+    	return "Bid id " + id + " value: " + value + " time " + time.toString() + "\n";
+    }
+
+	@Override
+	public int compareTo(Bid o) {
+		return this.id - o.id;
+	}
 }

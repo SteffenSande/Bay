@@ -9,9 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
 
 @Startup
@@ -30,11 +28,18 @@ public class startup {
 
     @PostConstruct
     void init(){
-        bid.setValue(1234);
+        
+        for (int i = 0; i < 10; i++) {
+        	 bid = new Bid();
+             bid.setValue(i);
+             bid.setTime(new Date());	
+             bd.persist(bid);
+		}
+        
+        
         feed.setContent("Kult produkt");
         feed.setRating(5.6);
         feed.setTime(new Date());
-        bd.persist(bid); 	
         bd.persist(feed);
     }
 }

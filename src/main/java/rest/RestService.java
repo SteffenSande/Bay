@@ -1,7 +1,8 @@
-package Rest;
+package rest;
 
 import entities.Bid;
 
+import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Stateless;
 import javax.enterprise.context.ApplicationScoped;
@@ -11,28 +12,28 @@ import javax.persistence.TypedQuery;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import ejb.AuctionDao;
+
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 
-@Path("/bids")
+@Path("/bi")
 //@Path("/Bid") //root resource class must have public constructor
 @Stateless
 public class RestService {
 
-    @PersistenceContext(unitName = "Bay")
-    private EntityManager em;
-
+	@EJB
+	private AuctionDao em;
+	
+	
     @GET
-    public Response getBids(){
-        try {
-
-
-            TypedQuery<Bid> query = em.createNamedQuery(Bid.FIND_ALL, Bid.class);
-            List<Bid> bids = query.getResultList();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return Response.ok().build();
+    public Response bi	(){
+        List<Bid> bids = em.getAllBids();
+        bids.sort(null);
+        return Response.ok(bids.toString()).build();
     }
 
     /*

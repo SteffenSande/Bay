@@ -36,7 +36,6 @@ public class AuctionDao {
 	public List<Bid> getAllBids() {
         
     	Query query = em.createQuery("SELECT bid FROM Bid bid");
-        
         List<Bid> tweets = new ArrayList<>();
         tweets = query.getResultList();
        
