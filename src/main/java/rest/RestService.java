@@ -26,12 +26,12 @@ import java.util.List;
 public class RestService {
 
 	@EJB
-	private AuctionDao em;
+	private AuctionDao data;
 	
 	
     @GET
     public Response bi	(){
-        List<Bid> bids = em.getAllBids();
+        List<Bid> bids = data.getAllBids();
         bids.sort(null);
         return Response.ok(bids.toString()).build();
     }
