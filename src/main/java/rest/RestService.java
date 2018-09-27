@@ -34,6 +34,7 @@ public class RestService {
     /** returns a representation of the auction/product identified by id */
     @GET
     @Path("/{productID: \\d+}")
+    @Produces({MediaType.TEXT_XML,MediaType.APPLICATION_JSON})
     public Response getProductsByID(@PathParam("productID") int id){
         Product p = auctionDao.getProductByID(id);
         return Response.ok(p.toString()).build();
@@ -42,6 +43,7 @@ public class RestService {
     /** return a representation with reference to all current bids in the auction identified by id */
     @GET
     @Path("/{productID : \\d+}/bids/")
+    @Produces({MediaType.TEXT_XML,MediaType.APPLICATION_JSON})
     public Response showBidsOnProduct(@PathParam("productID") int aid){
         List<Bid> bids = auctionDao.getAllBidsForProduct(aid); //p.getBids();
         return Response.ok(bids.toString()).build();
@@ -50,17 +52,19 @@ public class RestService {
     //returns a representation of the given bid within the auction identified by "aid" and "bidId"
     @GET
     @Path("/{productID : \\d+}/bids/{bidID : \\d+}")
+    @Produces({MediaType.TEXT_XML,MediaType.APPLICATION_JSON})
     public Response getSpecificBid(@PathParam("productID") int aid, @PathParam("productID") int bidID){
         Bid bid = auctionDao.getSpecificBidOnProduct(aid, bidID);
         return Response.ok(bid.toString()).build();
     }
 
-  /*  <app-path>/res/auction/{id}/bids - which creates a bid with a specified amount in the auction
+    /** <app-path>/res/auction/{id}/bids - which creates a bid with a specified amount in the auction
     identified by id and returns a representation of the bid. The amount should be contained
     in the payload of the request (or optionally as a query parameter).*/
 
     @POST
     @Path("/{productID : \\d+}/bids/{bidAmount : \\d+}")
+    @Produces({MediaType.TEXT_XML,MediaType.APPLICATION_JSON})
     public Response bidOnAProduct(@PathParam("productID") int aid, @PathParam("bidAmount") int bidAmount){
         Product p = auctionDao.getProductByID(aid);
         Bid bid = new Bid();
@@ -69,27 +73,4 @@ public class RestService {
         return Response.ok(bid.toString()).build();
 
     }
-
-    /*
-
-    @GET
-    @Produces(MediaType.APPLICATION_XML)
-    //@Produces(MediaType.TEXT_HTML)
-    //@Path("/all")
-
-    public Response getBids(){
-        TypedQuery<Bid> query = em.createNamedQuery(Bid.FIND_ALL, Bid.class);
-        List<Bid> bids = query.getResultList();
-        return Response.ok(bids).build();
-    }
-    @GET
-    @Path("{id}")
-    public Response getBid(@PathParam("id") String id){
-        int idInt = Integer.parseInt(id);
-        Bid bid = em.find(Bid.class, idInt);
-        if(bid == null){
-            throw new NotFoundException();
-        }
-        return Response.ok(bid).build();
-    }*/
 }
