@@ -20,7 +20,7 @@ import entities.Feedback;
 @Stateless
 public class AuctionDao {
     // Injected database connection:
-	@PersistenceContext(unitName="Bay")
+	@PersistenceContext(unitName="dat250psql")
     private EntityManager em;
 
     public void persist(Bid bid) {
