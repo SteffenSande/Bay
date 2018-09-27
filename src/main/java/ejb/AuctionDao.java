@@ -40,21 +40,23 @@ public class AuctionDao {
         return bids;
     }
 
-    //Get all bids for specific product by Id
-    public List<Bid> getAllBidsForProduct(int i) {
-        Query query = em.createQuery("SELECT p FROM Product p WHERE Id=i");
-        List<Bid> bids = new ArrayList<>();
-        bids = query.getResultList();
-        return bids;
-    }
-
-
+    //Get all products
     public List<Product> getAllProducts() {
         Query query = em.createQuery("SELECT p FROM Product p");
         List<Product> products = new ArrayList<>();
         products = query.getResultList();
         return products;
     }
+
+    //Get all bids for specific product by Id
+    public List<Bid> getAllBidsForProduct(int i) {
+        Query query = em.createQuery("SELECT p FROM Product p WHERE p.id = i");
+        List<Bid> bids = new ArrayList<>();
+        bids = query.getResultList();
+        return bids;
+    }
+
+
 
     public Product getProductByID(int i) {
         Query query = em.createQuery("SELECT p FROM Product p WHERE p.id = i");

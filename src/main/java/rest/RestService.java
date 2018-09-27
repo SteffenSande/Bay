@@ -53,6 +53,8 @@ public class RestService {
         return Response.ok(bids.toString()).build();
     }
 
+
+
     /*
 
     @GET

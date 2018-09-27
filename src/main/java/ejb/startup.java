@@ -33,9 +33,13 @@ public class startup {
     @PostConstruct
     void init(){
 
-        product.setId(1);
+        //product.setId(1);
         product.setName("Genesis_Product_1.0");
         product.setPublished(true);
+        product.setPicturePath("Some url");
+        product.setProductCatalog(null);
+
+
         List testBids = new ArrayList();
         
         for (int i = 0; i < 10; i++) {
