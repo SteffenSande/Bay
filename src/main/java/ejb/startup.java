@@ -2,8 +2,11 @@ package ejb;
 
 import entities.Bid;
 import entities.Feedback;
+import entities.Product;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -25,17 +28,26 @@ public class startup {
 
     private Bid bid = new Bid();
     private Feedback feed = new Feedback();
+    private Product product= new Product();
 
     @PostConstruct
     void init(){
+
+        product.setId(1);
+        product.setName("Genesis_Product_1.0");
+        product.setPublished(true);
+        List testBids = new ArrayList();
         
         for (int i = 0; i < 10; i++) {
         	 bid = new Bid();
              bid.setValue(i);
              bid.setTime(new Date());	
              bd.persist(bid);
+             testBids.add(bid);
 		}
-        
+        product.setBids(testBids);
+
+
         
         feed.setContent("Kult produkt");
         feed.setRating(5.6);
