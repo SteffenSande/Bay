@@ -49,7 +49,7 @@ public class RestService {
         return Response.ok(bids.toString()).build();
     }
 
-    //returns a representation of the given bid within the auction identified by "aid" and "bidId"
+    /** returns a representation of the given bid within the auction identified by "aid" and "bidId" */
     @GET
     @Path("/{productID : \\d+}/bids/{bidID : \\d+}")
     @Produces({MediaType.TEXT_XML,MediaType.APPLICATION_JSON})
@@ -71,6 +71,5 @@ public class RestService {
         bid.setValue(bidAmount);
         p.setBid(bid);
         return Response.ok(bid.toString()).build();
-
     }
 }
