@@ -24,8 +24,10 @@ import entities.Product;
 
 @Stateless
 public class AuctionDao {
-    // Injected database connection:
-	@PersistenceContext(unitName="dat250psql")
+
+    static final String DAT250_PSQL_UNIT_NAME = "dat250psql";
+
+	@PersistenceContext(unitName=DAT250_PSQL_UNIT_NAME)
     private EntityManager em;
 
     public void persist(Bid bid) {
@@ -39,22 +41,17 @@ public class AuctionDao {
     public void persist(Feedback feed) {
 		em.persist(feed);
 	}
-    
-    
-    @SuppressWarnings("unchecked")
+
 	public List<Bid> getAllBids() {
     	Query query = em.createQuery("SELECT bid FROM Bid bid");
-        List<Bid> bids = new ArrayList<>();
-        bids = query.getResultList();
+        List<Bid> bids = query.getResultList();
         return bids;
     }
-
 
     //Get all products
     public List<Product> getAllProducts() {
         Query query = em.createQuery("SELECT p FROM Product p");
-        List<Product> products = new ArrayList<>();
-        products = query.getResultList();
+        List<Product> products = query.getResultList();
         return products;
     }
 

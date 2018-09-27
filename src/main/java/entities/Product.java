@@ -1,7 +1,6 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,9 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlRootElement;
 
 
 @Entity
+@XmlRootElement
 public class Product implements Serializable
 {
     private static final long serialVersionUID = 1L;
@@ -19,31 +20,28 @@ public class Product implements Serializable
     @Id
     @GeneratedValue
     private int id;
-    
-    private boolean published; 
 
+    private boolean published;
 	private String picturePath;
     private String name;
-    
-    
+
     @ManyToOne	
     @JoinColumn(name= "product_catalog_fk")
     private ProductCatalog productCatalog;
     
-    //Make some entityy relations between this object and these variable
-    
-	public ProductCatalog getProductCatalog() {
-		return productCatalog;
-	}
-
-	public void setProductCatalog(ProductCatalog productCatalog) {
-		this.productCatalog = productCatalog;
-	}
-
 	@OneToMany
 	@JoinColumn(name= "product_fk")
-	private List <Bid> bids = new ArrayList<>();
-    
+	private List <Bid> bids;
+
+
+    //Make some entityy relations between this object and these variable
+    public ProductCatalog getProductCatalog() {
+        return productCatalog;
+    }
+
+    public void setProductCatalog(ProductCatalog productCatalog) {
+        this.productCatalog = productCatalog;
+    }
 
 	public boolean isPublished() {
 		return published;
@@ -68,7 +66,7 @@ public class Product implements Serializable
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public List<Bid> getBids() {
 		return bids;
 	}
@@ -99,6 +97,6 @@ public class Product implements Serializable
 
 	@Override
 	public String toString() {
-			return "Product id " + id + " published: " + published + " name " + name + "bids:" + this.bids.get(0)+ "\n";
+			return "Product id " + id + " published: " + published + " name " + name + "ProductCatalog" + productCatalog + "\n";
 	}
 }
