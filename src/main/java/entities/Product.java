@@ -85,6 +85,8 @@ public class Product implements Serializable
 		this.id = id;
 	}
 
-    
-
+	@Override
+	public String toString() {
+			return "Product id " + id + " published: " + published + " name " + name + "ProductCatalog" + productCatalog + "\n";
+	}
 }
