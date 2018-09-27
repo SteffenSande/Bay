@@ -40,6 +40,7 @@ public class AuctionDao {
         return bids;
     }
 
+
     //Get all products
     public List<Product> getAllProducts() {
         Query query = em.createQuery("SELECT p FROM Product p");
@@ -54,6 +55,13 @@ public class AuctionDao {
         List<Bid> bids = new ArrayList<>();
         bids = query.getResultList();
         return bids;
+    }
+
+    //Get specific bids for specific product by Id
+    public Bid getSpecificBidOnProduct(int aid, int bidId) {
+        Query query = em.createQuery("SELECT p FROM Product p WHERE p.id = aid");
+        Product p = (Product) query.getSingleResult();
+        return p.getBidById(bidId);
     }
 
 

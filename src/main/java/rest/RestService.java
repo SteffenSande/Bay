@@ -39,21 +39,41 @@ public class RestService {
     //returns a representation of the auction/product identified by id
     @GET
     @Path("/{productID: \\d+}")
-    public Response getProductsByID(@PathParam("productID") int id){
-        Product p = em.getProductByID(id);
+    public Response getProductsByID(@PathParam("productID") int aid){
+        Product p = em.getProductByID(aid);
         return Response.ok(p.toString()).build();
     }
 
     //return a representation with reference to all current bids in the auction identified by id
     @GET
     @Path("/{productID : \\d+}/bids/")
-    public Response bi(@PathParam("productID") int id){
-        Product p = em.getProductByID(id);
-        List<Bid> bids = p.getBids();
+    public Response showBidsOnProduct(@PathParam("productID") int aid){
+        List<Bid> bids = em.getAllBidsForProduct(aid); //p.getBids();
         return Response.ok(bids.toString()).build();
     }
 
+    //returns a representation of the given bid within the auction identified by "aid" and "bidId"
+    @GET
+    @Path("/{productID : \\d+}/bids/{bidID : \\d+}")
+    public Response getSpecificBid(@PathParam("productID") int aid, @PathParam("productID") int bidID){
+        Bid bid = em.getSpecificBidOnProduct(aid, bidID);
+        return Response.ok(bid.toString()).build();
+    }
 
+  /*  <app-path>/res/auction/{id}/bids - which creates a bid with a specified amount in the auction
+    identified by id and returns a representation of the bid. The amount should be contained
+    in the payload of the request (or optionally as a query parameter).*/
+
+    @POST
+    @Path("/{productID : \\d+}/bids/{bidAmount : \\d+}")
+    public Response bidOnAProduct(@PathParam("productID") int aid, @PathParam("bidAmount") int bidAmount){
+        Product p = em.getProductByID(aid);
+        Bid bid = new Bid();
+        bid.setValue(bidAmount);
+        p.setBid(bid);
+        return Response.ok(bid.toString()).build();
+
+    }
 
     /*
 
