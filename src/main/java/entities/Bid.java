@@ -2,10 +2,12 @@ package entities;
 
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.Date;
 
 @Entity
+@XmlRootElement
 @NamedQuery(name="Bid.findAll", query="SELECT b FROM Bid b")
 public class Bid implements Serializable, Comparable <Bid>
 {

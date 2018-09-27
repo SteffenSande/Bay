@@ -51,20 +51,20 @@ public class AuctionDao {
 
     //Get all bids for specific product by Id
     public List<Bid> getAllBidsForProduct(int id) {
-        Query query = em.createQuery("SELECT p FROM Product p WHERE p.id =: id").setParameter("id", id);
+        Query query = em.createQuery("SELECT p FROM Product p WHERE p.id = :id", Product.class).setParameter("id", id);
         List<Bid> bids = query.getResultList();
         return bids;
     }
 
     //Get specific bids for specific product by Id
-    public Bid getSpecificBidOnProduct(int aid, int bidId) {
-        Query query = em.createQuery("SELECT p FROM Product p WHERE p.id =: id").setParameter("id", aid);
-        Product p = (Product) query.getSingleResult();
-        return p.getBidById(bidId);
+    public Bid getSpecificBidOnProduct(int id) {
+        return em.createQuery("SELECT b FROM Bid b WHERE b.id = :id", Bid.class)
+                .setParameter("id", id)
+                .getSingleResult();
     }
 
     public Product getProductByID(int i) {
-        Query query = em.createQuery("SELECT p FROM Product p WHERE p.id =: id").setParameter("id", i);
+        Query query = em.createQuery("SELECT p FROM Product p WHERE p.id = :id").setParameter("id", i);
         return (Product) query.getSingleResult();
     }
 }

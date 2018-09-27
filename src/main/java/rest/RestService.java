@@ -27,8 +27,8 @@ public class RestService {
     @Produces({MediaType.TEXT_XML,MediaType.APPLICATION_JSON})
     public Response getAllProducts(){
 	    List<Product> products = auctionDao.getAllProducts();
-        GenericEntity<List<Product>> entity = new GenericEntity<List<Product>>(products) {};
-	    return Response.ok().entity(entity).build();
+        GenericEntity<List<Product>> genericList = new GenericEntity<List<Product>>(products) {};
+	    return Response.ok().entity(genericList).build();
     }
 
     /** returns a representation of the auction/product identified by id */
@@ -37,7 +37,7 @@ public class RestService {
     @Produces({MediaType.TEXT_XML,MediaType.APPLICATION_JSON})
     public Response getProductsByID(@PathParam("productID") int id){
         Product p = auctionDao.getProductByID(id);
-        return Response.ok(p.toString()).build();
+        return Response.ok().entity(p).build();
     }
 
     /** return a representation with reference to all current bids in the auction identified by id */
@@ -46,7 +46,8 @@ public class RestService {
     @Produces({MediaType.TEXT_XML,MediaType.APPLICATION_JSON})
     public Response showBidsOnProduct(@PathParam("productID") int aid){
         List<Bid> bids = auctionDao.getAllBidsForProduct(aid); //p.getBids();
-        return Response.ok(bids.toString()).build();
+        GenericEntity<List<Bid>> genericList = new GenericEntity<List<Bid>>(bids) {};
+        return Response.ok().entity(genericList).build();
     }
 
     /** returns a representation of the given bid within the auction identified by "aid" and "bidId" */
@@ -54,8 +55,8 @@ public class RestService {
     @Path("/{productID : \\d+}/bids/{bidID : \\d+}")
     @Produces({MediaType.TEXT_XML,MediaType.APPLICATION_JSON})
     public Response getSpecificBid(@PathParam("productID") int aid, @PathParam("productID") int bidID){
-        Bid bid = auctionDao.getSpecificBidOnProduct(aid, bidID);
-        return Response.ok(bid.toString()).build();
+        Bid bid = auctionDao.getSpecificBidOnProduct(bidID);
+        return Response.ok(bid).entity(bid).build();
     }
 
     /** <app-path>/res/auction/{id}/bids - which creates a bid with a specified amount in the auction
