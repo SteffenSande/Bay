@@ -24,7 +24,7 @@ public class ProductCatalog  implements Serializable
     @OneToOne(mappedBy ="productCatalog")
     private AppUser seller;
     
-    @OneToMany(mappedBy = "catalog")
+    @OneToMany(mappedBy = "productCatalog")
     private List <Product> products = new ArrayList<>();
     
 	public List<Product> getProducts() {

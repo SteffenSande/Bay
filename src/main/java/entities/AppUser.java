@@ -18,7 +18,7 @@ public class AppUser implements Serializable
     private int id;	
     
     @OneToOne
-	@JoinColumn(name= "productcatalog_fk")
+	@JoinColumn(name= "product_catalog_fk")
 	private ProductCatalog productCatalog;
 
     @Embedded

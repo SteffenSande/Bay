@@ -24,7 +24,7 @@ public class startup {
         bid.setValue(1234);
         feed.setContent("Kult produkt");
         feed.setRating(5.6);
-        bd.persist(bid);
+        bd.persist(bid); 	
         bd.persist(feed);
     }
 }
