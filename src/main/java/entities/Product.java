@@ -71,10 +71,21 @@ public class Product implements Serializable
 		return bids;
 	}
 
+	public Bid getBidById(int bidID) {
+		List<Bid> bids = this.getBids();
+		for (int i = 0; i < bids.size(); i++) {
+			if (bids.get(i).getId() == bidID) return bids.get(i);
+		}
+		return null;
+	}
+
 	public void setBids(List<Bid> bids) {
 		this.bids = bids;
 	}
 
+	public void setBid(Bid bid) {
+		this.bids.add(bid);
+	}
 
 	public int getId() {
 		return id;

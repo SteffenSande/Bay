@@ -5,8 +5,10 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NamedQuery;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.ws.rs.QueryParam;
 
 import entities.Bid;
 import entities.Feedback;
@@ -28,27 +30,22 @@ public class AuctionDao {
     public void persist(Bid bid) {
         em.persist(bid);
     }
-    
-    public void persist(Feedback feed) {
-		em.persist(feed);
-	}
 
     public void persist(Product product) {
         em.persist(product);
     }
 
+    public void persist(Feedback feed) {
+		em.persist(feed);
+	}
+
 	public List<Bid> getAllBids() {
     	Query query = em.createQuery("SELECT bid FROM Bid bid");
-        List<Bid> bids = query.getResultList();
+        List<Bid> bids = new ArrayList<>();
+        bids = query.getResultList();
         return bids;
     }
 
-    public List<Bid> getAllBidsForProduct(int id) {
-        List<Bid> bids = em.createQuery("SELECT p FROM Product p WHERE p.id = :id")
-                .setParameter("id", id)
-                .getResultList();
-        return bids;
-    }
 
     //Get all products
     public List<Product> getAllProducts() {
@@ -58,9 +55,25 @@ public class AuctionDao {
         return products;
     }
 
-    public Product getProductByID(int id) {
-        Query query = em.createQuery("SELECT p FROM Product p WHERE p.id = :id").setParameter("id", id);
-        return (Product) query.getSingleResult();
+    //Get all bids for specific product by Id
+    public List<Bid> getAllBidsForProduct(int id) {
+        Query query = em.createQuery("SELECT p FROM Product p WHERE p.id =: aid").setParameter("aid", id);
+        List<Bid> bids = new ArrayList<>();
+        bids = query.getResultList();
+        return bids;
     }
 
+    //Get specific bids for specific product by Id
+    public Bid getSpecificBidOnProduct(int aid, int bidId) {
+        Query query = em.createQuery("SELECT p FROM Product p WHERE p.id = aid");
+        Product p = (Product) query.getSingleResult();
+        return p.getBidById(bidId);
+    }
+
+
+
+    public Product getProductByID(int i) {
+        Query query = em.createQuery("SELECT p FROM Product p WHERE p.id = i");
+        return (Product) query.getSingleResult();
+    }
 }
