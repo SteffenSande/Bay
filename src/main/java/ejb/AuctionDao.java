@@ -19,8 +19,10 @@ import entities.Product;
 
 @Stateless
 public class AuctionDao {
-    // Injected database connection:
-	@PersistenceContext(unitName="dat250psql")
+
+    static final String DAT250_PSQL_UNIT_NAME = "dat250psql";
+
+	@PersistenceContext(unitName=DAT250_PSQL_UNIT_NAME)
     private EntityManager em;
 
     public void persist(Bid bid) {
@@ -30,9 +32,11 @@ public class AuctionDao {
     public void persist(Feedback feed) {
 		em.persist(feed);
 	}
-    
-    
-    @SuppressWarnings("unchecked")
+
+    public void persist(Product product) {
+        em.persist(product);
+    }
+
 	public List<Bid> getAllBids() {
     	Query query = em.createQuery("SELECT bid FROM Bid bid");
         List<Bid> bids = new ArrayList<>();
@@ -40,9 +44,8 @@ public class AuctionDao {
         return bids;
     }
 
-    //Get all bids for specific product by Id
-    public List<Bid> getAllBidsForProduct(int i) {
-        Query query = em.createQuery("SELECT p FROM Product p WHERE Id=i");
+    public List<Bid> getAllBidsForProduct(int id) {
+        Query query = em.createQuery("SELECT p FROM Product p WHERE p.id = :id").setParameter("id", id);
         List<Bid> bids = new ArrayList<>();
         bids = query.getResultList();
         return bids;
@@ -50,14 +53,15 @@ public class AuctionDao {
 
 
     public List<Product> getAllProducts() {
-        Query query = em.createQuery("SELECT p FROM Product p");
+        Query query = em.createQuery("SELECT p FROM Product p");
         List<Product> products = new ArrayList<>();
         products = query.getResultList();
         return products;
     }
 
-    public Product getProductByID(int i) {
-        Query query = em.createQuery("SELECT p FROM Product p WHERE p.id = i");
+    public Product getProductByID(int id) {
+        Query query = em.createQuery("SELECT p FROM Product p WHERE p.id = :id").setParameter("id", id);
         return (Product) query.getSingleResult();
     }
+
 }

@@ -46,7 +46,7 @@ public class startup {
              testBids.add(bid);
 		}
         product.setBids(testBids);
-
+        bd.persist(product);
 
         
         feed.setContent("Kult produkt");
