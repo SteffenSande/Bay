@@ -34,19 +34,14 @@ public class RestService {
     @Path("/{productID: \\d+}")
     public Response getProductsByID(@PathParam("productID") int id){
         Product p = auctionDao.getProductByID(id);
-    public Response getProductsByID(@PathParam("productID") int aid){
-        Product p = em.getProductByID(aid);
         return Response.ok(p.toString()).build();
     }
 
     /** return a representation with reference to all current bids in the auction identified by id */
     @GET
     @Path("/{productID : \\d+}/bids/")
-    public Response bi(@PathParam("productID") int id){
-        Product p = auctionDao.getProductByID(id);
-        List<Bid> bids = p.getBids();
     public Response showBidsOnProduct(@PathParam("productID") int aid){
-        List<Bid> bids = em.getAllBidsForProduct(aid); //p.getBids();
+        List<Bid> bids = auctionDao.getAllBidsForProduct(aid); //p.getBids();
         return Response.ok(bids.toString()).build();
     }
 
@@ -54,7 +49,7 @@ public class RestService {
     @GET
     @Path("/{productID : \\d+}/bids/{bidID : \\d+}")
     public Response getSpecificBid(@PathParam("productID") int aid, @PathParam("productID") int bidID){
-        Bid bid = em.getSpecificBidOnProduct(aid, bidID);
+        Bid bid = auctionDao.getSpecificBidOnProduct(aid, bidID);
         return Response.ok(bid.toString()).build();
     }
 
@@ -65,7 +60,7 @@ public class RestService {
     @POST
     @Path("/{productID : \\d+}/bids/{bidAmount : \\d+}")
     public Response bidOnAProduct(@PathParam("productID") int aid, @PathParam("bidAmount") int bidAmount){
-        Product p = em.getProductByID(aid);
+        Product p = auctionDao.getProductByID(aid);
         Bid bid = new Bid();
         bid.setValue(bidAmount);
         p.setBid(bid);

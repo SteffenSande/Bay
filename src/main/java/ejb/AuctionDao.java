@@ -57,7 +57,7 @@ public class AuctionDao {
 
     //Get all bids for specific product by Id
     public List<Bid> getAllBidsForProduct(int id) {
-        Query query = em.createQuery("SELECT p FROM Product p WHERE p.id =: aid").setParameter("aid", id);
+        Query query = em.createQuery("SELECT p FROM Product p WHERE p.id =: id").setParameter("id", id);
         List<Bid> bids = new ArrayList<>();
         bids = query.getResultList();
         return bids;
