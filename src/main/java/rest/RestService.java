@@ -43,5 +43,4 @@ public class RestService {
         List<Bid> bids = p.getBids();
         return Response.ok(bids.toString()).build();
     }
-
 }
