@@ -1,6 +1,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,7 +42,7 @@ public class Product implements Serializable
 
 	@OneToMany
 	@JoinColumn(name= "product_fk")
-	private List <Bid> bids;
+	private List <Bid> bids = new ArrayList<>();
     
 
 	public boolean isPublished() {
@@ -67,7 +68,7 @@ public class Product implements Serializable
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	
 	public List<Bid> getBids() {
 		return bids;
 	}
@@ -98,6 +99,6 @@ public class Product implements Serializable
 
 	@Override
 	public String toString() {
-			return "Product id " + id + " published: " + published + " name " + name + "bids:" + this.bids.size() + "\n";
+			return "Product id " + id + " published: " + published + " name " + name + "bids:" + this.bids.get(0)+ "\n";
 	}
 }

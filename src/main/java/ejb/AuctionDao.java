@@ -1,6 +1,7 @@
 package ejb;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -9,6 +10,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.ws.rs.QueryParam;
+
+import com.sun.mail.iap.Response;
 
 import entities.Bid;
 import entities.Feedback;
@@ -57,22 +60,23 @@ public class AuctionDao {
 
     //Get all bids for specific product by Id
     public List<Bid> getAllBidsForProduct(int id) {
-        Query query = em.createQuery("SELECT p FROM Product p WHERE p.id =: aid").setParameter("aid", id);
-        List<Bid> bids = query.getResultList();
-        return bids;
+    	Product p = em.find(Product.class, id);
+    	List <Bid> bids = p.getBids();
+    	return bids;
     }
 
     //Get specific bids for specific product by Id
     public Bid getSpecificBidOnProduct(int aid, int bidId) {
-        Query query = em.createQuery("SELECT p FROM Product p WHERE p.id =: id").setParameter("id", aid);
-        Product p = (Product) query.getSingleResult();
+    	Product p = em.find(Product.class, aid);
+        Bid b = p.getBidById(bidId);
         return p.getBidById(bidId);
     }
 
 
 
     public Product getProductByID(int i) {
-        Query query = em.createQuery("SELECT p FROM Product p WHERE p.id =: id").setParameter("id", i);
-        return (Product) query.getSingleResult();
-    }
+//      Query query = em.createQuery("SELECT p FROM Product p WHERE p.id =: id").setParameter("id", i);
+//      return (Product) query.getSingleResult();
+    	return em.find(Product.class, i);
+  }
 }

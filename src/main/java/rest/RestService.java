@@ -40,16 +40,25 @@ public class RestService {
     @GET
     @Path("/{productID: \\d+}")
     public Response getProductsByID(@PathParam("productID") int aid){
-        Product p = em.getProductByID(aid);
+        Product p= em.getProductByID(aid);
         return Response.ok(p.toString()).build();
     }
 
     //return a representation with reference to all current bids in the auction identified by id
     @GET
-    @Path("/{productID : \\d+}/bids/")
+    @Path("/{productID : \\d+}/bids/") 
     public Response showBidsOnProduct(@PathParam("productID") int aid){
-        List<Bid> bids = em.getAllBidsForProduct(aid); //p.getBids();
-        return Response.ok(bids.toString()).build();
+        List<Bid> bids = em.getAllBidsForProduct(aid); //p.getBids
+        String result = "";
+        for (int i = 0; i < bids.size(); i++) {
+			result += bids.get(i).toString();
+			
+			if(i != bids.size()-1) {
+				result += '\n';
+			}
+		}
+        
+        return Response.ok(result).build();
     }
 
     //returns a representation of the given bid within the auction identified by "aid" and "bidId"
