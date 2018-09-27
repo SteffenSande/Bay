@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
+@NamedQuery(name="Bid.findAll", query="SELECT b FROM Bid b")
 public class Bid implements Serializable
 {
     private static final long serialVersionUID = 1L;
@@ -25,8 +26,11 @@ public class Bid implements Serializable
 
 	private double value;
 
-	
-	@Temporal(TemporalType.TIMESTAMP)
+    //Used in the RestService.java
+    public static final String FIND_ALL = "Bid.findAll";
+
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Date time;
 
 	
