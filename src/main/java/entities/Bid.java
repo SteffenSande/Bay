@@ -33,6 +33,9 @@ public class Bid implements Serializable, Comparable <Bid>
     @Temporal(TemporalType.TIMESTAMP)
     private Date time;
 
+    public Bid() {
+    }
+
     public double getValue() {
         return value;
     }

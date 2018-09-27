@@ -8,9 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlRootElement;
 
 
 @Entity
+@XmlRootElement
 public class Product implements Serializable
 {
     private static final long serialVersionUID = 1L;
@@ -18,31 +20,28 @@ public class Product implements Serializable
     @Id
     @GeneratedValue
     private int id;
-    
-    private boolean published; 
 
+    private boolean published;
 	private String picturePath;
     private String name;
-    
-    
+
     @ManyToOne	
     @JoinColumn(name= "product_catalog_fk")
     private ProductCatalog productCatalog;
     
-    //Make some entityy relations between this object and these variable
-    
-	public ProductCatalog getProductCatalog() {
-		return productCatalog;
-	}
-
-	public void setProductCatalog(ProductCatalog productCatalog) {
-		this.productCatalog = productCatalog;
-	}
-
 	@OneToMany
 	@JoinColumn(name= "product_fk")
 	private List <Bid> bids;
-    
+
+
+    //Make some entityy relations between this object and these variable
+    public ProductCatalog getProductCatalog() {
+        return productCatalog;
+    }
+
+    public void setProductCatalog(ProductCatalog productCatalog) {
+        this.productCatalog = productCatalog;
+    }
 
 	public boolean isPublished() {
 		return published;

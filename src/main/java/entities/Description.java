@@ -5,9 +5,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.persistence.Embeddable;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 @Embeddable
 public class Description  implements Serializable
@@ -16,6 +14,7 @@ public class Description  implements Serializable
 
 	private String title;
 	private double rating;
+    @Temporal(TemporalType.DATE)
 	private Date endDate;
 	
 	//@OneToMany

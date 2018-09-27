@@ -5,6 +5,7 @@ import entities.Bid;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import ejb.AuctionDao;
@@ -13,7 +14,7 @@ import entities.Product;
 import java.util.List;
 
 
-@Path("/auctions") //Returns a representation with references to all current auctions (ongoing/completed) in the system
+@Path("auctions") //Returns a representation with references to all current auctions (ongoing/completed) in the system
 @Stateless
 public class RestService {
 
@@ -22,9 +23,10 @@ public class RestService {
 
     /** return a representation with references to all current auctions (ongoing/completed) in the system. */
     @GET
-    public Response getAllProducts(){
+    @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    public List<Product> getAllProducts(){
 	    List<Product> products = auctionDao.getAllProducts();
-	    return Response.ok(products.toString()).build();
+	    return products;
     }
 
     /** returns a representation of the auction/product identified by id */
