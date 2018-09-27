@@ -55,7 +55,7 @@ public class RestService {
     @Path("/{productID : \\d+}/bids/{bidID : \\d+}")
     @Produces({MediaType.TEXT_XML,MediaType.APPLICATION_JSON})
     public Response getSpecificBid(@PathParam("productID") int aid, @PathParam("productID") int bidID){
-        Bid bid = auctionDao.getSpecificBidOnProduct(bidID);
+        Bid bid = auctionDao.getSpecificBidOnProduct(aid, bidID);
         return Response.ok(bid).entity(bid).build();
     }
 
