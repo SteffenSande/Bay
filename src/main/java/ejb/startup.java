@@ -38,6 +38,7 @@ public class startup {
         product.setPublished(true);
         product.setPicturePath("Some url");
         product.setProductCatalog(null);
+        product.setId(1);
 
 
         List testBids = new ArrayList();
@@ -50,7 +51,7 @@ public class startup {
              testBids.add(bid);
 		}
         product.setBids(testBids);
-
+        bd.persist(product);
 
         
         feed.setContent("Kult produkt");
