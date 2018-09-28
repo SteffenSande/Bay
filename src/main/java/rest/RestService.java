@@ -8,10 +8,12 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
 
 import ejb.AuctionDao;
 import entities.Product;
 
+import java.net.URI;
 import java.util.Date;
 import java.util.List;
 
@@ -84,6 +86,6 @@ public class RestService {
         bid.setTime(new Date());
         auctionDao.persist(bid);
         p.setBid(bid);
-        return Response.ok().entity(bid).build();
+        return Response.status(201).entity(bid).build();
     }
 }

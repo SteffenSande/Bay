@@ -14,10 +14,9 @@ public class Description  implements Serializable
 
 	private String title;
 	private double rating;
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.DATE) 
 	private Date endDate;
 
-    // Dette er ikke riktig forhold i følge design modellen vår
 	//@OneToMany
 	//@JoinColumn(name="feature_id")
 	//private List <Feature> features = new ArrayList<>();
