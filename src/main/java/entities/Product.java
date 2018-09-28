@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 
 @Entity
@@ -22,6 +23,7 @@ public class Product implements Serializable
 
     @ManyToOne( fetch = FetchType.EAGER)
     @JoinColumn(name = "productCatalog_fk")
+	@XmlTransient
     private ProductCatalog productCatalog;
     
 
@@ -76,7 +78,7 @@ public class Product implements Serializable
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	@XmlTransient
 	public List<Bid> getBids() {
 		return bids;
 	}
