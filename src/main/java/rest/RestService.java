@@ -18,7 +18,8 @@ import java.util.Date;
 import java.util.List;
 
 
-@Path("auctions") //Returns a representation with references to all current auctions (ongoing/completed) in the system
+/** Returns a representation with references to all current auctions (ongoing/completed) in the system */
+@Path("auctions")
 @Stateless
 public class RestService {
 
@@ -62,7 +63,7 @@ public class RestService {
         return Response.ok().entity(bid).build();
     }
 
-    /** <app-path>/res/auction/{id}/bids - which creates a bid with a specified amount in the auction
+    /** creates a bid with a specified amount in the auction
     identified by id and returns a representation of the bid. The amount should be contained
     in the payload of the request (or optionally as a query parameter).*/
 
@@ -76,6 +77,7 @@ public class RestService {
         bid.setTime(new Date());
         auctionDao.persist(bid);
         p.setBid(bid);
-        return Response.status(201).entity(bid).build();
+        URI uri = UriBuilder.fromUri("http://localhost:8080/Bay/rest/auctions").path(Integer.toString(aid)).path(Integer.toString(bidAmount)).build();
+        return Response.created(uri).entity(bid).build();
     }
 }
