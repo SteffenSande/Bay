@@ -1,9 +1,7 @@
 package entities;
 
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Feature implements Serializable{
@@ -14,7 +12,20 @@ public class Feature implements Serializable{
     private int id;
     
     private String feature;
-    
+
+     @ManyToOne
+	 @JoinColumn(name = "product_fk")
+    private Product product;
+
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
 	public String getFeature() {
 		return feature;
 	}

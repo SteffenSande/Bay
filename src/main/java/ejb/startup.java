@@ -42,20 +42,20 @@ public class startup {
 
 
         List <Bid> testBids = new ArrayList<>();
-        
+
+
         for (int i = 0; i < 10; i++) {
         	 bid = new Bid();
              bid.setValue(i);
-             bid.setTime(new Date());	
+             bid.setTime(new Date());
              bd.persist(bid);
              testBids.add(bid);
 		}
         
         product.setBids(testBids);
-        
+
         bd.persist(product);
 
-        
         feed.setContent("Kult produkt");
         feed.setRating(5.6);
         feed.setTime(new Date());

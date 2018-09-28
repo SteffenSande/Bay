@@ -74,6 +74,6 @@ public class RestService {
         bid.setTime(new Date());
         auctionDao.persist(bid);
         p.setBid(bid);
-        return Response.ok(bid.toString()).build();
+        return Response.ok().entity(bid).build();
     }
 }

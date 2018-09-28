@@ -22,9 +22,9 @@ public class Bid implements Serializable, Comparable <Bid>
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
+	@ManyToOne
+    @JoinColumn(name = "product_fk")
+    private Product product;
 
 	private double value;
 
@@ -35,7 +35,16 @@ public class Bid implements Serializable, Comparable <Bid>
     @Temporal(TemporalType.TIMESTAMP)
     private Date time;
 
-    public Bid() {
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public double getValue() {

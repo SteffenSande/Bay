@@ -2,12 +2,7 @@ package entities;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 
@@ -25,16 +20,30 @@ public class Product implements Serializable
 	private String picturePath;
     private String name;
 
-    @ManyToOne	
-    @JoinColumn(name= "product_catalog_fk")
+    @ManyToOne
+    @JoinColumn(name = "productCatalog_fk")
     private ProductCatalog productCatalog;
     
-	@OneToMany
-	@JoinColumn(name= "product_fk")
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	private List <Bid> bids;
 
 
-    //Make some entityy relations between this object and these variable
+	@OneToMany(mappedBy = "product")
+	private List<Feature> features;
+
+
+	public List<Feature> getFeatures() {
+		return features;
+	}
+
+	public void setFeatures(List<Feature> features) {
+		this.features = features;
+		for (int i = 0; i < features.size(); i++) {
+			this.features.get(i).setProduct(this);
+		}
+	}
+
+	//Make some entityy relations between this object and these variable
     public ProductCatalog getProductCatalog() {
         return productCatalog;
     }
@@ -81,10 +90,15 @@ public class Product implements Serializable
 
 	public void setBids(List<Bid> bids) {
 		this.bids = bids;
+		//for (int i = 0; i < bids.size(); i++) {
+		//	setBid(bids.get(i));
+		//}
 	}
 
 	public void setBid(Bid bid) {
+		bid.setProduct(this);
 		this.bids.add(bid);
+
 	}
 
 	public int getId() {
