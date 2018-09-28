@@ -30,10 +30,9 @@ public class RestService {
     //@Produces({MediaType.TEXT_XML,MediaType.APPLICATION_JSON})
     public Response getAllProducts(){
 
-	    List<Product> products = auctionDao.getAllProducts();
-        GenericEntity<List<Product>> genericList = new GenericEntity<List<Product>>(products) {};
+	    List <Product> products = auctionDao.getAllProducts();
 
-	    return Response.ok().entity(genericList).build();
+	    return Response.ok(products.toString()).build();
     }
 
 
