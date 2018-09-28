@@ -23,14 +23,25 @@ public class RestService {
 	@EJB
 	private AuctionDao auctionDao;
 
+
+
     /** return a representation with references to all current auctions (ongoing/completed) in the system. */
     @GET
-    @Produces({MediaType.TEXT_XML,MediaType.APPLICATION_JSON})
+    //@Produces({MediaType.TEXT_XML,MediaType.APPLICATION_JSON})
     public Response getAllProducts(){
+
 	    List<Product> products = auctionDao.getAllProducts();
         GenericEntity<List<Product>> genericList = new GenericEntity<List<Product>>(products) {};
+
 	    return Response.ok().entity(genericList).build();
     }
+
+
+
+
+
+
+
 
     /** returns a representation of the auction/product identified by id */
     @GET

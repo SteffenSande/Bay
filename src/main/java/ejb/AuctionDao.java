@@ -52,6 +52,7 @@ public class AuctionDao {
     public List<Product> getAllProducts() {
         Query query = em.createQuery("SELECT p FROM Product p");
         List<Product> products = query.getResultList();
+
         return products;
     }
 

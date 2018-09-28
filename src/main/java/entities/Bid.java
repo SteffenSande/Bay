@@ -23,7 +23,6 @@ public class Bid implements Serializable, Comparable <Bid>
 	}
 
 	@ManyToOne
-    @JoinColumn(name = "product_fk")
     private Product product;
 
 	private double value;

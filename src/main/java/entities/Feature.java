@@ -13,8 +13,8 @@ public class Feature implements Serializable{
     
     private String feature;
 
-     @ManyToOne
-	 @JoinColumn(name = "product_fk")
+    @ManyToOne
+	@JoinColumn(name = "product_fk")
     private Product product;
 
 

@@ -20,11 +20,12 @@ public class Product implements Serializable
 	private String picturePath;
     private String name;
 
-    @ManyToOne
+    @ManyToOne( fetch = FetchType.EAGER)
     @JoinColumn(name = "productCatalog_fk")
     private ProductCatalog productCatalog;
     
-	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List <Bid> bids;
 
 
@@ -111,6 +112,6 @@ public class Product implements Serializable
 
 	@Override
 	public String toString() {
-			return "Product id " + id + " published: " + published + " name " + name + "ProductCatalog" + productCatalog + "\n";
+			return "Product id " + id + " published: " + published + " name " + name + "Bids: " + this.bids.toString() +"\n";
 	}
 }

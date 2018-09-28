@@ -38,16 +38,15 @@ public class startup {
         product.setPublished(true);
         product.setPicturePath("Some url");
         product.setProductCatalog(null);
-        product.setId(1);
 
 
         List <Bid> testBids = new ArrayList<>();
-
 
         for (int i = 0; i < 10; i++) {
         	 bid = new Bid();
              bid.setValue(i);
              bid.setTime(new Date());
+             bid.setProduct(product);
              bd.persist(bid);
              testBids.add(bid);
 		}
