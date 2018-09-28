@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response;
 import ejb.AuctionDao;
 import entities.Product;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -54,9 +55,9 @@ public class RestService {
     @GET
     @Path("/{productID : \\d+}/bids/{bidID : \\d+}")
     @Produces({MediaType.TEXT_XML,MediaType.APPLICATION_JSON})
-    public Response getSpecificBid(@PathParam("productID") int aid, @PathParam("productID") int bidID){
-        Bid bid = auctionDao.getSpecificBidOnProduct(aid, bidID);
-        return Response.ok(bid).entity(bid).build();
+    public Response getSpecificBid(@PathParam("productID") int aid, @PathParam("bidID") int bidID){
+        Bid bid = auctionDao.getSpecificBidOnProduct(bidID);
+        return Response.ok().entity(bid).build();
     }
 
     /** <app-path>/res/auction/{id}/bids - which creates a bid with a specified amount in the auction
@@ -70,6 +71,8 @@ public class RestService {
         Product p = auctionDao.getProductByID(aid);
         Bid bid = new Bid();
         bid.setValue(bidAmount);
+        bid.setTime(new Date());
+        auctionDao.persist(bid);
         p.setBid(bid);
         return Response.ok(bid.toString()).build();
     }

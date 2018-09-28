@@ -63,10 +63,8 @@ public class AuctionDao {
     }
 
     //Get specific bids for specific product by Id
-    public Bid getSpecificBidOnProduct(int aid, int bidId) {
-    	Product p = em.find(Product.class, aid);
-        Bid b = p.getBidById(bidId);
-        return p.getBidById(bidId);
+    public Bid getSpecificBidOnProduct(int bidId) {
+    	return em.find(Bid.class, bidId);
     }
 
 
