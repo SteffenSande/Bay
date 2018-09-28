@@ -29,8 +29,7 @@ public class Product implements Serializable
     @JoinColumn(name= "productCatalog_fk")
     private ProductCatalog productCatalog;
     
-	@OneToMany
-	@JoinColumn(name= "product_fk")
+	@OneToMany(mappedBy = "product")
 	private List <Bid> bids;
 
 

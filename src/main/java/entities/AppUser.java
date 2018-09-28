@@ -1,13 +1,9 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.List;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 public class AppUser implements Serializable
@@ -18,14 +14,16 @@ public class AppUser implements Serializable
     private int id;	
     
     @OneToOne
-	@JoinColumn(name="productCatalog_fk")
+	@JoinColumn(name="product_catalog_fk")
 	private ProductCatalog productCatalog;
+
+    @OneToMany(mappedBy = "buyer")
+    List<Bid> bids;
 
     @Embedded
 	private ContactInformation contactInformation;
 
 	private String username;
-
 
 	public int getId() {
 		return id;
@@ -35,8 +33,6 @@ public class AppUser implements Serializable
 		this.id = id;
 	}
 
-	
-	
 	public String getUsername() {
 		return username;
 	}

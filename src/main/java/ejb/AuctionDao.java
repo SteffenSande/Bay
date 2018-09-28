@@ -1,17 +1,11 @@
 package ejb;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.NamedQuery;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.ws.rs.QueryParam;
-
-import com.sun.mail.iap.Response;
 
 import entities.Bid;
 import entities.Feedback;
@@ -25,7 +19,7 @@ import entities.Product;
 @Stateless
 public class AuctionDao {
 
-    static final String DAT250_PSQL_UNIT_NAME = "dat250psql";
+    static final String DAT250_PSQL_UNIT_NAME = "derby";
 
 	@PersistenceContext(unitName=DAT250_PSQL_UNIT_NAME)
     private EntityManager em;

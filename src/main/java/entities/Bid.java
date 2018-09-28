@@ -12,12 +12,26 @@ import java.util.Date;
 public class Bid implements Serializable, Comparable <Bid>
 {
     private static final long serialVersionUID = 1L;
-    
+    //Used in the RestService.java
+    public static final String FIND_ALL = "Bid.findAll";
+
+    private double value;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date time;
+
     @Id
     @GeneratedValue
     private int id;
-    
-    
+
+    @ManyToOne
+    @JoinColumn
+    private AppUser buyer;
+
+    @ManyToOne
+    @JoinColumn
+    private Product product;
+
     public int getId() {
 		return id;
 	}
@@ -25,15 +39,6 @@ public class Bid implements Serializable, Comparable <Bid>
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	private double value;
-
-    //Used in the RestService.java
-    public static final String FIND_ALL = "Bid.findAll";
-
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date time;
 
     public Bid() {
     }
