@@ -26,7 +26,7 @@ public class Product implements Serializable
     private String name;
 
     @ManyToOne	
-    @JoinColumn(name= "product_catalog_fk")
+    @JoinColumn(name= "productCatalog_fk")
     private ProductCatalog productCatalog;
     
 	@OneToMany
