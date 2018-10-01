@@ -3,11 +3,7 @@ package entities;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 @Entity
 public class Feedback implements Serializable
@@ -24,6 +20,9 @@ public class Feedback implements Serializable
     
     @Temporal(TemporalType.TIMESTAMP)
     private Date time;
+
+
+    @ManyToOne
     
 	public int getId() {
 		return id;

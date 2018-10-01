@@ -2,7 +2,6 @@ package ejb;
 
 import entities.Bid;
 
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,13 +21,13 @@ public class BidController implements Serializable {
 
 	// Injected DAO EJB:
 	@EJB
-	private AuctionDao bidDao;
+	private BidDao bidDao;
 	
 	private Bid bid;
 
 	public List<Bid> getBids() {
 		List<Bid> reverseTweetList = new ArrayList<>();
-		reverseTweetList.addAll(this.bidDao.getAllBids());
+		reverseTweetList.addAll(this.bidDao.getList());
 		Collections.reverse(reverseTweetList);
 		return reverseTweetList;
 	}

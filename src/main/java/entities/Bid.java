@@ -25,7 +25,14 @@ public class Bid implements Serializable, Comparable <Bid>
 
 	@ManyToOne
     @XmlTransient
+    @JoinColumn(name = "product_fk")
     private Product product;
+
+
+    @ManyToOne
+    @XmlTransient
+    @JoinColumn(name = "appUser_fk")
+    private AppUser appUser;
 
 	private double value;
 

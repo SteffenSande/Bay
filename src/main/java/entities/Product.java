@@ -19,9 +19,8 @@ public class Product implements Serializable
 
     private boolean published;
 	private String picturePath;
-    private String name;
 
-    @ManyToOne( fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "productCatalog_fk")
 	@XmlTransient
     private ProductCatalog productCatalog;
@@ -34,6 +33,18 @@ public class Product implements Serializable
 	@OneToMany(mappedBy = "product")
 	private List<Feature> features;
 
+
+	@Embedded
+	private Description description;
+
+
+	public Description getDescription() {
+		return description;
+	}
+
+	public void setDescription(Description description) {
+		this.description = description;
+	}
 
 	public List<Feature> getFeatures() {
 		return features;
@@ -71,13 +82,6 @@ public class Product implements Serializable
 		this.picturePath = picturePath;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 	@XmlTransient
 	public List<Bid> getBids() {
 		return bids;
@@ -114,6 +118,6 @@ public class Product implements Serializable
 
 	@Override
 	public String toString() {
-			return "Product id " + id + " published: " + published + " name " + name + "Bids: " + this.bids.toString() +"\n";
+			return "Product id " + id + " published: " + published + "Bids: " + this.bids.toString() +"\n";
 	}
 }
