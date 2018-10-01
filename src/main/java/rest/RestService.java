@@ -9,8 +9,10 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
+import javax.xml.bind.JAXBContext;
 
 import ejb.AuctionDao;
+import entities.Feedback;
 import entities.Product;
 
 import java.net.URI;
@@ -26,29 +28,33 @@ public class RestService {
 	@EJB
 	private AuctionDao auctionDao;
 
+	@GET
+    @Path("/ok")
+    public Response ok() {
+	    return Response.ok("Content").build();
+    }
+
+    @GET
+    @Path("/fail")
+    public Response fail() {
+	    Object o = null;
+	    o.equals("Test");
+	    return Response.ok().build();
+    }
 
 
     /** return a representation with references to all current auctions (ongoing/completed) in the system. */
     @GET
-    //@Produces({MediaType.TEXT_XML,MediaType.APPLICATION_JSON})
-    public Response getAllProducts(){
-
-	    List <Product> products = auctionDao.getAllProducts();
-
-	    return Response.ok(products.toString()).build();
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response getAllProducts() {
+	    List<Product> products = auctionDao.getAllProducts();
+	    return Response.ok(new GenericEntity<List<Product>>(products){}).build();
     }
-
-
-
-
-
-
-
 
     /** returns a representation of the auction/product identified by id */
     @GET
     @Path("/{productID: \\d+}")
-    @Produces({MediaType.TEXT_XML,MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     public Response getProductsByID(@PathParam("productID") int id){
         Product p = auctionDao.getProductByID(id);
         return Response.ok().entity(p).build();
@@ -57,7 +63,7 @@ public class RestService {
     /** return a representation with reference to all current bids in the auction identified by id */
     @GET
     @Path("/{productID : \\d+}/bids/")
-    @Produces({MediaType.TEXT_XML,MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     public Response showBidsOnProduct(@PathParam("productID") int aid){
         List<Bid> bids = auctionDao.getAllBidsForProduct(aid); //p.getBids();
         GenericEntity<List<Bid>> genericList = new GenericEntity<List<Bid>>(bids) {};
@@ -67,7 +73,7 @@ public class RestService {
     /** returns a representation of the given bid within the auction identified by "aid" and "bidId" */
     @GET
     @Path("/{productID : \\d+}/bids/{bidID : \\d+}")
-    @Produces({MediaType.TEXT_XML,MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     public Response getSpecificBid(@PathParam("productID") int aid, @PathParam("bidID") int bidID){
         Bid bid = auctionDao.getSpecificBidOnProduct(bidID);
         return Response.ok().entity(bid).build();
@@ -79,7 +85,7 @@ public class RestService {
 
     @POST
     @Path("/{productID : \\d+}/bids/{bidAmount : \\d+}")
-    @Produces({MediaType.TEXT_XML,MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     public Response bidOnAProduct(@PathParam("productID") int aid, @PathParam("bidAmount") int bidAmount){
         Product p = auctionDao.getProductByID(aid);
         Bid bid = new Bid();
@@ -89,5 +95,15 @@ public class RestService {
         p.setBid(bid);
         URI uri = UriBuilder.fromUri("http://localhost:8080/Bay/rest/auctions").path(Integer.toString(aid)).path(Integer.toString(bidAmount)).build();
         return Response.created(uri).entity(bid).build();
+    }
+
+    /** This is for test purposes only, as it doesn't use AuctionDao. When everyone is comfortable with testing,
+      * this method can be removed, though it wont do any harm.
+     */
+    @GET
+    @Path("/testFeedback")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response testFeedback() {
+        return Response.ok(new Feedback("Content", 4, new Date())).build();
     }
 }
