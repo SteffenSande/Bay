@@ -3,14 +3,8 @@ package entities;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.persistence.*;
 
-@XmlRootElement
 @Entity
 public class Feedback implements Serializable
 {
@@ -27,9 +21,10 @@ public class Feedback implements Serializable
     @Temporal(TemporalType.TIMESTAMP)
     private Date time;
 
-    public Feedback() {
-    }
+    public Feedback(){
 
+	}
+	
     public Feedback(String content, double rating, Date time) {
         this.content = content;
         this.rating = rating;
@@ -37,7 +32,8 @@ public class Feedback implements Serializable
         this.id = 1;
     }
 
-    public int getId() {
+    
+	public int getId() {
 		return id;
 	}
 
@@ -68,14 +64,4 @@ public class Feedback implements Serializable
 	public void setTime(Date time) {
 		this.time = time;
 	}
-
-    @Override
-    public String toString() {
-        return "Feedback{" +
-                "id=" + id +
-                ", content='" + content + '\'' +
-                ", rating=" + rating +
-                ", time=" + time +
-                '}';
-    }
 }

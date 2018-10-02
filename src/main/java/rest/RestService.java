@@ -48,7 +48,10 @@ public class RestService {
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response getAllProducts() {
 	    List<Product> products = auctionDao.getAllProducts();
-	    return Response.ok(new GenericEntity<List<Product>>(products){}).build();
+	    return Response.ok().entity(new GenericEntity<List<Product>>(products){}).build();
+
+
+	    //return Response.ok(products.toString()).build();
     }
 
     /** returns a representation of the auction/product identified by id */

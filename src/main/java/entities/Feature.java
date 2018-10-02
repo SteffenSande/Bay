@@ -2,6 +2,7 @@ package entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 public class Feature implements Serializable{
@@ -10,9 +11,12 @@ public class Feature implements Serializable{
     @Id
     @GeneratedValue
     private int id;
-    
+
+
+    //Kanskje bytte til enum og klassenavn til categori
     private String feature;
 
+	@XmlTransient
     @ManyToOne
 	@JoinColumn(name = "product_fk")
     private Product product;
