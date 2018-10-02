@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 public class ProductCatalog  implements Serializable
@@ -20,7 +21,7 @@ public class ProductCatalog  implements Serializable
     @GeneratedValue
     private int id;
 
-    
+    @XmlTransient
     @OneToOne(mappedBy ="productCatalog")
     private AppUser seller;
     

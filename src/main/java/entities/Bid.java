@@ -1,9 +1,10 @@
 package entities;
 
 
+import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
+
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -13,7 +14,7 @@ import java.util.Date;
 public class Bid implements Serializable, Comparable <Bid>
 {
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue
     private int id;
@@ -23,14 +24,13 @@ public class Bid implements Serializable, Comparable <Bid>
 		return id;
 	}
 
+
 	@ManyToOne
-    @XmlTransient
     @JoinColumn(name = "product_fk")
     private Product product;
 
 
     @ManyToOne
-    @XmlTransient
     @JoinColumn(name = "appUser_fk")
     private AppUser appUser;
 

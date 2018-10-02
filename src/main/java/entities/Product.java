@@ -1,14 +1,16 @@
 package entities;
 
+import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
+
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.*;
 
 
 @Entity
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Product implements Serializable
 {
     private static final long serialVersionUID = 1L;
@@ -20,15 +22,16 @@ public class Product implements Serializable
     private boolean published;
 	private String picturePath;
 
-	@XmlTransient
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "productCatalog_fk")
     private ProductCatalog productCatalog;
-    
-    @XmlTransient
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private List <Bid> bids;
 
+
+
+    @OneToMany(cascade = CascadeType.ALL)
+	@XmlElement
+	@XmlInverseReference(mappedBy = "product")
+	private List <Bid> bids;
 
     @XmlTransient
 	@OneToMany(mappedBy = "product")
