@@ -26,8 +26,9 @@ public class startup {
 	@EJB
     private AuctionDao bd;
 
-	@PersistenceUnit(unitName="dat250psql")
-    EntityManagerFactory emf;
+	//@EJB
+    //private BidDao bidDao;
+
 
     private Bid bid = new Bid();
     private Feedback feed = new Feedback();
@@ -53,7 +54,7 @@ public class startup {
              bd.persist(bid);
              testBids.add(bid);
 		}
-        
+
         product.setBids(testBids);
 
         bd.persist(product);
