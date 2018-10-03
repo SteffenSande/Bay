@@ -17,20 +17,20 @@ import java.util.Date;
 @Singleton
 public class Seed {
 
-	@Inject
+    @Inject
     IDao<Bid, Integer> bidDao;
 
-	@Inject
+    @Inject
     IDao<Product, Integer> productDao;
 
     @Inject
     IDao<Feedback, Integer> feedbackDao;
 
     private Feedback feedback = new Feedback();
-    private Product product= new Product();
+    private Product product = new Product();
 
     @PostConstruct
-    void init(){
+    void init() {
         System.out.println("1234");
         System.out.println(bidDao);
 
@@ -43,13 +43,13 @@ public class Seed {
         product.setBids(new ArrayList<>());
 
         for (int i = 0; i < 4; i++) {
-        	Bid bid = new Bid();
-        	product.getBids().add(bid);
+            Bid bid = new Bid();
+            product.getBids().add(bid);
             bidDao.persist(bid);
             bid.setProduct(product);
             bid.setValue(i);
             bid.setTime(new Date());
-		}
+        }
 
         feedback.setContent("Kult produkt");
         feedback.setRating(5.6);

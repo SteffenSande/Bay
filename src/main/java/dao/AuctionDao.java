@@ -20,7 +20,7 @@ import java.util.List;
 public class AuctionDao {
 
 
-	@PersistenceContext(unitName= Configuration.CURRENT_PERSISTENCE_UNIT)
+    @PersistenceContext(unitName = Configuration.CURRENT_PERSISTENCE_UNIT)
     private EntityManager em;
 
     public void persist(Bid bid) {
@@ -32,11 +32,11 @@ public class AuctionDao {
     }
 
     public void persist(Feedback feed) {
-		em.persist(feed);
-	}
+        em.persist(feed);
+    }
 
-	public List<Bid> getAllBids() {
-    	Query query = em.createQuery("SELECT bid FROM Bid bid");
+    public List<Bid> getAllBids() {
+        Query query = em.createQuery("SELECT bid FROM Bid bid");
         List<Bid> bids = query.getResultList();
         return bids;
     }
@@ -51,21 +51,20 @@ public class AuctionDao {
 
     //Get all bids for specific product by Id
     public List<Bid> getAllBidsForProduct(int id) {
-    	Product p = em.find(Product.class, id);
-    	List <Bid> bids = p.getBids();
-    	return bids;
+        Product p = em.find(Product.class, id);
+        List<Bid> bids = p.getBids();
+        return bids;
     }
 
     //Get specific bids for specific product by Id
     public Bid getSpecificBidOnProduct(int bidId) {
-    	return em.find(Bid.class, bidId);
+        return em.find(Bid.class, bidId);
     }
-
 
 
     public Product getProductByID(int i) {
 //      Query query = em.createQuery("SELECT p FROM Product p WHERE p.id =: id").setParameter("id", i);
 //      return (Product) query.getSingleResult();
-    	return em.find(Product.class, i);
-  }
+        return em.find(Product.class, i);
+    }
 }

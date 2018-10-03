@@ -5,7 +5,7 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
-public class Feature implements Serializable{
+public class Feature implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -16,37 +16,35 @@ public class Feature implements Serializable{
     //Kanskje bytte til enum og klassenavn til categori
     private String feature;
 
-	@XmlTransient
+    @XmlTransient
     @ManyToOne
-	@JoinColumn(name = "product_fk")
+    @JoinColumn(name = "product_fk")
     private Product product;
 
 
-	public Product getProduct() {
-		return product;
-	}
+    public Product getProduct() {
+        return product;
+    }
 
-	public void setProduct(Product product) {
-		this.product = product;
-	}
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 
-	public String getFeature() {
-		return feature;
-	}
+    public String getFeature() {
+        return feature;
+    }
 
-	public void setFeature(String feature) {
-		this.feature = feature;
-	}
+    public void setFeature(String feature) {
+        this.feature = feature;
+    }
 
-	public int getId() {
-		return id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
-    
-    
-    
-    
+    public void setId(int id) {
+        this.id = id;
+    }
+
+
 }

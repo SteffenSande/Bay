@@ -8,9 +8,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.Optional;
 
-public abstract class AbstractDao <T, IdType> implements IDao<T, IdType> {
+public abstract class AbstractDao<T, IdType> implements IDao<T, IdType> {
 
-    @PersistenceContext(unitName= Configuration.CURRENT_PERSISTENCE_UNIT)
+    @PersistenceContext(unitName = Configuration.CURRENT_PERSISTENCE_UNIT)
     protected EntityManager em;
 
     protected Class<T> tClass;
@@ -32,5 +32,10 @@ public abstract class AbstractDao <T, IdType> implements IDao<T, IdType> {
     @Override
     public void merge(T t) {
         em.merge(t);
+    }
+
+    @Override
+    public void flush() {
+        em.flush();
     }
 }
