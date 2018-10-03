@@ -15,8 +15,7 @@ public class AppUser implements Serializable {
     @OneToMany(mappedBy = "appUser")
     private List<Bid> bids;
 
-    @OneToOne()
-    @JoinColumn(name = "productCatalog_fk")
+    @OneToOne(mappedBy = "seller")
     private ProductCatalog productCatalog;
 
 

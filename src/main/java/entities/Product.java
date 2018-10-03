@@ -31,8 +31,10 @@ public class Product implements Serializable {
 	@XmlInverseReference(mappedBy = "product")
 	private List <Bid> bids;
 
-    @XmlTransient
-    @OneToMany(mappedBy = "product")
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @XmlElement
+    @XmlInverseReference(mappedBy = "product")
     private List<Feature> features;
 
 

@@ -1,14 +1,13 @@
 package entities;
 
+import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElement;
 
 @Entity
 public class ProductCatalog implements Serializable {
@@ -19,11 +18,15 @@ public class ProductCatalog implements Serializable {
     @GeneratedValue
     private int id;
 
-
-    @OneToOne(mappedBy = "productCatalog")
+    @OneToOne
+    @JoinColumn(name = "seller_fk")
     private AppUser seller;
 
+
     @OneToMany(mappedBy = "productCatalog")
+    @XmlElement
+    @XmlInverseReference(mappedBy = "product")
+
     private List<Product> products = new ArrayList<>();
 
     public List<Product> getProducts() {

@@ -16,7 +16,6 @@ public class Feature implements Serializable {
     //Kanskje bytte til enum og klassenavn til categori
     private String feature;
 
-    @XmlTransient
     @ManyToOne
     @JoinColumn(name = "product_fk")
     private Product product;

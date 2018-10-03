@@ -42,10 +42,11 @@ public class Seed {
         product.setProductCatalog(null);
         product.setBids(new ArrayList<>());
 
+
         for (int i = 0; i < 4; i++) {
             Bid bid = new Bid();
             product.getBids().add(bid);
-            bidDao.persist(bid);
+            //bidDao.persist(bid);
             bid.setProduct(product);
             bid.setValue(i);
             bid.setTime(new Date());
@@ -54,5 +55,12 @@ public class Seed {
         feedback.setContent("Kult produkt");
         feedback.setRating(5.6);
         feedback.setTime(new Date());
+    }
+
+
+
+
+    void setUpLargerTestData(){
+        
     }
 }
