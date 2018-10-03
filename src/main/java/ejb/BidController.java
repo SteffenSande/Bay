@@ -1,5 +1,6 @@
 package ejb;
 
+import dao.AuctionDao;
 import entities.Bid;
 
 
@@ -10,40 +11,38 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
+
 @Named(value = "bidController")
 @RequestScoped
 public class BidController implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	// Injected DAO EJB:
-	@EJB
-	private AuctionDao bidDao;
-	
-	private Bid bid;
+    @Inject
+    private AuctionDao bidDao;
 
-	public List<Bid> getBids() {
-		List<Bid> reverseTweetList = new ArrayList<>();
-		reverseTweetList.addAll(this.bidDao.getAllBids());
-		Collections.reverse(reverseTweetList);
-		return reverseTweetList;
-	}
+    private Bid bid;
 
-	public String saveBids() {
-		this.bidDao.persist(this.bid);
-		return "index";
-	}
+    public List<Bid> getBids() {
+        List<Bid> reverseTweetList = new ArrayList<>();
+        reverseTweetList.addAll(this.bidDao.getAllBids());
+        Collections.reverse(reverseTweetList);
+        return reverseTweetList;
+    }
 
-	public Bid getBid() {
-		if (this.bid == null) {
-			bid = new Bid();
-		}
-		return bid;
-		
-	}
+    public String saveBids() {
+        this.bidDao.persist(this.bid);
+        return "index";
+    }
+
+    public Bid getBid() {
+        if (this.bid == null) {
+            bid = new Bid();
+        }
+        return bid;
+
+    }
 
 }

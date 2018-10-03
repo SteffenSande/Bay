@@ -6,67 +6,66 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-public class AppUser implements Serializable
-{
+public class AppUser implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue
     private int id;
 
-	@OneToMany(mappedBy = "appUser")
-	private List<Bid> bids;
+    @OneToMany(mappedBy = "appUser")
+    private List<Bid> bids;
 
-	@OneToOne()
-	@JoinColumn(name="productCatalog_fk")
-	private ProductCatalog productCatalog;
-
-
-	@Embedded
-	private ContactInformation contactInformation;
-
-	private String username;
+    @OneToOne()
+    @JoinColumn(name = "productCatalog_fk")
+    private ProductCatalog productCatalog;
 
 
-	public List<Bid> getBids() {
-		return bids;
-	}
+    @Embedded
+    private ContactInformation contactInformation;
 
-	public void setBids(List<Bid> bids) {
-		this.bids = bids;
-	}
+    private String username;
 
 
-	public ProductCatalog getProductCatalog() {
-		return productCatalog;
-	}
+    public List<Bid> getBids() {
+        return bids;
+    }
 
-	public void setProductCatalog(ProductCatalog productCatalog) {
-		this.productCatalog = productCatalog;
-	}
+    public void setBids(List<Bid> bids) {
+        this.bids = bids;
+    }
 
-	public ContactInformation getContactInformation() {
-		return contactInformation;
-	}
 
-	public void setContactInformation(ContactInformation contactInformation) {
-		this.contactInformation = contactInformation;
-	}
+    public ProductCatalog getProductCatalog() {
+        return productCatalog;
+    }
 
-	public int getId() {
-		return id;
-	}
+    public void setProductCatalog(ProductCatalog productCatalog) {
+        this.productCatalog = productCatalog;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
-	
-	
-	public String getUsername() {
-		return username;
-	}
+    public ContactInformation getContactInformation() {
+        return contactInformation;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	
+    public void setContactInformation(ContactInformation contactInformation) {
+        this.contactInformation = contactInformation;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
 }

@@ -10,17 +10,15 @@ import javax.xml.bind.annotation.*;
 
 @Entity
 @XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
-public class Product implements Serializable
-{
+public class Product implements Serializable {
     private static final long serialVersionUID = 1L;
-	 //Create elements ids automatically, incremented 1 by 1
+    //Create elements ids automatically, incremented 1 by 1
     @Id
     @GeneratedValue
     private int id;
 
     private boolean published;
-	private String picturePath;
+    private String picturePath;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "productCatalog_fk")
@@ -34,34 +32,34 @@ public class Product implements Serializable
 	private List <Bid> bids;
 
     @XmlTransient
-	@OneToMany(mappedBy = "product")
-	private List<Feature> features;
+    @OneToMany(mappedBy = "product")
+    private List<Feature> features;
 
 
-	@Embedded
-	private Description description;
+    @Embedded
+    private Description description;
 
 
-	public Description getDescription() {
-		return description;
-	}
+    public Description getDescription() {
+        return description;
+    }
 
-	public void setDescription(Description description) {
-		this.description = description;
-	}
+    public void setDescription(Description description) {
+        this.description = description;
+    }
 
-	public List<Feature> getFeatures() {
-		return features;
-	}
+    public List<Feature> getFeatures() {
+        return features;
+    }
 
-	public void setFeatures(List<Feature> features) {
-		this.features = features;
-		for (int i = 0; i < features.size(); i++) {
-			this.features.get(i).setProduct(this);
-		}
-	}
+    public void setFeatures(List<Feature> features) {
+        this.features = features;
+        for (int i = 0; i < features.size(); i++) {
+            this.features.get(i).setProduct(this);
+        }
+    }
 
-	//Make some entityy relations between this object and these variable
+    //Make some entityy relations between this object and these variable
     public ProductCatalog getProductCatalog() {
         return productCatalog;
     }
@@ -70,58 +68,58 @@ public class Product implements Serializable
         this.productCatalog = productCatalog;
     }
 
-	public boolean isPublished() {
-		return published;
-	}
+    public boolean isPublished() {
+        return published;
+    }
 
-	public void setPublished(boolean published) {
-		this.published = published;
-	}
+    public void setPublished(boolean published) {
+        this.published = published;
+    }
 
     public String getPicturePath() {
-		return picturePath;
-	}
+        return picturePath;
+    }
 
-	public void setPicturePath(String picturePath) {
-		this.picturePath = picturePath;
-	}
+    public void setPicturePath(String picturePath) {
+        this.picturePath = picturePath;
+    }
 
-	@XmlTransient
-	public List<Bid> getBids() {
-		return bids;
-	}
+    @XmlTransient
+    public List<Bid> getBids() {
+        return bids;
+    }
 
-	public Bid getBidById(int bidID) {
-		List<Bid> bids = this.getBids();
-		for (int i = 0; i < bids.size(); i++) {
-			if (bids.get(i).getId() == bidID) return bids.get(i);
-		}
-		return null;
-	}
+    public Bid getBidById(int bidID) {
+        List<Bid> bids = this.getBids();
+        for (int i = 0; i < bids.size(); i++) {
+            if (bids.get(i).getId() == bidID) return bids.get(i);
+        }
+        return null;
+    }
 
-	public void setBids(List<Bid> bids) {
-		this.bids = bids;
-		//for (int i = 0; i < bids.size(); i++) {
-		//	setBid(bids.get(i));
-		//}
-	}
+    public void setBids(List<Bid> bids) {
+        this.bids = bids;
+        //for (int i = 0; i < bids.size(); i++) {
+        //	setBid(bids.get(i));
+        //}
+    }
 
-	public void setBid(Bid bid) {
-		bid.setProduct(this);
-		this.bids.add(bid);
+    public void setBid(Bid bid) {
+        bid.setProduct(this);
+        this.bids.add(bid);
 
-	}
+    }
 
-	public int getId() {
-		return id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	@Override
-	public String toString() {
-			return "Product id " + id + " published: " + published + "Bids: " + this.bids.toString() +"\n";
-	}
+    @Override
+    public String toString() {
+        return "Product id " + id + " published: " + published + "Bids: " + this.bids.toString() + "\n";
+    }
 }

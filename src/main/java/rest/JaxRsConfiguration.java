@@ -13,7 +13,7 @@ public class JaxRsConfiguration extends ResourceConfig {
     public JaxRsConfiguration() {
         super();
         packages(RestService.class.getPackage().getName());
-        register(new LoggingFeature(Logger.getLogger(LoggingFeature.DEFAULT_LOGGER_NAME), Level.INFO, LoggingFeature.Verbosity.PAYLOAD_ANY, Integer.MAX_VALUE));
+        register(new LoggingFeature(Logger.getLogger(LoggingFeature.DEFAULT_LOGGER_NAME), Level.INFO, LoggingFeature.Verbosity.PAYLOAD_ANY, 8192));
         register(DebugMapper.class);
     }
 }
