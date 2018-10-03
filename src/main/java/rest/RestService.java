@@ -2,16 +2,15 @@ package rest;
 
 import entities.Bid;
 
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
-import javax.xml.bind.JAXBContext;
 
-import ejb.AuctionDao;
+import dao.AuctionDao;
 import entities.Feedback;
 import entities.Product;
 
@@ -25,23 +24,8 @@ import java.util.List;
 @Stateless
 public class RestService {
 
-	@EJB
-	private AuctionDao auctionDao;
-
-	@GET
-    @Path("/ok")
-    public Response ok() {
-	    return Response.ok("Content").build();
-    }
-
-    @GET
-    @Path("/fail")
-    public Response fail() {
-	    Object o = null;
-	    o.equals("Test");
-	    return Response.ok().build();
-    }
-
+	@Inject
+	AuctionDao auctionDao;
 
     /** return a representation with references to all current auctions (ongoing/completed) in the system. */
     @GET

@@ -1,33 +1,26 @@
-package ejb;
+package dao;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.NamedQuery;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.ws.rs.QueryParam;
-
-import com.sun.mail.iap.Response;
-
+import setup.Configuration;
 import entities.Bid;
 import entities.Feedback;
 import entities.Product;
+
+import javax.enterprise.context.RequestScoped;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import java.util.List;
 
 
 /**
  * Data Access Object connecting the Database with the business logic
  */
 
-@Stateless
+@RequestScoped
 public class AuctionDao {
 
-    static final String DAT250_PSQL_UNIT_NAME = "dat250psql";
 
-	@PersistenceContext(unitName=DAT250_PSQL_UNIT_NAME)
+	@PersistenceContext(unitName= Configuration.CURRENT_PERSISTENCE_UNIT)
     private EntityManager em;
 
     public void persist(Bid bid) {

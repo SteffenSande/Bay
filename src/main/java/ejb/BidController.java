@@ -1,5 +1,6 @@
 package ejb;
 
+import dao.AuctionDao;
 import entities.Bid;
 
 
@@ -10,18 +11,15 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 @Named(value = "bidController")
 @RequestScoped
 public class BidController implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
-	// Injected DAO EJB:
-	@EJB
+	@Inject
 	private AuctionDao bidDao;
 	
 	private Bid bid;
