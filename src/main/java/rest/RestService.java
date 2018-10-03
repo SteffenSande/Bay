@@ -2,6 +2,7 @@ package rest;
 
 import dao.IDao;
 import dto.Value;
+import entities.Auction;
 import entities.Bid;
 
 import javax.ejb.Stateless;
@@ -29,6 +30,9 @@ public class RestService {
     IDao<Product, Integer> productDao;
 
     @Inject
+    IDao<Auction, Integer> auctionDao;
+
+    @Inject
     IDao<Bid, Integer> bidDao;
 
     @Context
@@ -39,9 +43,9 @@ public class RestService {
      */
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getAllProducts() {
-        List<Product> products = productDao.getAll();
-        return Response.ok().entity(new GenericEntity<List<Product>>(products) {
+    public Response getAuctions() {
+        List<Auction> auctions = auctionDao.getAll();
+        return Response.ok().entity(new GenericEntity<List<Auction>>(auctions) {
         }).build();
     }
 
@@ -49,15 +53,23 @@ public class RestService {
      * returns a representation of the auction/product identified by id
      */
     @GET
-    @Path("/{productID: \\d+}")
+    @Path("/{auctionId: \\d+}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response getProductsByID(@PathParam("productID") int id) {
-        Optional<Product> p = productDao.find(id);
-        if (p.isPresent()) {
-            return Response.ok().entity(p.get()).build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).entity("This product does not exist.").build();
-        }
+    public Response getAuction(@PathParam("auctionId") int id) {
+        return auctionDao
+                .find(id)
+                .map(p -> Response.ok().entity(p).build())
+                .orElse(auctionNotFound(id));
+    }
+
+    @GET
+    @Path("/test")
+    public Response test() {
+        List<Bid> bids = auctionDao.find(3).get().getBids();
+        bids.size();
+        bids.isEmpty();
+        System.out.println(bids);
+        return Response.ok(bids.toString()).build();
     }
 
     /**
@@ -67,13 +79,9 @@ public class RestService {
     @Path("/{productID : \\d+}/bids/")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response showBidsOnProduct(@PathParam("productID") int id) {
-        Optional<Product> p = productDao.find(id);
-        if (!p.isPresent()) {
-            return productNotFound(id);
-        }
-        GenericEntity<List<Bid>> genericList = new GenericEntity<List<Bid>>(p.get().getBids()) {
-        };
-        return Response.ok().entity(genericList).build();
+        return auctionDao.find(id)
+                .map(p -> Response.ok().entity(new GenericEntity<List<Bid>>(p.getBids()){}).build())
+                .orElse(auctionNotFound(id));
     }
 
     /**
@@ -83,11 +91,11 @@ public class RestService {
     @Path("/{productID : \\d+}/bids/{bidID : \\d+}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response getSpecificBid(@PathParam("productID") int auctionId, @PathParam("bidID") int bidId) {
-        Optional<Product> product = productDao.find(auctionId);
-        if (!product.isPresent()) {
-            return productNotFound(auctionId);
+        Optional<Auction> auction = auctionDao.find(auctionId);
+        if (!auction.isPresent()) {
+            return auctionNotFound(auctionId);
         }
-        Optional<Bid> bid = product.get().getBids().stream().filter(b -> b.getId() == bidId).findAny();
+        Optional<Bid> bid = auction.get().getBids().stream().filter(b -> b.getId() == bidId).findAny();
         if (!bid.isPresent()) {
             return Response
                     .status(Response.Status.NOT_FOUND)
@@ -109,14 +117,14 @@ public class RestService {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response bidOnAProduct(@PathParam("productID") int auctionId, Value value) {
-        Optional<Product> pOpt = productDao.find(auctionId);
-        if (!pOpt.isPresent()) {
-            return productNotFound(auctionId);
+        Optional<Auction> optionalAuction = auctionDao.find(auctionId);
+        if (!optionalAuction.isPresent()) {
+            return auctionNotFound(auctionId);
         }
-        Product p = pOpt.get();
-        productDao.persist(p);
+        Auction auction = optionalAuction.get();
+        auctionDao.persist(auction);
         Bid bid = new Bid();
-        p.getBids().add(bid);
+        auction.getBids().add(bid);
         bid.setValue(value.get());
         bid.setTime(new Date());
         bidDao.merge(bid);
@@ -136,10 +144,10 @@ public class RestService {
         return Response.ok(new Feedback("Content", 4, new Date())).build();
     }
 
-    private Response productNotFound(int id) {
+    private Response auctionNotFound(int id) {
         return Response
                 .status(Response.Status.NOT_FOUND)
-                .entity(String.format("Product %d does not exist.", id))
+                .entity(String.format("Auction %d does not exist.", id))
                 .type(MediaType.TEXT_PLAIN)
                 .build();
     }

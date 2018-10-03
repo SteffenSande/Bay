@@ -1,15 +1,14 @@
 package setup;
 
-import dao.AuctionDao;
 import dao.IDao;
-import entities.Bid;
-import entities.Feedback;
-import entities.Product;
+import entities.*;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -24,35 +23,72 @@ public class Seed {
     IDao<Product, Integer> productDao;
 
     @Inject
+    IDao<Auction, Integer> auctionDao;
+
+    @Inject
     IDao<Feedback, Integer> feedbackDao;
+
+    @Inject
+    IDao<User, Integer> userDao;
+
+    @PersistenceContext(unitName = Configuration.CURRENT_PERSISTENCE_UNIT)
+    EntityManager em;
 
     private Feedback feedback = new Feedback();
     private Product product = new Product();
+    private Auction auction = new Auction();
 
     @PostConstruct
     void init() {
-        System.out.println("1234");
-        System.out.println(bidDao);
-
         productDao.persist(product);
         feedbackDao.persist(feedback);
+        auctionDao.persist(auction);
+
+        auction.setProduct(product);
+        product.setAuction(auction);
+
+        auction.setBids(new ArrayList<>());
 
         product.setPublished(true);
         product.setPicturePath("Some url");
-        product.setProductCatalog(null);
-        product.setBids(new ArrayList<>());
 
         for (int i = 0; i < 4; i++) {
             Bid bid = new Bid();
-            product.getBids().add(bid);
-            bidDao.persist(bid);
-            bid.setProduct(product);
+            bid.setAuction(auction);
+            auction.getBids().add(bid);
             bid.setValue(i);
             bid.setTime(new Date());
+            bidDao.persist(bid);
         }
 
         feedback.setContent("Kult produkt");
         feedback.setRating(5.6);
         feedback.setTime(new Date());
+
+        User u = new User();
+        userDao.persist(u);
+        u.setUsername("MyName");
+        u.setBids(new ArrayList<>());
+
+        Bid b = new Bid();
+        b.setUser(u);
+        b.setAuction(auction);
+        b.setValue(250);
+        b.setTime(new Date());
+        bidDao.persist(b);
+
+        bidDao.flush();
+        userDao.flush();
+        auctionDao.flush();
+
+        System.out.println("Found bids:");
+        System.out.println(u.getBids());
+        System.out.println(auction.getBids());
+
+        em.createQuery("SELECT b FROM Bid b where b.user = :user")
+                .setParameter("user", u)
+                .getResultList()
+                .stream()
+                .forEach(System.out::println);
     }
 }

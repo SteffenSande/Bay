@@ -5,6 +5,7 @@ Auction application using java EE as a part of the course DAT250
 - [Relationship between](https://stackoverflow.com/questions/36032978/what-is-the-relationship-between-jersey-jaxb-jax-rs-moxy-jackson-eclipselin) XML, JSON, JAXB, Jackson and Moxy.
 - [Customizing JSON representation](http://blog.bdoughan.com/2013/06/moxy-is-new-default-json-binding.html)
 - [Persist both parent and childs](https://stackoverflow.com/a/14153341/4080590), like with Product and Bids.
+- [Prevent infinite loop](http://www.eclipse.org/eclipselink/documentation/2.4/moxy/shared_reference_relationships005.htm) in cyclic relationships when generating XML and JSON.
 
 ## Troubleshooting
 - There might be a problem with the default postgres driver for glassfish. Do the 3 first steps of [this guide](http://www.hildeberto.com/2010/02/creating-a-connection-pool-to-postgresql-on-glassfish-v3.html) to fix.

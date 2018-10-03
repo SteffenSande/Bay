@@ -14,14 +14,13 @@ import javax.persistence.OneToOne;
 public class ProductCatalog implements Serializable {
     private static final long serialVersionUID = 1L;
 
-
     @Id
     @GeneratedValue
     private int id;
 
 
     @OneToOne(mappedBy = "productCatalog")
-    private AppUser seller;
+    private User seller;
 
     @OneToMany(mappedBy = "productCatalog")
     private List<Product> products = new ArrayList<>();
@@ -34,11 +33,11 @@ public class ProductCatalog implements Serializable {
         this.products = products;
     }
 
-    public AppUser getSeller() {
+    public User getSeller() {
         return seller;
     }
 
-    public void setSeller(AppUser seller) {
+    public void setSeller(User seller) {
         this.seller = seller;
     }
 

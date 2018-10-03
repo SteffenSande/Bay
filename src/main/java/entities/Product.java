@@ -3,12 +3,15 @@ package entities;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 
 @Entity
 @XmlRootElement
+@XmlAccessorType(value = XmlAccessType.FIELD)
 public class Product implements Serializable {
     private static final long serialVersionUID = 1L;
     //Create elements ids automatically, incremented 1 by 1
@@ -25,18 +28,23 @@ public class Product implements Serializable {
     private ProductCatalog productCatalog;
 
     @XmlTransient
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Bid> bids;
-
-
-    @XmlTransient
     @OneToMany(mappedBy = "product")
     private List<Feature> features;
 
+    @XmlTransient
+    @OneToOne
+    private Auction auction;
 
     @Embedded
     private Description description;
 
+    public Auction getAuction() {
+        return auction;
+    }
+
+    public void setAuction(Auction auction) {
+        this.auction = auction;
+    }
 
     public Description getDescription() {
         return description;
@@ -82,32 +90,6 @@ public class Product implements Serializable {
         this.picturePath = picturePath;
     }
 
-    @XmlTransient
-    public List<Bid> getBids() {
-        return bids;
-    }
-
-    public Bid getBidById(int bidID) {
-        List<Bid> bids = this.getBids();
-        for (int i = 0; i < bids.size(); i++) {
-            if (bids.get(i).getId() == bidID) return bids.get(i);
-        }
-        return null;
-    }
-
-    public void setBids(List<Bid> bids) {
-        this.bids = bids;
-        //for (int i = 0; i < bids.size(); i++) {
-        //	setBid(bids.get(i));
-        //}
-    }
-
-    public void setBid(Bid bid) {
-        bid.setProduct(this);
-        this.bids.add(bid);
-
-    }
-
     public int getId() {
         return id;
     }
@@ -118,6 +100,13 @@ public class Product implements Serializable {
 
     @Override
     public String toString() {
-        return "Product id " + id + " published: " + published + "Bids: " + this.bids.toString() + "\n";
+        return "Product{" +
+                "id=" + id +
+                ", published=" + published +
+                ", picturePath='" + picturePath + '\'' +
+                ", productCatalog=" + productCatalog +
+                ", features=" + features +
+                ", description=" + description +
+                '}';
     }
 }
