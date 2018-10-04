@@ -10,9 +10,6 @@ import javax.persistence.Id;
 public class Address implements Serializable {
     private static final long serialVersionUID = 1L;
 
-
-    //Fields
-
     private String street;
     private String city;
     private int zip;

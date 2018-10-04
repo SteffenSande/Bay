@@ -14,7 +14,7 @@ public class Feature implements Serializable {
 
 
     //Kanskje bytte til enum og klassenavn til categori
-    private String feature;
+    private String value;
 
     @ManyToOne
     @JoinColumn(name = "product_fk")
@@ -30,11 +30,11 @@ public class Feature implements Serializable {
     }
 
     public String getFeature() {
-        return feature;
+        return value;
     }
 
     public void setFeature(String feature) {
-        this.feature = feature;
+        this.value = feature;
     }
 
     public int getId() {

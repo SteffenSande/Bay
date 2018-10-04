@@ -4,15 +4,19 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
-public class AppUser implements Serializable {
+@Table(name = "Appuser")
+public class User implements Serializable {
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue
     private int id;
 
-    @OneToMany(mappedBy = "appUser")
+    @XmlTransient
+    @OneToMany(mappedBy = "user")
     private List<Bid> bids;
 
     @OneToOne(mappedBy = "seller")
@@ -67,4 +71,14 @@ public class AppUser implements Serializable {
         this.username = username;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", bids=" + bids +
+                ", productCatalog=" + productCatalog +
+                ", contactInformation=" + contactInformation +
+                ", username='" + username + '\'' +
+                '}';
+    }
 }

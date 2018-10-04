@@ -4,13 +4,16 @@ package entities;
 import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @XmlRootElement
-@NamedQuery(name = "Bid.findAll", query = "SELECT b FROM Bid b")
+@XmlAccessorType(value = XmlAccessType.FIELD)
 public class Bid implements Serializable, Comparable<Bid> {
     private static final long serialVersionUID = 1L;
 
@@ -19,35 +22,31 @@ public class Bid implements Serializable, Comparable<Bid> {
     private int id;
 
 
-    public int getId() {
-        return id;
-    }
-
-
-	@ManyToOne
-    @JoinColumn(name = "product_fk")
-    private Product product;
-
+    @ManyToOne()
+    @XmlTransient
+    @JoinColumn(name = "auction_fk")
+    private Auction auction;
 
     @ManyToOne
-    @JoinColumn(name = "appUser_fk")
-    private AppUser appUser;
+    @XmlTransient
+    @JoinColumn(name = "user_fk")
+    private User user;
 
     private double value;
-
-    //Used in the RestService.java
-    public static final String FIND_ALL = "Bid.findAll";
-
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date time;
 
-    public Product getProduct() {
-        return product;
+    public Auction getAuction() {
+        return auction;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setAuction(Auction auction) {
+        this.auction = auction;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void setId(int id) {
@@ -70,9 +69,17 @@ public class Bid implements Serializable, Comparable<Bid> {
         this.time = time;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
-        return "Bid id " + id + " value: " + value + " time " + time.toString() + "\n";
+        return "Bid id " + id + " value: " + value + " time " + time + "\n";
     }
 
     @Override
