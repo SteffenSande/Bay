@@ -127,7 +127,7 @@ public class RestService {
         auction.getBids().add(bid);
         bid.setValue(value.get());
         bid.setTime(new Date());
-        bidDao.merge(bid);
+        bidDao.save(bid);
         bidDao.flush();
         URI bidUri = UriBuilder.fromUri(uri.getBaseUri()).path("auctions").path(Integer.toString(auctionId)).path("bids").path(Integer.toString(bid.getId())).build();
         return Response.created(bidUri).entity(bid).build();
