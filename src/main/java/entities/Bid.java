@@ -37,6 +37,15 @@ public class Bid implements Serializable, Comparable<Bid> {
     @Temporal(TemporalType.TIMESTAMP)
     private Date time;
 
+    public Bid() { }
+
+    public Bid(Auction auction, User user, double value, Date time) {
+        this.auction = auction;
+        this.user = user;
+        this.value = value;
+        this.time = time;
+    }
+
     public Auction getAuction() {
         return auction;
     }

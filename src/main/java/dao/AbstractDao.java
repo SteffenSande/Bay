@@ -30,7 +30,7 @@ public abstract class AbstractDao<T, IdType> implements IDao<T, IdType> {
     }
 
     @Override
-    public void merge(T t) {
+    public void save(T t) {
         em.merge(t);
     }
 
