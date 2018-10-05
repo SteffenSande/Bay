@@ -4,12 +4,10 @@ package entities;
 import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @XmlRootElement
@@ -91,8 +89,25 @@ public class Bid implements Serializable, Comparable<Bid> {
         return "Bid id " + id + " value: " + value + " time " + time + "\n";
     }
 
+    /**  */
     @Override
     public int compareTo(Bid o) {
-        return this.id - o.id;
+        return (value != o.value) ? Double.compare(value, o.value) : o.time.compareTo(time);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Bid bid = (Bid) o;
+        return Double.compare(bid.value, value) == 0 &&
+                Objects.equals(auction, bid.auction) &&
+                Objects.equals(user, bid.user) &&
+                Objects.equals(time, bid.time);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(auction, user, value, time);
     }
 }

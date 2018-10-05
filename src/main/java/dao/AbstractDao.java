@@ -2,8 +2,6 @@ package dao;
 
 import setup.Configuration;
 
-import javax.ejb.Stateless;
-import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.Optional;
@@ -30,8 +28,8 @@ public abstract class AbstractDao<T, IdType> implements IDao<T, IdType> {
     }
 
     @Override
-    public void save(T t) {
-        em.merge(t);
+    public T save(T t) {
+        return em.merge(t);
     }
 
     @Override

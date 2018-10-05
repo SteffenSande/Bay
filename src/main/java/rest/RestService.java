@@ -1,10 +1,12 @@
 package rest;
 
+import com.sun.tools.javac.util.Pair;
 import dao.IDao;
 import dto.Value;
 import entities.Auction;
 import entities.Bid;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -12,6 +14,7 @@ import javax.ws.rs.core.*;
 
 import entities.Feedback;
 import entities.Product;
+import services.IAuctionService;
 
 import java.net.URI;
 import java.util.Date;
@@ -37,6 +40,9 @@ public class RestService {
 
     @Context
     UriInfo uri;
+
+    @EJB
+    IAuctionService auctionService;
 
     /**
      * return a representation with references to all current auctions (ongoing/completed) in the system.
@@ -117,18 +123,8 @@ public class RestService {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response bidOnAProduct(@PathParam("productID") int auctionId, Value value) {
-        Optional<Auction> optionalAuction = auctionDao.find(auctionId);
-        if (!optionalAuction.isPresent()) {
-            return auctionNotFound(auctionId);
-        }
-        Auction auction = optionalAuction.get();
-        auctionDao.persist(auction);
-        Bid bid = new Bid();
-        auction.getBids().add(bid);
-        bid.setValue(value.get());
-        bid.setTime(new Date());
-        bidDao.save(bid);
-        bidDao.flush();
+        Pair<Bid, Boolean> p = auctionService.placeBid(auctionId, value.get());
+        Bid bid = p.fst;
         URI bidUri = UriBuilder.fromUri(uri.getBaseUri()).path("auctions").path(Integer.toString(auctionId)).path("bids").path(Integer.toString(bid.getId())).build();
         return Response.created(bidUri).entity(bid).build();
     }

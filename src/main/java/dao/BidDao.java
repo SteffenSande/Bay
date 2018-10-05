@@ -3,6 +3,7 @@ package dao;
 import entities.Bid;
 
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
