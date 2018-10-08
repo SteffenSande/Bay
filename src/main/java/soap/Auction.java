@@ -1,18 +1,15 @@
 package soap;
 
-import com.sun.tools.javac.util.Pair;
-import dao.AuctionDao;
-import dao.BidDao;
 import dao.IDao;
 import entities.Bid;
 import services.IAuctionService;
+import util.Pair;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.transaction.Transactional;
-import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -43,6 +40,6 @@ public class Auction {
     @Transactional
     public String placeBid(int auctionId, int value) {
         Pair<Bid, Boolean> p = auctionService.placeBid(auctionId, value);
-        return p.snd ? "This is currently the highest bid." : "Someone has bid higher";
+        return p.snd() ? "This is currently the highest bid." : "Someone has bid higher";
     }
 }

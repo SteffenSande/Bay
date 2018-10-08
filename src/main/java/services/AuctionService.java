@@ -1,9 +1,9 @@
 package services;
 
-import com.sun.tools.javac.util.Pair;
 import dao.IDao;
 import entities.Auction;
 import entities.Bid;
+import util.Pair;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;

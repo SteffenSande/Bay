@@ -1,6 +1,5 @@
 package rest;
 
-import com.sun.tools.javac.util.Pair;
 import dao.IDao;
 import dto.Value;
 import entities.Auction;
@@ -15,6 +14,7 @@ import javax.ws.rs.core.*;
 import entities.Feedback;
 import entities.Product;
 import services.IAuctionService;
+import util.Pair;
 
 import java.net.URI;
 import java.util.Date;
@@ -124,7 +124,7 @@ public class RestService {
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response bidOnAProduct(@PathParam("productID") int auctionId, Value value) {
         Pair<Bid, Boolean> p = auctionService.placeBid(auctionId, value.get());
-        Bid bid = p.fst;
+        Bid bid = p.fst();
         URI bidUri = UriBuilder.fromUri(uri.getBaseUri()).path("auctions").path(Integer.toString(auctionId)).path("bids").path(Integer.toString(bid.getId())).build();
         return Response.created(bidUri).entity(bid).build();
     }

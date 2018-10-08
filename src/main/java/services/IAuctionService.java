@@ -1,7 +1,7 @@
 package services;
 
-import com.sun.tools.javac.util.Pair;
 import entities.Bid;
+import util.Pair;
 
 /**
  * @return (the created bid, is this bid the highest)
