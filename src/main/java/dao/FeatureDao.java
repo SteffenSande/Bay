@@ -1,20 +1,19 @@
 package dao;
 
-import entities.Feature;
+import entities.PracticalInfo;
 
 import javax.enterprise.context.RequestScoped;
-import javax.persistence.Query;
 import java.util.List;
 
 @RequestScoped
-public class FeatureDao extends AbstractDao<Feature, Integer> {
+public class FeatureDao extends AbstractDao<PracticalInfo, Integer> {
 
     public FeatureDao() {
-        super(Feature.class);
+        super(PracticalInfo.class);
     }
 
     @Override
-    public List<Feature> getAll() {
-        return em.createQuery("SELECT item FROM Feature item", tClass).getResultList();
+    public List<PracticalInfo> getAll() {
+        return em.createQuery("SELECT item FROM PracticalInfo item", tClass).getResultList();
     }
 }

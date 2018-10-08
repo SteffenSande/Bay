@@ -1,8 +1,6 @@
 package entities;
 
-import java.util.List;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 
 import javax.persistence.*;
@@ -11,18 +9,18 @@ import javax.persistence.*;
 public class Description implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private String title;
+    private String name;
     private double rating;
     @Temporal(TemporalType.DATE)
     private Date endDate;
 
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return this.name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public double getRating() {

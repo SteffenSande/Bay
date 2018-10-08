@@ -1,6 +1,7 @@
 package setup;
 
 import dao.IDao;
+import entities.noe;
 import entities.*;
 
 import javax.annotation.PostConstruct;
@@ -12,7 +13,7 @@ import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.Date;
 
-@Startup
+//@Startup
 @Singleton
 public class Seed {
 
@@ -29,6 +30,8 @@ public class Seed {
     IDao<Feedback, Integer> feedbackDao;
 
     @Inject
+    IDao<ProductCatalog, Integer> productCatalogDao;
+    @Inject
     IDao<User, Integer> userDao;
 
     @PersistenceContext(unitName = Configuration.CURRENT_PERSISTENCE_UNIT)
@@ -37,12 +40,22 @@ public class Seed {
     private Feedback feedback = new Feedback();
     private Product product = new Product();
     private Auction auction = new Auction();
+    private ProductCatalog productCatalog = new ProductCatalog();
+    private User seller = new User();
+    private noe ne= new noe();
 
     @PostConstruct
     void init() {
         productDao.persist(product);
-        feedbackDao.persist(feedback);
         auctionDao.persist(auction);
+        userDao.persist(seller);
+        seller.setUsername("Bob");
+        seller.addProductCatalog(productCatalog);
+        productDao.save(product);
+        productDao.flush();
+        product.setFeedback(feedback);
+        feedbackDao.persist(feedback);
+        productCatalogDao.persist(productCatalog);
 
         auction.setProduct(product);
         product.setAuction(auction);
@@ -90,5 +103,9 @@ public class Seed {
                 .getResultList()
                 .stream()
                 .forEach(System.out::println);
+
+        ne.setHei("hei");
+        em.persist(ne);
+
     }
 }

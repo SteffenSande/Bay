@@ -86,6 +86,14 @@ public class Bid implements Serializable, Comparable<Bid> {
         this.user = user;
     }
 
+    public void addAuction(Auction auction){
+        auction.addBid(this);
+    }
+
+    public void removeAuction(Auction auction) {
+        auction.removeBid(this);
+    }
+
     @Override
     public String toString() {
         return "Bid id " + id + " value: " + value + " time " + time + "\n";

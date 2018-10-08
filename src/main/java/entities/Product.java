@@ -1,12 +1,11 @@
 package entities;
 
+import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
+
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.*;
 
 
 @Entity
@@ -22,14 +21,16 @@ public class Product implements Serializable {
     private boolean published;
     private String picturePath;
 
-    @XmlTransient
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "productCatalog_fk")
+    @XmlElement
+    @XmlInverseReference(mappedBy = "productCatalog")
     private ProductCatalog productCatalog;
 
     @XmlTransient
     @OneToMany(mappedBy = "product")
-    private List<Feature> features;
+    private List<PracticalInfo> features;
 
     @XmlTransient
     @OneToOne
@@ -37,6 +38,10 @@ public class Product implements Serializable {
 
     @Embedded
     private Description description;
+
+    @OneToOne(mappedBy = "product")
+    private Feedback feedback;
+
 
     public Auction getAuction() {
         return auction;
@@ -54,18 +59,30 @@ public class Product implements Serializable {
         this.description = description;
     }
 
-    public List<Feature> getFeatures() {
+    public List<PracticalInfo> getFeatures() {
         return features;
     }
 
-    public void setFeatures(List<Feature> features) {
+    public void setFeatures(List<PracticalInfo> features) {
         this.features = features;
         for (int i = 0; i < features.size(); i++) {
             this.features.get(i).setProduct(this);
         }
     }
 
-    //Make some entityy relations between this object and these variable
+    public Feedback getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(Feedback feedback) {
+        this.feedback = feedback;
+    }
+
+    public void addFeedback(Feedback feedback) {
+        this.feedback.addProduct(this);
+    }
+
+
     public ProductCatalog getProductCatalog() {
         return productCatalog;
     }
@@ -97,6 +114,7 @@ public class Product implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
+
 
     @Override
     public String toString() {

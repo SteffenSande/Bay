@@ -1,6 +1,9 @@
 package entities;
 
+import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -19,8 +22,17 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user")
     private List<Bid> bids;
 
-    @OneToOne(mappedBy = "seller")
+
+    @OneToOne(mappedBy = "seller", cascade = CascadeType.ALL)
+    @XmlInverseReference(mappedBy = "seller")
     private ProductCatalog productCatalog;
+
+/*
+    @XmlTransient
+    @OneToMany(mappedBy = "user")
+    private List<Feedback> feedbacks;
+*/
+
 
 
     @Embedded
@@ -39,6 +51,7 @@ public class User implements Serializable {
 
 
     public ProductCatalog getProductCatalog() {
+
         return productCatalog;
     }
 
@@ -70,6 +83,17 @@ public class User implements Serializable {
     public void setUsername(String username) {
         this.username = username;
     }
+
+    public void addProductCatalog(ProductCatalog pc){
+        this.productCatalog = pc;
+        pc.setSeller(this);
+    }
+
+    public void removeProductCatalog(){
+        this.productCatalog.setSeller(null);
+        this.productCatalog = null;
+    }
+
 
     @Override
     public String toString() {

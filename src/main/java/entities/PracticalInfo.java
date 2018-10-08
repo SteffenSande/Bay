@@ -5,7 +5,7 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
-public class Feature implements Serializable {
+public class PracticalInfo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -20,6 +20,7 @@ public class Feature implements Serializable {
     @JoinColumn(name = "product_fk")
     private Product product;
 
+    
 
     public Product getProduct() {
         return product;
