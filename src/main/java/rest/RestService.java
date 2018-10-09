@@ -124,17 +124,17 @@ public class RestService {
         URI bidUri = UriBuilder.fromUri(uri.getBaseUri()).path("auctions").path(Integer.toString(auctionId)).path("bids").path(Integer.toString(bid.getId())).build();
         return Response.created(bidUri).entity(bid).build();
     }
-/*
-    *//**
+
+    /**
      * This is for test purposes only, as it doesn't use AuctionDao. When everyone is comfortable with testing,
      * this method can be removed, though it wont do any harm.
-     *//*
+     */
     @GET
     @Path("/testFeedback")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response testFeedback() {
         return Response.ok(new Feedback("Content", 4, new Date())).build();
-    }*/
+    }
 
     private Response auctionNotFound(int id) {
         return Response

@@ -39,6 +39,12 @@ public class Feedback implements Serializable {
 
     }
 
+    public Feedback(String content, double rating, Date time) {
+        this.content = content;
+        this.rating = rating;
+        this.time = time;
+    }
+
     public int getId() {
         return id;
     }
