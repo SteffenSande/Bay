@@ -34,6 +34,10 @@ public class ProductCatalog implements Serializable {
         this.products = products;
     }
 
+    public void addProduct(Product product) {
+        this.products.add(product);
+    }
+
     public User getSeller() {
         return seller;
     }

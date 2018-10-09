@@ -1,8 +1,6 @@
 package services;
 
-import entities.Bid;
-import entities.Feedback;
-import entities.Product;
+import entities.*;
 import util.Pair;
 
 /**
@@ -10,6 +8,8 @@ import util.Pair;
  */
 public interface IAuctionService {
     Pair<Bid, Boolean> placeBid(int auctionId, int value);
-    Pair<Feedback, Boolean> placeFeedback(int produktId, String content, Double rating, int userId);
+    Pair<Feedback, Boolean> placeFeedback(int productId, String content, Double rating, int userId);
+    Pair<Auction, Boolean> publishAuction(String picturePath, Description description, String extras, Category category, int userId);
+    Pair<User, Boolean> registerUser(String username, String name, String phone, String email, String street, String city, int zip);
 }
 

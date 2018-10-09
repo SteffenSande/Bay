@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BidTest {
 
+
     @Test
     void compareToDifferentValues() {
         Bid lowBid = new Bid(null, null, 10, new Date());
@@ -26,6 +27,8 @@ class BidTest {
 
         bidIsFirstAfterSorting(earlyBid, lateBid, lateBid);
     }
+
+
 
     private void bidIsFirstAfterSorting(Bid a, Bid b, Bid expectedFirst) {
         List<Bid> l1 = Arrays.asList(a, b);
