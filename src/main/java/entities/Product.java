@@ -27,9 +27,7 @@ public class Product implements Serializable {
     @JoinColumn(name = "productCatalog_fk")
     private ProductCatalog productCatalog;
 
-    @XmlTransient
-    @OneToMany(mappedBy = "product")
-    private List<Feature> features;
+    private String extras;
 
     @XmlTransient
     @OneToOne
@@ -52,17 +50,6 @@ public class Product implements Serializable {
 
     public void setDescription(Description description) {
         this.description = description;
-    }
-
-    public List<Feature> getFeatures() {
-        return features;
-    }
-
-    public void setFeatures(List<Feature> features) {
-        this.features = features;
-        for (int i = 0; i < features.size(); i++) {
-            this.features.get(i).setProduct(this);
-        }
     }
 
     //Make some entityy relations between this object and these variable
@@ -105,8 +92,16 @@ public class Product implements Serializable {
                 ", published=" + published +
                 ", picturePath='" + picturePath + '\'' +
                 ", productCatalog=" + productCatalog +
-                ", features=" + features +
+                ", extras=" + extras +
                 ", description=" + description +
                 '}';
+    }
+
+    public String getExtras() {
+        return extras;
+    }
+
+    public void setExtras(String extras) {
+        this.extras = extras;
     }
 }
