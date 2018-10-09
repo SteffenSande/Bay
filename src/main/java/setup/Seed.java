@@ -2,6 +2,7 @@ package setup;
 
 import dao.IDao;
 import entities.*;
+import sun.security.krb5.internal.crypto.Des;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
@@ -11,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Startup
 @Singleton
@@ -31,64 +33,128 @@ public class Seed {
     @Inject
     IDao<User, Integer> userDao;
 
+    @Inject
+    IDao <ProductCatalog, Integer> productCatalogDao;
+
+
     @PersistenceContext(unitName = Configuration.CURRENT_PERSISTENCE_UNIT)
     EntityManager em;
 
-    private Feedback feedback = new Feedback();
-    private Product product = new Product();
-    private Auction auction = new Auction();
+
 
     @PostConstruct
     void init() {
-        productDao.persist(product);
+
+        User bidder = createUser("Arvid");
+        bidder.addProductCatalog(createProductCatalog());
+        User seller = createUser("Berit");
+        seller.addProductCatalog(createProductCatalog());
+
+
+
+        Auction auction = createAuction();
+        Product product = createProduct();
+        auction.addProduct(product);
+        List<Bid> bids = createBids();
+
+
+        for (int i = 0; i < bids.size(); i++) {
+            bidder.addBid(bids.get(i));
+            auction.addBid(bids.get(i));
+        }
+
+        Feedback feed = createFeedback();
+        bidder.addFeedback(feed);
+        product.addFeedback(feed);
+
+        double rating = 0;
+        for (int i = 0; i < product.getFeedbacks().size(); i++) {
+            rating += product.getFeedbacks().get(i).getRating();
+        }
+        rating /= product.getFeedbacks().size();
+        product.setDescription(createDescription(rating));
+        product.setCategory(Category.SPORT);
+
+
+    }
+
+
+    ProductCatalog createProductCatalog (){
+        ProductCatalog productCatalog = new ProductCatalog();
+        productCatalogDao.persist(productCatalog);
+        return productCatalog;
+    }
+
+
+    Description createDescription(double rating){
+        Description description = new Description();
+        description.setRating(rating);
+        description.setEndDate(new Date());
+        description.setTitle("Kult produkt");
+        return description;
+    }
+
+    Feedback createFeedback(){
+        Feedback feedback = new Feedback();
         feedbackDao.persist(feedback);
+        feedback.setContent("Superfeedback");
+        feedback.setRating(5);
+        feedback.setTime(new Date());
+        return feedback;
+    }
+
+
+    Auction createAuction(){
+        Auction auction = new Auction();
         auctionDao.persist(auction);
+        return auction;
+    }
 
-        auction.setProduct(product);
-        product.setAuction(auction);
-
-        auction.setBids(new ArrayList<>());
-
+    Product createProduct(){
+        Product product = new Product();
+        productDao.persist(product);
         product.setPublished(true);
         product.setPicturePath("Some url");
+        return product;
+    }
 
+    List<Bid> createBids (){
+        List <Bid> bids = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             Bid bid = new Bid();
-            bid.setAuction(auction);
-            auction.getBids().add(bid);
             bid.setValue(i);
             bid.setTime(new Date());
             bidDao.persist(bid);
+            bids.add(bid);
         }
+        return bids;
+    }
 
-        feedback.setContent("Kult produkt");
-        feedback.setRating(5.6);
-        feedback.setTime(new Date());
 
-        User u = new User();
-        userDao.persist(u);
-        u.setUsername("MyName");
-        u.setBids(new ArrayList<>());
 
-        Bid b = new Bid();
-        b.setUser(u);
-        b.setAuction(auction);
-        b.setValue(250);
-        b.setTime(new Date());
-        bidDao.persist(b);
+    User createUser(String name){
+        User user = new User();
+        userDao.persist(user);
+        user.setUsername(name);
+        user.setContactInformation(createContactinformation(name));
+        return user;
+    }
 
-        bidDao.flush();
-        userDao.flush();
-        auctionDao.flush();
 
-        System.out.println("Found bids:");
-        System.out.println(u.getBids());
-        System.out.println(auction.getBids());
+    ContactInformation createContactinformation(String name){
+        ContactInformation ci = new ContactInformation();
+        ci.setName(name);
+        ci.setEmail(name + "Sin@epost.no");
+        ci.setPhone("12345678");
+        ci.setAddress(createAdress());
+        return ci;
+    }
 
-        em.createQuery("SELECT b FROM Bid b where b.user = :user")
-                .setParameter("user", u)
-                .getResultList()
-                .stream()
-                .forEach(System.out::println);
+    Address createAdress(){
+        Address ad = new Address();
+        ad.setZip(1234);
+        ad.setStreet("Ene gata uten regn");
+        ad.setCity("Bergen");
+        return ad;
     }
 }

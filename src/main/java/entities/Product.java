@@ -1,12 +1,12 @@
 package entities;
 
+import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.*;
 
 
 @Entity
@@ -16,21 +16,27 @@ public class Product implements Serializable {
     private static final long serialVersionUID = 1L;
     //Create elements ids automatically, incremented 1 by 1
     @Id
-    @GeneratedValue
     private int id;
 
     private boolean published;
     private String picturePath;
-
-    @XmlTransient
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "productCatalog_fk")
-    private ProductCatalog productCatalog;
-
     private String extras;
 
-    @XmlTransient
+    @Enumerated
+    private Category category;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "productCatalog_fk")
+    @XmlInverseReference(mappedBy = "product")
+    private ProductCatalog productCatalog;
+
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = { CascadeType.ALL})
+    private List<Feedback> feedbacks;
+
     @OneToOne
+    @MapsId
+    @XmlInverseReference(mappedBy = "product")
     private Auction auction;
 
     @Embedded
@@ -52,9 +58,16 @@ public class Product implements Serializable {
         this.description = description;
     }
 
-    //Make some entityy relations between this object and these variable
     public ProductCatalog getProductCatalog() {
         return productCatalog;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public void setProductCatalog(ProductCatalog productCatalog) {
@@ -104,4 +117,36 @@ public class Product implements Serializable {
     public void setExtras(String extras) {
         this.extras = extras;
     }
+
+    public void addAuction(Auction auction) {
+       this.auction = auction;
+       auction.setProduct(this);
+    }
+
+    public void removeAuction(Auction auction) {
+        this.auction = null;
+        auction.setProduct(null);
+    }
+
+    public List<Feedback> getFeedbacks() {
+        return feedbacks;
+    }
+
+    public void setFeedbacks(List<Feedback> feedbacks) {
+        this.feedbacks = feedbacks;
+    }
+
+    public void addFeedback(Feedback feedback){
+        if (this.getFeedbacks() == null)
+            this.feedbacks = new ArrayList<>();
+        this.feedbacks.add(feedback);
+        feedback.setProduct(this);
+    }
+
+    public void removeFeedback(Feedback feedback){
+        this.feedbacks.remove(feedback);
+        feedback.setProduct(null);
+
+    }
+
 }

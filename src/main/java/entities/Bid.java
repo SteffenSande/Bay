@@ -20,14 +20,16 @@ public class Bid implements Serializable, Comparable<Bid> {
     private int id;
 
 
-    @ManyToOne()
-    @XmlTransient
+    @ManyToOne
     @JoinColumn(name = "auction_fk")
+    @XmlInverseReference(mappedBy = "bids")
+    @XmlElement
     private Auction auction;
 
     @ManyToOne
-    @XmlTransient
     @JoinColumn(name = "user_fk")
+    @XmlInverseReference(mappedBy = "bids")
+    @XmlElement
     private User user;
 
     private double value;
@@ -83,6 +85,7 @@ public class Bid implements Serializable, Comparable<Bid> {
     public void setUser(User user) {
         this.user = user;
     }
+
 
     @Override
     public String toString() {
