@@ -42,7 +42,7 @@ public class Tests extends JerseyTest {
         }
     }
 
-    @Test
+   /* @Test
     public void feedBackXML() {
         testFeedback(MediaType.APPLICATION_XML);
     }
@@ -52,7 +52,7 @@ public class Tests extends JerseyTest {
         Response response = target("/auctions/testFeedback").request(MediaType.APPLICATION_JSON).get();
         String result = response.readEntity(String.class);
         assertEquals('{', result.charAt(0)); // Then its json and not xml
-    }
+    }*/
 
     private <T> T convertToObject(String s, Class<T> type, String mediaType) throws JAXBException {
         Map<String, Object> properties = new HashMap<>(1);
