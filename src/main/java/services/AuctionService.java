@@ -75,6 +75,7 @@ public class AuctionService implements IAuctionService {
     /**
      * Create new auction
      */
+    @Override
     public Pair<Auction, Boolean> publishAuction(String picturePath, Description description, String extras, Category category, int userId) {
         User user = userDao.find(userId).orElseThrow(NoSuchElementException::new);
         Product product = new Product();
@@ -98,8 +99,22 @@ public class AuctionService implements IAuctionService {
     }
 
     /**
+     * Delete product from catalog
+     */
+    @Override
+    public void  deleteProduct(int pid, int userId) {
+        //Må sjekke om bruker med userId er innlogget, slik at vedkommende kan slette fra sin produkt katalog
+        //Vet ikke helt hvordan vi hånderer hvilken userId som er innlogget
+        User user = userDao.find(userId).orElseThrow(NoSuchElementException::new);
+
+        Product product = productDao.find(pid).orElseThrow(NoSuchElementException::new);
+        product.removeAuction(product.getAuction());
+    }
+
+    /**
      * Register new user
      */
+    @Override
     public Pair<User, Boolean> registerUser(String username, String name, String phone, String email, String street, String city, int zip) {
 
         ContactInformation contactInformation = new ContactInformation();
@@ -120,6 +135,8 @@ public class AuctionService implements IAuctionService {
         ProductCatalog productCatalog = new ProductCatalog();
         user.setProductCatalog(productCatalog);
         return new Pair<>(user, true);
+        //Regner med vi ikke skal sjekke form-input her? Er vel en frontend. Kan vel evt. sjekke om brukeren er registrert i databasen da.
+        //return new Pair<>(user, isInputValid(user));
     }
 
 
