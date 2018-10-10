@@ -83,9 +83,9 @@ class AuctionServiceTest {
 
         auctionService.placeFeedback(0, "", 5.0, 0);
 
+        // KA: Hva er poenget med denne testen?
         verify(mockedAuction).getBids();
         verify(mockedProduct).getAuction();
         verify(mockedUser).getBids();
-
     }
 }
