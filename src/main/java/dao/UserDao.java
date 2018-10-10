@@ -6,7 +6,7 @@ import javax.enterprise.context.RequestScoped;
 import java.util.List;
 
 @RequestScoped
-public class UserDao extends AbstractDao<User, Integer> {
+public class UserDao extends AbstractDao<User, String> {
 
     public UserDao() {
         super(User.class);

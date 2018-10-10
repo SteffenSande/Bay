@@ -1,8 +1,6 @@
 package services;
 
-import entities.Bid;
-import entities.Feedback;
-import entities.Product;
+import entities.*;
 import util.Pair;
 
 import java.util.NoSuchElementException;
@@ -17,12 +15,10 @@ public interface IAuctionService {
      */
     Pair<Bid, Boolean> placeBid(int auctionId, int value);
 
+    Feedback placeFeedback(int productId, String content, Double rating, String username);
 
-    /**
-     * Places a feedback on an auction
-     *
-     * @return
-     */
-    Pair<Feedback, Boolean> placeFeedback(int produktId, String content, Double rating, int userId);
+    void deleteProduct(int pid, String username);
+
+    Auction publishNewAuction(String picturePath, Description description, String extras, Category category, String username);
 }
 

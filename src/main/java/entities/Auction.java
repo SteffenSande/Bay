@@ -18,10 +18,10 @@ public class Auction {
     @GeneratedValue
     private int id;
 
-    @OneToMany(mappedBy = "auction", fetch = FetchType.EAGER, cascade = { CascadeType.ALL})
+    @OneToMany(mappedBy = "auction", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     private List<Bid> bids;
 
-    @OneToOne(mappedBy = "auction", fetch = FetchType.EAGER, cascade = { CascadeType.ALL})
+    @OneToOne(mappedBy = "auction", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     private Product product;
 
     public int getId() {
@@ -48,14 +48,14 @@ public class Auction {
         this.product = product;
     }
 
-    public void addBid(Bid bid){
+    public void addBid(Bid bid) {
         if (this.bids == null)
             this.bids = new ArrayList<>();
         this.bids.add(bid);
         bid.setAuction(this);
     }
 
-    public void removeBid(Bid bid){
+    public void removeBid(Bid bid) {
         this.bids.remove(bid);
         bid.setAuction(null);
     }

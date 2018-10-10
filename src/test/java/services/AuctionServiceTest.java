@@ -7,10 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Matchers;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -32,60 +29,49 @@ class AuctionServiceTest {
     }
 
     @Test
-    void placeBidThrowsOnIllegalAuctionId() {
-        when(auctionService.auctionDao.find(Matchers.anyInt()))
-                .thenReturn(Optional.empty());
-        assertThrows(NoSuchElementException.class, () -> auctionService.placeBid(0, 0));
-    }
-
-    @Test
     void placeBidStoresBid() {
-        Auction mockedAuction = mock(Auction.class);
-        when(auctionService.auctionDao.find(Matchers.anyInt()))
-                .thenReturn(Optional.of(mockedAuction));
+        Auction auction = new Auction();
+        auction.setBids(new ArrayList<>());
+        when(auctionService.auctionDao.findOrThrow(Matchers.anyInt())).thenReturn(auction);
         auctionService.placeBid(1, 10);
 
         ArgumentCaptor<Bid> bid = ArgumentCaptor.forClass(Bid.class);
         verify(auctionService.bidDao).save(bid.capture());
-        assertEquals(mockedAuction, bid.getValue().getAuction());
+        assertEquals(auction, bid.getValue().getAuction());
         assertEquals(10, bid.getValue().getValue());
     }
 
     @Test
-    void placeFeedbackThrowsOnIllegalAuctionId() {
-        Auction mockedAuction = mock(Auction.class);
-        Product mockedProduct = mock(Product.class);
-        User mockedUser = mock(User.class);
+    void placeFeedbackWithoutWinningThrows() {
+        Auction auction = new Auction();
+        auction.setBids(new ArrayList<>());
+        Product product = new Product();
+        product.setAuction(auction);
 
-        when(auctionService.auctionDao.find(Matchers.anyInt()))
-                .thenReturn(Optional.empty());
-        when(auctionService.userDao.find(Matchers.anyInt()))
-                .thenReturn(Optional.empty());
-        when(auctionService.productDao.find(Matchers.anyInt()))
-                .thenReturn(Optional.empty());
+        when(auctionService.productDao.findOrThrow(Matchers.anyInt())).thenReturn(product);
 
-        assertThrows(NoSuchElementException.class, () -> auctionService.placeFeedback(0, "", 5.0, 0 ));
+        assertThrows(IllegalArgumentException.class, () -> auctionService.placeFeedback(0, "", 0.0, ""));
     }
 
     @Test
     void placeFeedbackStoresFeedback() {
-        Auction mockedAuction = mock(Auction.class);
-        Product mockedProduct = mock(Product.class);
-        User mockedUser = mock(User.class);
+        Auction auction = new Auction();
+        Product product = new Product();
+        product.setDescription(new Description());
+        product.setAuction(auction);
+        User user = new User();
+        user.setUsername("username");
+        auction.setBids(Arrays.asList(new Bid(auction, user, 200, new Date())));
 
+        when(auctionService.userDao.findOrThrow(Matchers.anyString())).thenReturn(user);
+        when(auctionService.productDao.findOrThrow(Matchers.anyInt())).thenReturn(product);
 
-        when(auctionService.userDao.find(Matchers.anyInt()))
-                .thenReturn(Optional.of(mockedUser));
-        when(auctionService.productDao.find(Matchers.anyInt()))
-                .thenReturn(Optional.of(mockedProduct));
-        when(mockedProduct.getAuction())
-                .thenReturn(mockedAuction);
+        auctionService.placeFeedback(0, "some content", 5.0, "");
 
-        auctionService.placeFeedback(0, "", 5.0, 0);
+        ArgumentCaptor<Feedback> arg = ArgumentCaptor.forClass(Feedback.class);
+        verify(auctionService.feedbackDao).persist(arg.capture());
+        Feedback feedback = arg.getValue();
 
-        // KA: Hva er poenget med denne testen?
-        verify(mockedAuction).getBids();
-        verify(mockedProduct).getAuction();
-        verify(mockedUser).getBids();
+        assertEquals("some content", feedback.getContent());
     }
 }

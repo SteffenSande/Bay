@@ -4,6 +4,7 @@ import setup.Configuration;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 public abstract class AbstractDao<T, IdType> implements IDao<T, IdType> {
@@ -20,6 +21,11 @@ public abstract class AbstractDao<T, IdType> implements IDao<T, IdType> {
     @Override
     public Optional<T> find(IdType id) {
         return Optional.ofNullable(em.find(tClass, id));
+    }
+
+    @Override
+    public T findOrThrow(IdType id) {
+        return find(id).orElseThrow(() -> new NoSuchElementException(tClass.getName() + " with id " + id.toString() + " does not exist."));
     }
 
     @Override

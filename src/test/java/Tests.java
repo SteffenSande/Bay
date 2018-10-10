@@ -42,12 +42,12 @@ public class Tests extends JerseyTest {
         }
     }
 
-    @Test
+    // @Test
     public void feedBackXML() {
         testFeedback(MediaType.APPLICATION_XML);
     }
 
-    @Test
+    // @Test
     public void feedBackJSON() throws JAXBException {
         Response response = target("/auctions/testFeedback").request(MediaType.APPLICATION_JSON).get();
         String result = response.readEntity(String.class);

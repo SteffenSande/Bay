@@ -31,15 +31,14 @@ public class Seed {
     IDao<Feedback, Integer> feedbackDao;
 
     @Inject
-    IDao<User, Integer> userDao;
+    IDao<User, String> userDao;
 
     @Inject
-    IDao <ProductCatalog, Integer> productCatalogDao;
+    IDao<ProductCatalog, Integer> productCatalogDao;
 
 
     @PersistenceContext(unitName = Configuration.CURRENT_PERSISTENCE_UNIT)
     EntityManager em;
-
 
 
     @PostConstruct
@@ -49,7 +48,6 @@ public class Seed {
         bidder.addProductCatalog(createProductCatalog());
         User seller = createUser("Berit");
         seller.addProductCatalog(createProductCatalog());
-
 
 
         Auction auction = createAuction();
@@ -79,14 +77,14 @@ public class Seed {
     }
 
 
-    ProductCatalog createProductCatalog (){
+    ProductCatalog createProductCatalog() {
         ProductCatalog productCatalog = new ProductCatalog();
         productCatalogDao.persist(productCatalog);
         return productCatalog;
     }
 
 
-    Description createDescription(double rating){
+    Description createDescription(double rating) {
         Description description = new Description();
         description.setRating(rating);
         description.setEndDate(new Date());
@@ -94,7 +92,7 @@ public class Seed {
         return description;
     }
 
-    Feedback createFeedback(){
+    Feedback createFeedback() {
         Feedback feedback = new Feedback();
         feedbackDao.persist(feedback);
         feedback.setContent("Superfeedback");
@@ -104,13 +102,13 @@ public class Seed {
     }
 
 
-    Auction createAuction(){
+    Auction createAuction() {
         Auction auction = new Auction();
         auctionDao.persist(auction);
         return auction;
     }
 
-    Product createProduct(){
+    Product createProduct() {
         Product product = new Product();
         productDao.persist(product);
         product.setPublished(true);
@@ -118,8 +116,8 @@ public class Seed {
         return product;
     }
 
-    List<Bid> createBids (){
-        List <Bid> bids = new ArrayList<>();
+    List<Bid> createBids() {
+        List<Bid> bids = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             Bid bid = new Bid();
             bid.setValue(i);
@@ -131,8 +129,7 @@ public class Seed {
     }
 
 
-
-    User createUser(String name){
+    User createUser(String name) {
         User user = new User();
         userDao.persist(user);
         user.setUsername(name);
@@ -141,7 +138,7 @@ public class Seed {
     }
 
 
-    ContactInformation createContactinformation(String name){
+    ContactInformation createContactinformation(String name) {
         ContactInformation ci = new ContactInformation();
         ci.setName(name);
         ci.setEmail(name + "Sin@epost.no");
@@ -150,7 +147,7 @@ public class Seed {
         return ci;
     }
 
-    Address createAdress(){
+    Address createAdress() {
         Address ad = new Address();
         ad.setZip(1234);
         ad.setStreet("Ene gata uten regn");

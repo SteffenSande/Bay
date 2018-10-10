@@ -19,6 +19,16 @@ public class ContactInformation implements Serializable {
     @Embedded
     private Address address;
 
+    public ContactInformation() {
+    }
+
+    public ContactInformation(String name, String phone, String email, Address address) {
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+    }
+
     public Address getAddress() {
         return address;
     }

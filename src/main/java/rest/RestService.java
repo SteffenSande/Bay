@@ -48,7 +48,8 @@ public class RestService {
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response getAuctions() {
         List<Auction> auctions = auctionDao.getAll();
-        return Response.ok().entity(new GenericEntity<List<Auction>>(auctions) {}).build();
+        return Response.ok().entity(new GenericEntity<List<Auction>>(auctions) {
+        }).build();
     }
 
     /**
@@ -82,7 +83,8 @@ public class RestService {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response showBidsOnProduct(@PathParam("productID") int id) {
         return auctionDao.find(id)
-                .map(p -> Response.ok().entity(new GenericEntity<List<Bid>>(p.getBids()){}).build())
+                .map(p -> Response.ok().entity(new GenericEntity<List<Bid>>(p.getBids()) {
+                }).build())
                 .orElse(auctionNotFound(id));
     }
 

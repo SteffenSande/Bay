@@ -15,8 +15,7 @@ public class ProductCatalog implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    private int id;
-
+    private String id;
 
     @OneToOne
     @MapsId
@@ -34,6 +33,10 @@ public class ProductCatalog implements Serializable {
         this.products = products;
     }
 
+    public void addProduct(Product product) {
+        this.products.add(product);
+    }
+
     public User getSeller() {
         return seller;
     }
@@ -42,12 +45,7 @@ public class ProductCatalog implements Serializable {
         this.seller = seller;
     }
 
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 }

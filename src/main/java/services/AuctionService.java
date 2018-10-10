@@ -24,14 +24,15 @@ public class AuctionService implements IAuctionService {
     IDao<Product, Integer> productDao;
 
     @Inject
-    IDao<User, Integer> userDao;
+    IDao<User, String> userDao;
 
     @Override
     public Pair<Bid, Boolean> placeBid(int auctionId, int value) {
-        entities.Auction auction = auctionDao.find(auctionId).orElseThrow(NoSuchElementException::new);
+        entities.Auction auction = auctionDao.findOrThrow(auctionId);
 
-        //Dette er ikke helt riktig
-        //Bid gir egentlig ikke mening uten user, men det legger vi til når vi har innlogging
+        // TODO
+        // Dette er ikke helt riktig
+        // Bid gir egentlig ikke mening uten user, men det legger vi til når vi har innlogging
 
         Bid bid = new Bid(auction, null, value, new Date());
         auction.getBids().add(bid);
@@ -41,38 +42,55 @@ public class AuctionService implements IAuctionService {
     }
 
     @Override
-    public Pair<Feedback, Boolean> placeFeedback(int produktId, String content, Double rating, int userId) {
-        Product product = productDao.find(produktId).orElseThrow(NoSuchElementException::new);
-        User user = userDao.find(userId).orElseThrow(NoSuchElementException::new);
+    public Feedback placeFeedback(int productId, String content, Double rating, String username) {
+        Product product = productDao.findOrThrow(productId);
+        User user = userDao.findOrThrow(username);
 
-        Bid highestBid = this.getHighestBid(product.getAuction());
-        if (user.getBids().contains(highestBid)) {
-            Feedback feedback = new Feedback();
-            //persist
-            feedbackDao.persist(feedback);
-            user.addFeedback(feedback);
-            product.addFeedback(feedback);
-
-            //Update object
-            feedback.setTime(new Date());
-            feedback.setContent(content);
-            feedback.setRating(rating);
-            feedbackDao.flush();
-            this.updateProductRating(product);
-            return new Pair<>(feedback, true);
-        }else {
-            return new Pair<>(null, false);
+        Optional<Bid> highestBid = getHighestBid(product.getAuction());
+        if (!highestBid.isPresent() || !highestBid.get().getUser().getUsername().equals(user.getUsername())) {
+            throw new IllegalArgumentException("User trying to place feedback has not won the auction.");
         }
+
+        Feedback feedback = new Feedback(content, rating, new Date());
+        feedbackDao.persist(feedback);
+        user.addFeedback(feedback);
+        product.addFeedback(feedback);
+
+        feedbackDao.flush();
+        updateProductRating(product);
+        return feedback;
     }
 
+    @Override
+    public Auction publishNewAuction(String picturePath, Description description, String extras, Category category, String username) {
+        Product product = new Product(true, picturePath, extras, category, description);
+        Auction auction = new Auction();
+        auction.setProduct(product);
+
+        User user = userDao.findOrThrow(username);
+        user.getProductCatalog().addProduct(product);
+
+        productDao.save(product);
+        auctionDao.save(auction);
+
+        return auction;
+    }
+
+    @Override
+    public void deleteProduct(int productId, String username) {
+        User user = userDao.findOrThrow(username);
+        Product product = productDao.findOrThrow(productId);
+        product.removeAuction(product.getAuction());
+        productDao.save(product);
+    }
 
     /**
      * Setter rating til riktig verdi
      * 0 om ikke noen rating enda er avgitt
+     *
      * @param product - produktet som skal oppdateres
      */
-
-    private void updateProductRating(Product product){
+    private void updateProductRating(Product product) {
         List<Feedback> feedbacks = product.getFeedbacks();
         double rating = 0;
         for (int i = 0; i < feedbacks.size(); i++) {
@@ -84,16 +102,17 @@ public class AuctionService implements IAuctionService {
 
     /**
      * Finne det høyeste budet
+     *
      * @param a Auksjonen
      * @return det høyeste budet eller null om ingen har budd
      */
-    private Bid getHighestBid(Auction a){
+    private Optional<Bid> getHighestBid(Auction a) {
         if (a.getBids().isEmpty()) {
-            return null;
+            return Optional.empty();
         }
         List<Bid> bids = a.getBids();
         Collections.sort(bids);
-        return bids.get(bids.size()-1);
+        return Optional.of(bids.get(bids.size() - 1));
 
     }
 

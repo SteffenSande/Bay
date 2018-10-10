@@ -30,10 +30,6 @@ public class Product implements Serializable {
     @XmlInverseReference(mappedBy = "product")
     private ProductCatalog productCatalog;
 
-
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = { CascadeType.ALL})
-    private List<Feedback> feedbacks;
-
     @OneToOne
     @MapsId
     @XmlInverseReference(mappedBy = "product")
@@ -41,6 +37,20 @@ public class Product implements Serializable {
 
     @Embedded
     private Description description;
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    private List<Feedback> feedbacks;
+
+    public Product() {
+    }
+
+    public Product(boolean published, String picturePath, String extras, Category category, Description description) {
+        this.published = published;
+        this.picturePath = picturePath;
+        this.extras = extras;
+        this.category = category;
+        this.description = description;
+    }
 
     public Auction getAuction() {
         return auction;
@@ -119,8 +129,8 @@ public class Product implements Serializable {
     }
 
     public void addAuction(Auction auction) {
-       this.auction = auction;
-       auction.setProduct(this);
+        this.auction = auction;
+        auction.setProduct(this);
     }
 
     public void removeAuction(Auction auction) {
@@ -136,14 +146,14 @@ public class Product implements Serializable {
         this.feedbacks = feedbacks;
     }
 
-    public void addFeedback(Feedback feedback){
+    public void addFeedback(Feedback feedback) {
         if (this.getFeedbacks() == null)
             this.feedbacks = new ArrayList<>();
         this.feedbacks.add(feedback);
         feedback.setProduct(this);
     }
 
-    public void removeFeedback(Feedback feedback){
+    public void removeFeedback(Feedback feedback) {
         this.feedbacks.remove(feedback);
         feedback.setProduct(null);
 
