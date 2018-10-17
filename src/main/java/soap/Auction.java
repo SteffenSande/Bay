@@ -2,6 +2,7 @@ package soap;
 
 import dao.IDao;
 import dao.UserDao;
+import entities.Auctions;
 import entities.User;
 import services.IAuctionService;
 import util.Pair;
@@ -11,10 +12,15 @@ import javax.inject.Inject;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.transaction.Transactional;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
+import java.io.File;
 import java.util.NoSuchElementException;
 
 
-@WebService
+@WebService(
+
+)
 public class Auction {
 
     @Inject
@@ -30,12 +36,12 @@ public class Auction {
     IAuctionService auctionService;
 
     @WebMethod
-    public entities.Auctions getAuctions() {
-        entities.Auctions auctions = new entities.Auctions(auctionDao.getAll());
+    public Auctions getAuctions() {
+        Auctions auctions = new Auctions(auctionDao.getAll());
         return auctions;
         /*try {
-            System.out.println(JAXBContext.newInstance(entities.Auction.class).getClass());
-            return JAXBContext.newInstance(entities.Auction.class).getClass().toString();
+            JAXBContext context = JAXBContext.newInstance(auctions.getClass());
+            return JAXBContext.newInstance(Auction.class).getClass().toString();
         } catch (Exception e) {
             e.printStackTrace();
         }

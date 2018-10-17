@@ -6,10 +6,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 
 @Entity
 @XmlRootElement
@@ -30,12 +27,12 @@ public class Feedback implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "product_fk")
-    @XmlInverseReference(mappedBy = "feedbacks")
+    @XmlTransient
     private Product product;
 
     @ManyToOne
     @JoinColumn(name = "user_fk")
-    @XmlInverseReference(mappedBy = "feedbacks")
+    @XmlTransient
     private User user;
 
     public Feedback() {

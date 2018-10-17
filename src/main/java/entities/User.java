@@ -27,11 +27,9 @@ public class User implements Serializable {
     private ProductCatalog productCatalog;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @XmlTransient
     private List<Bid> bids;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @XmlTransient
     private List<Feedback> feedbacks;
 
     public User() {

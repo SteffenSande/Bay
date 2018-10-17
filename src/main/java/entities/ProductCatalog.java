@@ -23,7 +23,7 @@ public class ProductCatalog implements Serializable {
 
     @OneToOne
     @MapsId
-    @XmlInverseReference(mappedBy = "productCatalog")
+    @XmlTransient
     private User seller;
 
     @OneToMany(mappedBy = "productCatalog")

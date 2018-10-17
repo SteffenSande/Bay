@@ -27,20 +27,18 @@ public class Product implements Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "productCatalog_fk")
-    @XmlInverseReference(mappedBy = "product")
+    @XmlTransient
     private ProductCatalog productCatalog;
 
     @OneToOne
     @MapsId
-    @XmlInverseReference(mappedBy = "product")
-    @XmlElement
+    @XmlTransient
     private Auction auction;
 
     @Embedded
     private Description description;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @XmlTransient
     private List<Feedback> feedbacks;
 
     public Product() {

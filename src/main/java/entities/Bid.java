@@ -2,6 +2,7 @@ package entities;
 
 
 import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
+import org.eclipse.persistence.oxm.annotations.XmlPath;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
@@ -22,13 +23,12 @@ public class Bid implements Serializable, Comparable<Bid> {
 
     @ManyToOne
     @JoinColumn(name = "auction_fk")
-    @XmlInverseReference(mappedBy = "bids")
-    @XmlElement
+    @XmlTransient
     private Auction auction;
 
     @ManyToOne
     @JoinColumn(name = "user_fk")
-    @XmlInverseReference(mappedBy = "bids")
+    @XmlTransient
     private User user;
 
     private double value;

@@ -17,12 +17,9 @@ public class Auction {
     private int id;
 
     @OneToMany(mappedBy = "auction", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @XmlElement(name = "bids")
-    @XmlInverseReference(mappedBy = "auction")
     private List<Bid> bids;
 
     @OneToOne(mappedBy = "auction", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @XmlTransient
     private Product product;
 
     public int getId() {
