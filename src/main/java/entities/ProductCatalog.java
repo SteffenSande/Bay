@@ -7,10 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @XmlRootElement
+@XmlAccessorType(value = XmlAccessType.FIELD)
 public class ProductCatalog implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -23,6 +27,7 @@ public class ProductCatalog implements Serializable {
     private User seller;
 
     @OneToMany(mappedBy = "productCatalog")
+    @XmlTransient
     private List<Product> products = new ArrayList<>();
 
     public List<Product> getProducts() {

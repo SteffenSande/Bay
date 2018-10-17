@@ -6,11 +6,14 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @XmlRootElement
+@XmlAccessorType(value = XmlAccessType.FIELD)
 public class Feedback implements Serializable {
     private static final long serialVersionUID = 1L;
 

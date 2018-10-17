@@ -1,7 +1,6 @@
 import dao.IDao;
 import dao.ProductDao;
-import entities.Feedback;
-import entities.Product;
+import entities.*;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
@@ -14,11 +13,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
 import java.io.StringReader;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -62,4 +61,75 @@ public class Tests extends JerseyTest {
         Unmarshaller u = jaxbContext.createUnmarshaller();
         return u.unmarshal(new StreamSource(new StringReader(s)), type).getValue();
     }
+
+
+    @Test
+    public void checkAuction(){
+
+
+        List<Bid> bids = createBids();
+
+        Auction auction = createAuction();
+
+        auction.setBids(bids);
+
+        for (int i = 0; i < bids.size(); i++) {
+            bids.get(i).setAuction(auction);
+        }
+
+        try {
+            JAXBContext context = JAXBContext.newInstance(Auction.class);
+            Marshaller marshaller = context.createMarshaller();
+
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            marshaller.marshal(auction, System.out);
+
+            System.out.println(JAXBContext.newInstance(Auction.class).getClass());
+            System.out.println(JAXBContext.newInstance(Bid.class).getClass());
+            System.out.println(JAXBContext.newInstance(Bid.class, Auction.class).getClass());
+
+        }catch (Exception e ){
+            fail();
+        }
+
+    }
+
+    @Test
+    public void checkBids(){
+        List<Bid> bids = createBids();
+        Auction auction = createAuction();
+        auction.setBids(bids);
+        for (int i = 0; i < bids.size(); i++) {
+            bids.get(i).setAuction(auction);
+        }
+        try {
+            JAXBContext context = JAXBContext.newInstance(Bid.class);
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            marshaller.marshal(bids.get(0), System.out);
+        }catch (Exception e ){
+            fail();
+        }
+
+    }
+
+
+
+    List<Bid> createBids() {
+        List<Bid> bids = new ArrayList<>();
+        //for (int i = 0; i < 4; i++) {
+            Bid bid = new Bid();
+            bid.setValue(1);
+            bid.setTime(new Date());
+            bids.add(bid);
+        //}
+        return bids;
+    }
+
+    Auction createAuction() {
+        Auction auction = new Auction();
+        return auction;
+    }
+
+
 }

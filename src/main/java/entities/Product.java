@@ -33,12 +33,14 @@ public class Product implements Serializable {
     @OneToOne
     @MapsId
     @XmlInverseReference(mappedBy = "product")
+    @XmlElement
     private Auction auction;
 
     @Embedded
     private Description description;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @XmlTransient
     private List<Feedback> feedbacks;
 
     public Product() {

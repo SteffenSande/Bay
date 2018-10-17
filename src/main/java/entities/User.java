@@ -1,7 +1,10 @@
 package entities;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +12,7 @@ import java.util.List;
 @Entity
 @Table(name = "Appuser")
 @XmlRootElement
+@XmlAccessorType(value = XmlAccessType.FIELD)
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -19,12 +23,15 @@ public class User implements Serializable {
     private ContactInformation contactInformation;
 
     @OneToOne(mappedBy = "seller")
+    @XmlTransient
     private ProductCatalog productCatalog;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @XmlTransient
     private List<Bid> bids;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @XmlTransient
     private List<Feedback> feedbacks;
 
     public User() {

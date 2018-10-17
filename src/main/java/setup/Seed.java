@@ -118,13 +118,13 @@ public class Seed {
 
     List<Bid> createBids() {
         List<Bid> bids = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
+        //for (int i = 0; i < 4; i++) {
             Bid bid = new Bid();
-            bid.setValue(i);
+            bid.setValue(1);
             bid.setTime(new Date());
             bidDao.persist(bid);
             bids.add(bid);
-        }
+        //}
         return bids;
     }
 

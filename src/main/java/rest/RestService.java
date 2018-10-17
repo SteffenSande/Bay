@@ -2,8 +2,7 @@ package rest;
 
 import dao.IDao;
 import dto.Value;
-import entities.Auction;
-import entities.Bid;
+import entities.*;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -11,12 +10,11 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 
-import entities.Feedback;
-import entities.Product;
 import services.IAuctionService;
 import util.Pair;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -45,11 +43,12 @@ public class RestService {
     IAuctionService auctionService;
 
     @GET
+    @Path("")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getAuctions() {
-        List<Auction> auctions = auctionDao.getAll();
-        return Response.ok().entity(new GenericEntity<List<Auction>>(auctions) {
-        }).build();
+    public Auctions getAuctions() {
+        Auctions auctions = new Auctions(auctionDao.getAll());
+        return auctions;
+
     }
 
     /**
@@ -83,8 +82,7 @@ public class RestService {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response showBidsOnProduct(@PathParam("productID") int id) {
         return auctionDao.find(id)
-                .map(p -> Response.ok().entity(new GenericEntity<List<Bid>>(p.getBids()) {
-                }).build())
+                .map(p -> Response.ok().entity(new Bids(p.getBids())).build())
                 .orElse(auctionNotFound(id));
     }
 

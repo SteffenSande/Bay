@@ -3,15 +3,13 @@ package entities;
 import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlList;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @XmlRootElement
+@XmlAccessorType(value = XmlAccessType.FIELD)
 public class Auction {
 
     @Id
@@ -19,9 +17,12 @@ public class Auction {
     private int id;
 
     @OneToMany(mappedBy = "auction", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @XmlElement(name = "bids")
+    @XmlInverseReference(mappedBy = "auction")
     private List<Bid> bids;
 
     @OneToOne(mappedBy = "auction", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @XmlTransient
     private Product product;
 
     public int getId() {
@@ -70,8 +71,10 @@ public class Auction {
         product.setAuction(null);
     }
 
+
     @Override
     public String toString() {
-        return this.product.toString() + " " + this.bids.toString();
+        return "Auction{" +
+                "id=" + id + "}";
     }
 }

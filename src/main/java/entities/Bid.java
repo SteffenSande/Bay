@@ -29,7 +29,6 @@ public class Bid implements Serializable, Comparable<Bid> {
     @ManyToOne
     @JoinColumn(name = "user_fk")
     @XmlInverseReference(mappedBy = "bids")
-    @XmlElement
     private User user;
 
     private double value;
@@ -90,7 +89,7 @@ public class Bid implements Serializable, Comparable<Bid> {
 
     @Override
     public String toString() {
-        return "Bid id " + id + " value: " + value + " time " + time + "\n";
+        return "Bid id " + id;
     }
 
     /**  */

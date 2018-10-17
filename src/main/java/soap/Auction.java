@@ -1,7 +1,8 @@
 package soap;
 
 import dao.IDao;
-import entities.Bid;
+import dao.UserDao;
+import entities.User;
 import services.IAuctionService;
 import util.Pair;
 
@@ -10,7 +11,6 @@ import javax.inject.Inject;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 
@@ -21,25 +21,40 @@ public class Auction {
     IDao<entities.Auction, Integer> auctionDao;
 
     @Inject
-    IDao<Bid, Integer> bidDao;
+    IDao<entities.Bid, Integer> bidDao;
+
+    @Inject
+    UserDao userDao;
 
     @EJB
     IAuctionService auctionService;
 
     @WebMethod
-    public List<entities.Auction> getAuctions() {
-        return auctionDao.getAll();
+    public entities.Auctions getAuctions() {
+        entities.Auctions auctions = new entities.Auctions(auctionDao.getAll());
+        return auctions;
+        /*try {
+            System.out.println(JAXBContext.newInstance(entities.Auction.class).getClass());
+            return JAXBContext.newInstance(entities.Auction.class).getClass().toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "nei";*/
     }
-
     @WebMethod
     public entities.Auction getAuction(int id) {
         return auctionDao.find(id).orElseThrow(NoSuchElementException::new);
     }
 
     @WebMethod
+    public User getUser(String username) {
+        return userDao.find(username).orElseThrow(NoSuchElementException::new);
+    }
+
+    @WebMethod
     @Transactional
     public String placeBid(int auctionId, int value) {
-        Pair<Bid, Boolean> p = auctionService.placeBid(auctionId, value);
+        Pair<entities.Bid, Boolean> p = auctionService.placeBid(auctionId, value);
         return p.snd() ? "This is currently the highest bid." : "Someone has bid higher";
     }
 }
