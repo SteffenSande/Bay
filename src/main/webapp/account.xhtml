@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<ui:include src="head.xhtml"/>
+<h:body>
+    <!--container-->
+    <div class="container">
+        <ui:include src="nav.xhtml"/>
+        <!--main-content-->
+        <!--web-forms-->
+        <div class="row profile-information">
+            <!--first-one-->
+            <div class="col-lg-2"/>
+            <div class="col-lg-8 first-one">
+                <div class="first-one-inner">
+                    <h3 class="tittle">My Profile</h3>
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <th scope="row">Username:</th>
+                            <td>SteffenBoy99</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Email:</th>
+                            <td>Steffis@123spill.no</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Number of products:</th>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Number of bids:</th>
+                            <td>46</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-2"/>
+            <div class="clearfix"/>
+        </div>
+        <div class="row profile-productsrow">
+            <div class="col-lg-2"/>
+            <div class="col-lg-4">
+                <div class="first-one-inner">
+                    <h3 class="tittle">My Products</h3>
+                    <div class="list-group">
+                        <a href="#" class="list-group-item list-group-item-action">A Cat</a>
+                        <a href="#" class="list-group-item list-group-item-action">A Dog</a>
+                        <a href="#" class="list-group-item list-group-item-action">A Bear</a>
+                        <a href="#" class="list-group-item list-group-item-action disabled">A Panda</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="first-one-inner">
+                    <h3 class="tittle">Products You've Bid On</h3>
+                    <div class="list-group">
+                        <a href="#" class="list-group-item list-group-item-action">Macbook Air</a>
+                        <a href="#" class="list-group-item list-group-item-action">Macbook Pro</a>
+                        <a href="#" class="list-group-item list-group-item-action">Macbook</a>
+                        <a href="#" class="list-group-item list-group-item-action disabled">iMac</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2"/>
+            <div class="clearfix"/>
+        </div>
+    </div>
+</h:body>
+</html>
