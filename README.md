@@ -16,3 +16,5 @@ Auction application using java EE as a part of the course DAT250
 
 ## Interesting
 - [This problem](https://stackoverflow.com/questions/20116444/severe-a-message-body-writer-for-java-class-java-util-arraylist-and-mime-media) had 7 different solutions, all solutions working for someone!
+
+Copy pasta domain.xml til opt/glassfish4/glassfish/domains/domain1/config/domain.xml
