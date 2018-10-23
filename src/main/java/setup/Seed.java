@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Startup
+//@Startup
 @Singleton
 public class Seed {
 
@@ -113,6 +113,7 @@ public class Seed {
         productDao.persist(product);
         product.setPublished(true);
         product.setPicturePath("Some url");
+        product.setCategory(Category.SPORT);
         return product;
     }
 

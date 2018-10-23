@@ -30,7 +30,7 @@ public class Auction {
     IDao<entities.Bid, Integer> bidDao;
 
     @Inject
-    UserDao userDao;
+    IDao<User, String> userDao;
 
     @EJB
     IAuctionService auctionService;
@@ -39,13 +39,7 @@ public class Auction {
     public Auctions getAuctions() {
         Auctions auctions = new Auctions(auctionDao.getAll());
         return auctions;
-        /*try {
-            JAXBContext context = JAXBContext.newInstance(auctions.getClass());
-            return JAXBContext.newInstance(Auction.class).getClass().toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "nei";*/
+
     }
     @WebMethod
     public entities.Auction getAuction(int id) {

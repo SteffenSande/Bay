@@ -22,7 +22,6 @@ public class Product implements Serializable {
     private String picturePath;
     private String extras;
 
-    @Enumerated
     private Category category;
 
     @ManyToOne(fetch = FetchType.EAGER)

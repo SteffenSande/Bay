@@ -2,7 +2,12 @@
 <!DOCTYPE resources PUBLIC "-//GlassFish.org//DTD GlassFish Application Server 3.1 Resource Definitions//EN" "http://glassfish.org/dtds/glassfish-resources_1_5.dtd">
 <resources>
     <!-- Connection Pool and Resource for Local Derby DB -->
-    <jdbc-connection-pool  connection-validation-method="auto-commit" datasource-classname="org.apache.derby.jdbc.ClientDataSource"  name="derby_net_Bay_appPool"  res-type="javax.sql.DataSource"  wrap-jdbc-objects="false">
+
+ <!--   <jdbc-connection-pool  connection-validation-method="auto-commit"
+                           datasource-classname="org.apache.derby.jdbc.ClientDataSource"
+                           name="derby_net_Bay_appPool"
+                           res-type="javax.sql.DataSource"
+                           wrap-jdbc-objects="true">
         <property name="serverName" value="localhost"/>
         <property name="portNumber" value="1527"/>
         <property name="databaseName" value="Bay"/>
@@ -12,7 +17,12 @@
         <property name="URL" value="jdbc:derby://localhost:1527/Bay;create=true"/>
         <property name="driverClass" value="org.apache.derby.jdbc.ClientDriver"/>
     </jdbc-connection-pool>
-    <jdbc-resource jndi-name="java:app/jdbc/Bay" pool-name="derby_net_Bay_appPool"/>
+    <jdbc-resource enabled="true"
+    			   jndi-name="jdbc/Bay"
+    			   object-type="user"
+                   pool-name="derby_net_Bay_appPool"
+    />-->
+    <!--<jdbc-resource jndi-name="jdbc/Bay" pool-name="derby_net_Bay_appPool"/>-->
 
     <!-- Connection Pool and Resource for DAT250 PostgreSQL DB -->
     <jdbc-connection-pool
@@ -30,4 +40,10 @@
         <property name="driverClass" value="org.postgresql.Driver" />
     </jdbc-connection-pool>
     <jdbc-resource jndi-name="java:app/db_g2018_02" pool-name="post-gre-sql_db_g2018_02Pool"/>
+
+
+
+
+
+
 </resources>

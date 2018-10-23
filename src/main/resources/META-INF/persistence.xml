@@ -5,10 +5,10 @@
 http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 
     <persistence-unit name="derby" transaction-type="JTA">
-        <jta-data-source>java:app/jdbc/Bay</jta-data-source>
+        <jta-data-source>jdbc/Bay</jta-data-source>
         <properties>
-            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
-            <property name="eclipselink.ddl-generation" value="drop-and-create-tables" />
+            <property name="javax.persistence.schema-generation.database.action" value="create"/>
+            <property name="eclipslink.ddl-generation" value="create-tables" />
             <property name="toplink.logging.level" value="INFO"/>
         </properties>
     </persistence-unit>
