@@ -30,6 +30,15 @@
     </application>
   </system-applications>
   <resources>
+    <jdbc-connection-pool ping="true" datasource-classname="org.postgresql.ds.PGSimpleDataSource" name="post-gre-sql_db_g2018_02Pool" wrap-jdbc-objects="false" connection-validation-method="auto-commit" res-type="javax.sql.DataSource">
+      <property name="serverName" value="data2.hib.no"></property>
+      <property name="portNumber" value="5433"></property>
+      <property name="databaseName" value="db_g2018_02"></property>
+      <property name="User" value="g2018_02"></property>
+      <property name="Password" value="dqkg2zmv"></property>
+      <property name="URL" value="jdbc:postgresql://data2.hib.no:5433/db_g2018_02"></property>
+      <property name="driverClass" value="org.postgresql.Driver"></property>
+    </jdbc-connection-pool>
     <jdbc-connection-pool datasource-classname="org.apache.derby.jdbc.ClientDataSource" name="derby_net_Bay_appPool" connection-validation-method="auto-commit" res-type="javax.sql.DataSource">
       <property name="serverName" value="localhost"></property>
       <property name="portNumber" value="1527"></property>
@@ -40,8 +49,10 @@
       <property name="URL" value="jdbc:derby://localhost:1527/Bay;create=true"></property>
       <property name="driverClass" value="org.apache.derby.jdbc.ClientDriver"></property>
     </jdbc-connection-pool>
+    <jdbc-resource pool-name="post-gre-sql_db_g2018_02Pool" jndi-name="jdbc/db_g2018_02"></jdbc-resource>
     <jdbc-resource pool-name="__TimerPool" object-type="system-admin" jndi-name="jdbc/__TimerPool"></jdbc-resource>
     <jdbc-resource pool-name="DerbyPool" object-type="system-all" jndi-name="jdbc/__default"></jdbc-resource>
+    <jdbc-resource pool-name="derby_net_Bay_appPool" jndi-name="jdbc/Bay"></jdbc-resource>
     <jdbc-connection-pool datasource-classname="org.apache.derby.jdbc.EmbeddedXADataSource" name="__TimerPool" res-type="javax.sql.XADataSource">
       <property name="databaseName" value="${com.sun.aas.instanceRoot}/lib/databases/ejbtimer"></property>
       <property name="connectionAttributes" value=";create=true"></property>
@@ -60,18 +71,10 @@
     <managed-executor-service object-type="system-all" jndi-name="concurrent/__defaultManagedExecutorService"></managed-executor-service>
     <managed-scheduled-executor-service object-type="system-all" jndi-name="concurrent/__defaultManagedScheduledExecutorService"></managed-scheduled-executor-service>
     <managed-thread-factory object-type="system-all" jndi-name="concurrent/__defaultManagedThreadFactory"></managed-thread-factory>
-    <connector-connection-pool max-pool-size="250" resource-adapter-name="jmsra" steady-pool-size="1" name="jms/dat250/ConnectionFactory-Connection-Pool" connection-definition-name="javax.jms.TopicConnectionFactory" transaction-support=""></connector-connection-pool>
-    <connector-resource pool-name="jms/dat250/ConnectionFactory-Connection-Pool" jndi-name="jms/dat250/ConnectionFactory"></connector-resource>
-    <admin-object-resource res-adapter="jmsra" res-type="javax.jms.Topic" jndi-name="jms/dat250/Topic">
-      <property name="Name" value="dat250Topic"></property>
-    </admin-object-resource>
-    <jdbc-resource pool-name="derby_net_Bay_appPool" jndi-name="jdbc/Bay"></jdbc-resource>
   </resources>
   <servers>
     <server config-ref="server-config" name="server">
       <application-ref ref="__admingui" virtual-servers="__asadmin"></application-ref>
-      <application-ref ref="Dat250TweetSimple" virtual-servers="server"></application-ref>
-      <application-ref ref="Dat250TweetAdvanced" virtual-servers="server"></application-ref>
       <application-ref ref="Bay" virtual-servers="server"></application-ref>
       <resource-ref ref="jdbc/__TimerPool"></resource-ref>
       <resource-ref ref="jdbc/__default"></resource-ref>
@@ -80,9 +83,8 @@
       <resource-ref ref="concurrent/__defaultManagedExecutorService"></resource-ref>
       <resource-ref ref="concurrent/__defaultManagedScheduledExecutorService"></resource-ref>
       <resource-ref ref="concurrent/__defaultManagedThreadFactory"></resource-ref>
-      <resource-ref ref="jms/dat250/ConnectionFactory"></resource-ref>
-      <resource-ref ref="jms/dat250/Topic"></resource-ref>
       <resource-ref ref="jdbc/Bay"></resource-ref>
+      <resource-ref ref="jdbc/db_g2018_02"></resource-ref>
     </server>
   </servers>
   <nodes>
@@ -90,7 +92,6 @@
   </nodes>
   <configs>
     <config name="server-config">
-      <resource-ref ref="jms/dat250/Topic"></resource-ref>
       <system-property name="JMS_PROVIDER_PORT" description="Port Number that JMS Service will listen for remote clients connection." value="7676"></system-property>
       <http-service>
         <access-log></access-log>
@@ -120,6 +121,10 @@
       <jms-service default-jms-host="default_JMS_host" type="EMBEDDED">
         <jms-host port="${JMS_PROVIDER_PORT}" host="localhost" name="default_JMS_host"></jms-host>
       </jms-service>
+      <ejb-container>
+        <ejb-timer-service></ejb-timer-service>
+      </ejb-container>
+      <cdi-service></cdi-service>
       <web-container>
         <session-config>
           <session-manager>
@@ -129,12 +134,7 @@
           <session-properties></session-properties>
         </session-config>
       </web-container>
-      <ejb-container>
-        <ejb-timer-service></ejb-timer-service>
-      </ejb-container>
       <rest-config></rest-config>
-      <cdi-service></cdi-service>
-      <mdb-container></mdb-container>
       <diagnostic-service></diagnostic-service>
       <security-service>
         <auth-realm classname="com.sun.enterprise.security.auth.realm.file.FileRealm" name="admin-realm">
@@ -150,16 +150,14 @@
           <property name="jaas-context" value="jdbcRealm"></property>
           <property name="encoding" value="Base64"></property>
           <property name="password-column" value="password"></property>
-          <property name="datasource-jndi" value="jdbc/Bay"></property>
+          <property name="datasource-jndi" value="jdbc/db_g2018_02"></property>
           <property name="group-table" value="users_groups"></property>
           <property name="user-table" value="users"></property>
           <property name="group-name-column" value="groupname"></property>
           <property name="digestrealm-password-enc-algorithm" value="none"></property>
           <property name="group-table-user-name-column" value="email"></property>
-          <property name="user-name-column" value="email"></property>
           <property name="digest-algorithm" value="SHA-256"></property>
-          <property name="db-user" value="admin"></property>
-          <property name="db-password" value="admin"></property>
+          <property name="user-name-column" value="email"></property>
         </auth-realm>
         <jacc-provider policy-provider="com.sun.enterprise.security.provider.PolicyWrapper" name="default" policy-configuration-factory-provider="com.sun.enterprise.security.provider.PolicyConfigurationFactoryImpl">
           <property name="repository" value="${com.sun.aas.instanceRoot}/generated/policy"></property>
@@ -490,64 +488,10 @@
   </secure-admin>
   <clusters></clusters>
   <applications>
-    <application context-root="/Dat250TweetSimple" object-type="user" name="Dat250TweetSimple" location="${com.sun.aas.instanceRootURI}/applications/Dat250TweetSimple/">
-      <property name="archiveType" value="war"></property>
-      <property name="appLocation" value="${com.sun.aas.instanceRootURI}/applications/__internal/Dat250TweetSimple/Dat250TweetSimple.war"></property>
-      <property name="org.glassfish.ejb.container.application_unique_id" value="100786772347060224"></property>
-      <property name="defaultAppName" value="Dat250TweetSimple"></property>
-      <module name="Dat250TweetSimple">
-        <engine sniffer="ejb"></engine>
-        <engine sniffer="security"></engine>
-        <engine sniffer="weld"></engine>
-        <engine sniffer="jpa"></engine>
-        <engine sniffer="resources"></engine>
-        <engine sniffer="web"></engine>
-      </module>
-      <resources>
-        <jdbc-connection-pool datasource-classname="org.apache.derby.jdbc.ClientDataSource" name="java:app/derby_net_Dat250TweetSimple_appPool" wrap-jdbc-objects="false" connection-validation-method="auto-commit" res-type="javax.sql.DataSource">
-          <property name="URL" value="jdbc:derby://localhost:1527/Dat250TweetSimple;create=true"></property>
-          <property name="connectionAttributes" value=";create=true"></property>
-          <property name="driverClass" value="org.apache.derby.jdbc.ClientDriver"></property>
-          <property name="Password" value="admin"></property>
-          <property name="portNumber" value="1527"></property>
-          <property name="databaseName" value="Dat250TweetSimple"></property>
-          <property name="User" value="admin"></property>
-          <property name="serverName" value="localhost"></property>
-        </jdbc-connection-pool>
-        <jdbc-resource pool-name="java:app/derby_net_Dat250TweetSimple_appPool" jndi-name="java:app/jdbc/Dat250TweetSimple"></jdbc-resource>
-      </resources>
-    </application>
-    <application context-root="/Dat250TweetAdvanced" object-type="user" name="Dat250TweetAdvanced" location="${com.sun.aas.instanceRootURI}/applications/Dat250TweetAdvanced/">
-      <property name="archiveType" value="war"></property>
-      <property name="appLocation" value="${com.sun.aas.instanceRootURI}/applications/__internal/Dat250TweetAdvanced/Dat250TweetAdvanced.war"></property>
-      <property name="org.glassfish.ejb.container.application_unique_id" value="100798433118257152"></property>
-      <property name="defaultAppName" value="Dat250TweetAdvanced"></property>
-      <module name="Dat250TweetAdvanced">
-        <engine sniffer="ejb"></engine>
-        <engine sniffer="security"></engine>
-        <engine sniffer="weld"></engine>
-        <engine sniffer="jpa"></engine>
-        <engine sniffer="resources"></engine>
-        <engine sniffer="web"></engine>
-      </module>
-      <resources>
-        <jdbc-connection-pool datasource-classname="org.apache.derby.jdbc.ClientDataSource" name="java:app/derby_net_Dat250TweetAdvanced_appPool" wrap-jdbc-objects="false" connection-validation-method="auto-commit" res-type="javax.sql.DataSource">
-          <property name="URL" value="jdbc:derby://localhost:1527/Dat250TweetAdvanced;create=true"></property>
-          <property name="connectionAttributes" value=";create=true"></property>
-          <property name="driverClass" value="org.apache.derby.jdbc.ClientDriver"></property>
-          <property name="Password" value="admin"></property>
-          <property name="portNumber" value="1527"></property>
-          <property name="databaseName" value="Dat250TweetAdvanced"></property>
-          <property name="User" value="admin"></property>
-          <property name="serverName" value="localhost"></property>
-        </jdbc-connection-pool>
-        <jdbc-resource pool-name="java:app/derby_net_Dat250TweetAdvanced_appPool" jndi-name="java:app/jdbc/Dat250TweetAdvanced"></jdbc-resource>
-      </resources>
-    </application>
     <application context-root="/Bay" object-type="user" name="Bay" location="${com.sun.aas.instanceRootURI}/applications/Bay/">
       <property name="archiveType" value="war"></property>
       <property name="appLocation" value="${com.sun.aas.instanceRootURI}/applications/__internal/Bay/Bay.war"></property>
-      <property name="org.glassfish.ejb.container.application_unique_id" value="100945766770081792"></property>
+      <property name="org.glassfish.ejb.container.application_unique_id" value="100950477088882688"></property>
       <property name="defaultAppName" value="Bay"></property>
       <module name="Bay">
         <engine sniffer="ejb"></engine>
@@ -558,18 +502,7 @@
         <engine sniffer="resources"></engine>
         <engine sniffer="web"></engine>
       </module>
-      <resources>
-        <jdbc-connection-pool datasource-classname="org.postgresql.ds.PGSimpleDataSource" name="java:app/post-gre-sql_db_g2018_02Pool" wrap-jdbc-objects="false" connection-validation-method="auto-commit" res-type="javax.sql.DataSource">
-          <property name="URL" value="jdbc:postgresql://data2.hib.no:5433/db_g2018_02"></property>
-          <property name="driverClass" value="org.postgresql.Driver"></property>
-          <property name="Password" value="dqkg2zmv"></property>
-          <property name="portNumber" value="5433"></property>
-          <property name="databaseName" value="db_g2018_02"></property>
-          <property name="User" value="g2018_02"></property>
-          <property name="serverName" value="data2.hib.no"></property>
-        </jdbc-connection-pool>
-        <jdbc-resource pool-name="java:app/post-gre-sql_db_g2018_02Pool" jndi-name="java:app/db_g2018_02"></jdbc-resource>
-      </resources>
+      <resources></resources>
     </application>
   </applications>
 </domain>

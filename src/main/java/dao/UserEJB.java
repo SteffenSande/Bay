@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 @Stateless
 public class UserEJB {
 
-	@PersistenceContext(unitName= Configuration.CURRENT_PERSISTENCE_UNIT)
+	@PersistenceContext(unitName= "dat250psql")
 	private EntityManager em;
 	
 	public Users createUser(Users users) {

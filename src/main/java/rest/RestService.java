@@ -47,19 +47,11 @@ public class RestService {
     ISearchService searchService;
 
     @GET
-    @Path("/search")
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response search() {
-        List<Product> result = searchService.searchProductsByTitleAndDescription("Kult");
-        GenericEntity<List<Product>> entity = new GenericEntity<List<Product>>(result){};
-        return Response.ok(entity).build();
-    }
-
-    @GET
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Auctions getAuctions() {
+    @Path("")
+    //@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public String getAuctions() {
         Auctions auctions = new Auctions(auctionDao.getAll());
-        return auctions;
+        return auctions.toString();
 
     }
 
