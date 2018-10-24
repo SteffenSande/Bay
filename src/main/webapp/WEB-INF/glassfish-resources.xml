@@ -16,16 +16,13 @@
         <property name="connectionAttributes" value=";create=true" />
         <property name="URL" value="jdbc:derby://localhost:1527/Bay;create=true"/>
         <property name="driverClass" value="org.apache.derby.jdbc.ClientDriver"/>
-    </jdbc-connection-pool>
-    <jdbc-resource enabled="true"
-    			   jndi-name="jdbc/Bay"
-    			   object-type="user"
-                   pool-name="derby_net_Bay_appPool"
-    />-->
+    </jdbc-connection-pool>-->
+
+
     <!--<jdbc-resource jndi-name="jdbc/Bay" pool-name="derby_net_Bay_appPool"/>-->
 
     <!-- Connection Pool and Resource for DAT250 PostgreSQL DB -->
-    <jdbc-connection-pool
+    <!--<jdbc-connection-pool
             connection-validation-method="auto-commit"
             datasource-classname="org.postgresql.ds.PGSimpleDataSource"
             name="post-gre-sql_db_g2018_02Pool"
@@ -39,7 +36,7 @@
         <property name="URL"  value="jdbc:postgresql://data2.hib.no:5433/db_g2018_02" />
         <property name="driverClass" value="org.postgresql.Driver" />
     </jdbc-connection-pool>
-    <jdbc-resource jndi-name="java:app/db_g2018_02" pool-name="post-gre-sql_db_g2018_02Pool"/>
+    <jdbc-resource jndi-name="java:app/db_g2018_02" pool-name="post-gre-sql_db_g2018_02Pool"/>-->
 
 
 

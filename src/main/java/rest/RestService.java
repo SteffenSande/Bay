@@ -44,10 +44,10 @@ public class RestService {
 
     @GET
     @Path("")
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Auctions getAuctions() {
+    //@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public String getAuctions() {
         Auctions auctions = new Auctions(auctionDao.getAll());
-        return auctions;
+        return auctions.toString();
 
     }
 

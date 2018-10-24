@@ -14,9 +14,9 @@ http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
     </persistence-unit>
 
     <persistence-unit name="dat250psql" transaction-type="JTA">
-        <jta-data-source>java:app/db_g2018_02</jta-data-source>
+        <jta-data-source>jdbc/db_g2018_02</jta-data-source>
         <properties>
-            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+            <property name="javax.persistence.schema-generation.database.action" value="create"/>
             <property name="toplink.logging.level" value="INFO"/>
         </properties>
     </persistence-unit>
