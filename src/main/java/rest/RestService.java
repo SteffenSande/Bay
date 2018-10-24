@@ -11,6 +11,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 
 import services.IAuctionService;
+import services.ISearchService;
 import util.Pair;
 
 import java.net.URI;
@@ -42,8 +43,19 @@ public class RestService {
     @EJB
     IAuctionService auctionService;
 
+    @EJB
+    ISearchService searchService;
+
     @GET
-    @Path("")
+    @Path("/search")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response search() {
+        List<Product> result = searchService.searchProductsByTitleAndDescription("Kult");
+        GenericEntity<List<Product>> entity = new GenericEntity<List<Product>>(result){};
+        return Response.ok(entity).build();
+    }
+
+    @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Auctions getAuctions() {
         Auctions auctions = new Auctions(auctionDao.getAll());

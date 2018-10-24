@@ -12,6 +12,7 @@ public class Description implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String title;
+    private String content;
     private double rating;
     @Temporal(TemporalType.DATE)
     private Date endDate;
@@ -39,5 +40,13 @@ public class Description implements Serializable {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

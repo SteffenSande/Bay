@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-//@Startup
+@Startup
 @Singleton
 public class Seed {
 
@@ -70,10 +70,8 @@ public class Seed {
             rating += product.getFeedbacks().get(i).getRating();
         }
         rating /= product.getFeedbacks().size();
-        product.setDescription(createDescription(rating));
+        product.setDescription(createDescription("This is the description", rating));
         product.setCategory(Category.SPORT);
-
-
     }
 
 
@@ -84,11 +82,12 @@ public class Seed {
     }
 
 
-    Description createDescription(double rating) {
+    Description createDescription(String content, double rating) {
         Description description = new Description();
         description.setRating(rating);
         description.setEndDate(new Date());
         description.setTitle("Kult produkt");
+        description.setContent(content);
         return description;
     }
 
