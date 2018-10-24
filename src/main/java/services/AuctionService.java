@@ -62,7 +62,7 @@ public class AuctionService implements IAuctionService {
     }
 
     @Override
-    public Auction publishNewAuction(String picturePath, Description description, String extras, Category category, String username) {
+    public Auction publishNewAuction(String picturePath, Description description, String extras, String category, String username) {
         Product product = new Product(true, picturePath, extras, category, description);
         Auction auction = new Auction();
         auction.setProduct(product);

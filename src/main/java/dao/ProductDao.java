@@ -17,4 +17,8 @@ public class ProductDao extends AbstractDao<Product, Integer> {
     public List<Product> getAll() {
         return em.createQuery("SELECT item FROM Product item", tClass).getResultList();
     }
+
+    public List<Product> getByCategory(String category) {
+        return em.createQuery("SELECT item FROM Product item WHERE item.category LIKE 'Sport'", tClass).getResultList();
+    }
 }

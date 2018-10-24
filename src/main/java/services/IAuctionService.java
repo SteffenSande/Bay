@@ -19,6 +19,6 @@ public interface IAuctionService {
 
     void deleteProduct(int pid, String username);
 
-    Auction publishNewAuction(String picturePath, Description description, String extras, Category category, String username);
+    Auction publishNewAuction(String picturePath, Description description, String extras, String category, String username);
 }
 

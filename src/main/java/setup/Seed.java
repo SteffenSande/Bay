@@ -51,8 +51,21 @@ public class Seed {
 
 
         Auction auction = createAuction();
+
+        Auction auction2 = createAuction();
+        Auction auction3 = createAuction();
+        Auction auction4 = createAuction();
+
         Product product = createProduct();
+        Product product2 = createProduct();
+        Product product3 = createProduct();
+        Product product4 = createProduct();
+
         auction.addProduct(product);
+        auction2.addProduct(product2);
+        auction3.addProduct(product3);
+        auction4.addProduct(product4);
+
         List<Bid> bids = createBids();
 
 
@@ -71,7 +84,16 @@ public class Seed {
         }
         rating /= product.getFeedbacks().size();
         product.setDescription(createDescription("This is the description", rating));
-        product.setCategory(Category.SPORT);
+        product.setCategory("Sport");
+
+        product2.setDescription(createDescription("This is another description ", rating));
+        product2.setCategory("Electronics");
+
+        product3.setDescription(createDescription("This is the third description", rating));
+        product3.setCategory("Sport");
+
+        product4.setDescription(createDescription("This is the fourth description ", rating));
+        product4.setCategory("Electronics");
     }
 
 
@@ -112,7 +134,7 @@ public class Seed {
         productDao.persist(product);
         product.setPublished(true);
         product.setPicturePath("Some url");
-        product.setCategory(Category.SPORT);
+        product.setCategory("Sport");
         return product;
     }
 

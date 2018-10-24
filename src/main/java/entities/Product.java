@@ -22,7 +22,7 @@ public class Product implements Serializable {
     private String picturePath;
     private String extras;
 
-    private Category category;
+    private String category;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "productCatalog_fk")
@@ -43,7 +43,7 @@ public class Product implements Serializable {
     public Product() {
     }
 
-    public Product(boolean published, String picturePath, String extras, Category category, Description description) {
+    public Product(boolean published, String picturePath, String extras, String category, Description description) {
         this.published = published;
         this.picturePath = picturePath;
         this.extras = extras;
@@ -71,11 +71,11 @@ public class Product implements Serializable {
         return productCatalog;
     }
 
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
