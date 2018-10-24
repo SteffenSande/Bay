@@ -4,6 +4,7 @@ import dao.UserEJB;
 import entities.Users;
 import util.AuthenticationUtils;
 
+import javax.annotation.security.DeclareRoles;
 import javax.faces.application.FacesMessage;
 
 import javax.faces.bean.ManagedBean;
@@ -36,10 +37,16 @@ public class LoginView implements Serializable {
 
 	private Users users;
 
+	private String logInOrOut;
+
+	public LoginView(){
+		this.logInOrOut = "Log in";
+	}
+
 	public String login() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-
+		this.logInOrOut = "Log out";
 		try {
 			request.login(email, password);
 		} catch (ServletException e) {
@@ -64,10 +71,11 @@ public class LoginView implements Serializable {
 		}
 	}
 
+
 	public String logout() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-
+		this.logInOrOut = "Log in";
 		try {
 			this.users = null;
 			request.logout();
@@ -98,5 +106,26 @@ public class LoginView implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getLogInOrOut() {
+		return logInOrOut;
+	}
+
+	public void setLogInOrOut(String logInOrOut) {
+		this.logInOrOut = logInOrOut;
+	}
+
+
+	public String logInOrLogOut(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+			//If user is loggen in then logout, and if user is logged out, the login method.
+			if (request.isUserInRole("users")) {
+				return logout();
+			} else {
+				return "/signin?faces-redirect=true";
+			}
+
 	}
 }

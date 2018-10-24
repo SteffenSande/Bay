@@ -48,10 +48,10 @@ public class RestService {
 
     @GET
     @Path("")
-    //@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public String getAuctions() {
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Auctions getAuctions() {
         Auctions auctions = new Auctions(auctionDao.getAll());
-        return auctions.toString();
+        return auctions;
 
     }
 
