@@ -60,7 +60,6 @@ class AuctionServiceTest {
         product.setDescription(new Description());
         product.setAuction(auction);
         User user = new User();
-        user.setUsername("username");
         auction.setBids(Arrays.asList(new Bid(auction, user, 200, new Date())));
 
         when(auctionService.userDao.findOrThrow(Matchers.anyString())).thenReturn(user);

@@ -14,7 +14,6 @@ public class ContactInformation implements Serializable {
 
     private String name;
     private String phone;
-    private String email;
 
     @Embedded
     private Address address;
@@ -22,10 +21,9 @@ public class ContactInformation implements Serializable {
     public ContactInformation() {
     }
 
-    public ContactInformation(String name, String phone, String email, Address address) {
+    public ContactInformation(String name, String phone, Address address) {
         this.name = name;
         this.phone = phone;
-        this.email = email;
         this.address = address;
     }
 
@@ -43,14 +41,6 @@ public class ContactInformation implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getPhone() {

@@ -9,7 +9,7 @@
 		<h:form>
 			<h:commandLink action="#{loginView.logout}" value="Logout" />
 		</h:form>
-		<h3>Hello #{loginView.authenticatedUser.name}</h3>
+		<h3>Hello #{loginView.authenticatedUser.contactInformation.name}</h3>
 		<p>Your user id is #{loginView.authenticatedUser.email}</p>
 		<p>This is a private page, which requires login to access.</p>
 	</ui:define>
