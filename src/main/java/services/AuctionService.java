@@ -47,7 +47,7 @@ public class AuctionService implements IAuctionService {
         User user = userDao.findOrThrow(username);
 
         Optional<Bid> highestBid = getHighestBid(product.getAuction());
-        if (!highestBid.isPresent() || !highestBid.get().getUser().getUsername().equals(user.getUsername())) {
+        if (!highestBid.isPresent() || !highestBid.get().getUser().getEmail().equals(user.getEmail())) {
             throw new IllegalArgumentException("User trying to place feedback has not won the auction.");
         }
 

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Startup
+//@Startup
 @Singleton
 public class Seed {
 
@@ -160,7 +160,6 @@ public class Seed {
     User createUser(String name) {
         User user = new User();
         userDao.persist(user);
-        user.setUsername(name);
         user.setContactInformation(createContactinformation(name));
         return user;
     }
@@ -169,7 +168,6 @@ public class Seed {
     ContactInformation createContactinformation(String name) {
         ContactInformation ci = new ContactInformation();
         ci.setName(name);
-        ci.setEmail(name + "Sin@epost.no");
         ci.setPhone("12345678");
         ci.setAddress(createAdress());
         return ci;

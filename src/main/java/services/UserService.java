@@ -15,7 +15,7 @@ public class UserService implements IUserService {
             throw new IllegalStateException("Username exists already.");
         }
         Address address = new Address(street, city, zip);
-        ContactInformation contactInformation = new ContactInformation(name, phone, email, address);
+        ContactInformation contactInformation = new ContactInformation(name, phone, address);
         ProductCatalog productCatalog = new ProductCatalog();
         User user = new User(username, contactInformation, productCatalog);
         return userDao.save(user);

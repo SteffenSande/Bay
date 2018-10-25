@@ -1,10 +1,8 @@
 package managedbeans;
 
-import dao.UserEJB;
-import entities.Users;
+import dao.UserDao;
+import entities.User;
 
-
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -25,7 +23,7 @@ public class RegisterView implements Serializable {
 	private static Logger log = Logger.getLogger(RegisterView.class.getName());
 
 	@Inject
-	private UserEJB userEJB;
+	private UserDao userDao;
 
 	private String name;
 	private String email;
@@ -60,7 +58,7 @@ public class RegisterView implements Serializable {
 			facesContext.renderResponse();
 		}
 
-		if (userEJB.findUserById(email) != null) {
+		if (userDao.findUserById(email) != null) {
 			FacesMessage msg = new FacesMessage("Users with this e-mail already exists");
 			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
 			facesContext.addMessage(passwordId, msg);
@@ -70,8 +68,8 @@ public class RegisterView implements Serializable {
 	}
 
 	public String register() {
-		Users users = new Users(email, password, name);
-		userEJB.createUser(users);
+		User user = new User(email, name, password);
+		userDao.createUser(user);
 		log.info("New users created with e-mail: " + email + " and name: " + name);
 		return "regdone";
 	}

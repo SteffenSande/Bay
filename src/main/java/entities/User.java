@@ -10,14 +10,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "Appuser")
+@Table(name = "users")
+@NamedQueries({
+        @NamedQuery(name = "findUserById", query = "SELECT u FROM User u WHERE u.email = :email")
+})
 @XmlRootElement
 @XmlAccessorType(value = XmlAccessType.FIELD)
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    private String username;
+    @Column(name="email", nullable=false, length=255)
+    private String email;
+
+    @Column(name="password", nullable=false, length=64)
+    private String password;
 
     @Embedded
     private ContactInformation contactInformation;
@@ -35,8 +42,17 @@ public class User implements Serializable {
     public User() {
     }
 
+    public User(String username, String name, String password) {
+        this.email = username;
+        if (this.contactInformation == null){
+            this.contactInformation = new ContactInformation();
+        }
+        this.contactInformation.setName(name);
+        this.password = password;
+    }
+
     public User(String username, ContactInformation contactInformation, ProductCatalog productCatalog) {
-        this.username = username;
+        this.email = username;
         this.contactInformation = contactInformation;
         this.productCatalog = productCatalog;
     }
@@ -66,13 +82,22 @@ public class User implements Serializable {
         this.contactInformation = contactInformation;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
 
     public void addBid(Bid bid) {
         if (this.bids == null)
@@ -120,7 +145,7 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "User{" +
-                ", username='" + username + '\'' +
+                ", username='" + email + '\'' +
                 ", productCatalog=" + productCatalog +
                 ", contactInformation=" + contactInformation +
                 ", bids=" + bids +

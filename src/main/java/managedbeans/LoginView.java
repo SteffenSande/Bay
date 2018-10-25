@@ -1,10 +1,7 @@
 package managedbeans;
 
-import dao.UserEJB;
-import entities.Users;
-import util.AuthenticationUtils;
-
-import javax.annotation.security.DeclareRoles;
+import dao.UserDao;
+import entities.User;
 import javax.faces.application.FacesMessage;
 
 import javax.faces.bean.ManagedBean;
@@ -30,12 +27,12 @@ public class LoginView implements Serializable {
 	private static Logger log = Logger.getLogger(LoginView.class.getName());
 
 	@Inject
-	private UserEJB userEJB;
+	private UserDao userDao;
 
 	private String email;
 	private String password;
 
-	private Users users;
+	private User user;
 
 	private String logInOrOut;
 
@@ -56,13 +53,13 @@ public class LoginView implements Serializable {
 
 		Principal principal = request.getUserPrincipal();
 
-		this.users = userEJB.findUserById(principal.getName());
+		this.user = userDao.findUserById(principal.getName());
 
 		log.info("Authentication done for user: " + principal.getName());
 
 		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 		Map<String, Object> sessionMap = externalContext.getSessionMap();
-		sessionMap.put("Users", users);
+		sessionMap.put("Users", user);
 
 		if (request.isUserInRole("users")) {
 			return "/user/privatepage?faces-redirect=true";
@@ -77,7 +74,7 @@ public class LoginView implements Serializable {
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		this.logInOrOut = "Log in";
 		try {
-			this.users = null;
+			this.user = null;
 			request.logout();
 			// clear the session
 			((HttpSession) context.getExternalContext().getSession(false)).invalidate();
@@ -88,8 +85,8 @@ public class LoginView implements Serializable {
 		return "/signin?faces-redirect=true";
 	}
 
-	public Users getAuthenticatedUser() {
-		return users;
+	public User getAuthenticatedUser() {
+		return user;
 	}
 
 	public String getEmail() {
