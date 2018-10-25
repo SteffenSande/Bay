@@ -1,9 +1,9 @@
-package managedbeans;
+package controllers;
 
 import dao.UserDao;
 import entities.User;
-import javax.faces.application.FacesMessage;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
@@ -20,11 +20,11 @@ import java.util.logging.Logger;
 
 @ManagedBean
 @SessionScoped
-public class LoginView implements Serializable {
+public class LoginController implements Serializable {
 
 	private static final long serialVersionUID = 3254181235309041386L;
 
-	private static Logger log = Logger.getLogger(LoginView.class.getName());
+	private static Logger log = Logger.getLogger(LoginController.class.getName());
 
 	@Inject
 	private UserDao userDao;
@@ -36,7 +36,7 @@ public class LoginView implements Serializable {
 
 	private String logInOrOut;
 
-	public LoginView(){
+	public LoginController(){
 		this.logInOrOut = "Log in";
 	}
 

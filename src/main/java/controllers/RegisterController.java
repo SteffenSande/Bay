@@ -1,4 +1,4 @@
-package managedbeans;
+package controllers;
 
 import dao.UserDao;
 import entities.User;
@@ -16,11 +16,11 @@ import java.util.logging.Logger;
 
 @ManagedBean
 @SessionScoped
-public class RegisterView implements Serializable {
+public class RegisterController implements Serializable {
 
 	private static final long serialVersionUID = 1685823449195612778L;
 
-	private static Logger log = Logger.getLogger(RegisterView.class.getName());
+	private static Logger log = Logger.getLogger(RegisterController.class.getName());
 
 	@Inject
 	private UserDao userDao;
