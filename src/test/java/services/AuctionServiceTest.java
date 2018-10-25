@@ -33,7 +33,7 @@ class AuctionServiceTest {
         Auction auction = new Auction();
         auction.setBids(new ArrayList<>());
         when(auctionService.auctionDao.findOrThrow(Matchers.anyInt())).thenReturn(auction);
-        auctionService.placeBid(1, 10);
+        auctionService.placeBid(1, null, 10);
 
         ArgumentCaptor<Bid> bid = ArgumentCaptor.forClass(Bid.class);
         verify(auctionService.bidDao).save(bid.capture());

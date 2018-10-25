@@ -31,7 +31,6 @@ public class LoginController implements Serializable {
 
 	private String email;
 	private String password;
-
 	private User user;
 
 	private String logInOrOut;
@@ -113,6 +112,13 @@ public class LoginController implements Serializable {
 		this.logInOrOut = logInOrOut;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	public String logInOrLogOut(){
 		FacesContext context = FacesContext.getCurrentInstance();

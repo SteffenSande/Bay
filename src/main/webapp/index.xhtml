@@ -44,6 +44,34 @@
             </h:form>
         </div>
 
+
+
+        <f:metadata>
+            <f:viewParam name="query" value="#{searchController.query}"/>
+            <f:viewAction action="#{searchController.doQueryProducts}"/>
+        </f:metadata>
+
+    <h2><h:panelGroup rendered="#{searchController.query != ''}">Results matching "#{searchController.query}"</h:panelGroup></h2>
+
+            <ui:repeat value="#{searchController.normalisedResults}" var="row">
+                <div class="card-deck product_catalog-productrow">
+                    <ui:repeat value="#{row}" var="product">
+                        <h:panelGroup styleClass="card" rendered="#{product != null}">
+                            <img class="card-img-top"
+                                 src="https://cdn.vox-cdn.com/thumbor/qZdDl3n1ctNCLpwVYlqOuz4Utyg=/0x0:1024x683/1820x1213/filters:focal(431x261:593x423)/cdn.vox-cdn.com/uploads/chorus_image/image/59318659/iphone8red_1024.1523277341.jpg"
+                                 alt="Product image"/>
+                            <div class="card-body">
+                                <h:link value = "#{product.description.title}" outcome = "auction">
+                                    <f:param name="id" value="#{product.id}" />
+                                </h:link>
+                                <p class="card-text">#{product.description.content}</p>
+                            </div>
+                        </h:panelGroup>
+                    </ui:repeat>
+                </div>
+            </ui:repeat>
+
+
 </h:body>
 </ui:define>
 </ui:composition>

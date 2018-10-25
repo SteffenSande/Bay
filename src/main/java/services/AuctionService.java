@@ -27,14 +27,10 @@ public class AuctionService implements IAuctionService {
     IDao<User, String> userDao;
 
     @Override
-    public Pair<Bid, Boolean> placeBid(int auctionId, int value) {
+    public Pair<Bid, Boolean> placeBid(int auctionId, User user, int value) {
         entities.Auction auction = auctionDao.findOrThrow(auctionId);
 
-        // TODO
-        // Dette er ikke helt riktig
-        // Bid gir egentlig ikke mening uten user, men det legger vi til når vi har innlogging
-
-        Bid bid = new Bid(auction, null, value, new Date());
+        Bid bid = new Bid(auction, user, value, new Date());
         auction.getBids().add(bid);
         auctionDao.save(auction);
         bid = bidDao.save(bid);
@@ -106,7 +102,8 @@ public class AuctionService implements IAuctionService {
      * @param a Auksjonen
      * @return det høyeste budet eller null om ingen har budd
      */
-    private Optional<Bid> getHighestBid(Auction a) {
+    @Override
+    public Optional<Bid> getHighestBid(Auction a) {
         if (a.getBids().isEmpty()) {
             return Optional.empty();
         }

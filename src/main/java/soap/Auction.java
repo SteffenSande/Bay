@@ -53,8 +53,8 @@ public class Auction {
 
     @WebMethod
     @Transactional
-    public String placeBid(int auctionId, int value) {
-        Pair<entities.Bid, Boolean> p = auctionService.placeBid(auctionId, value);
+    public String placeBid(int auctionId, User user, int value) {
+        Pair<entities.Bid, Boolean> p = auctionService.placeBid(auctionId, user, value);
         return p.snd() ? "This is currently the highest bid." : "Someone has bid higher";
     }
 }

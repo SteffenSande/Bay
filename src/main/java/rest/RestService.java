@@ -118,16 +118,21 @@ public class RestService {
      * in the payload of the request (or optionally as a query parameter).
      */
 
+
+
+    //TO-DO user params in bidOnAProduct
+/*
     @POST
     @Path("/{productID : \\d+}/bids")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response bidOnAProduct(@PathParam("productID") int auctionId, Value value) {
-        Pair<Bid, Boolean> p = auctionService.placeBid(auctionId, value.get());
+    public Response bidOnAProduct(@PathParam("productID") int auctionId, @ String email, @PathParam("pass") String pass, Value value) {
+        Pair<Bid, Boolean> p = auctionService.placeBid(auctionId, user, value.get());
         Bid bid = p.fst();
         URI bidUri = UriBuilder.fromUri(uri.getBaseUri()).path("auctions").path(Integer.toString(auctionId)).path("bids").path(Integer.toString(bid.getId())).build();
         return Response.created(bidUri).entity(bid).build();
     }
+*/
 
     /**
      * This is for test purposes only, as it doesn't use AuctionDao. When everyone is comfortable with testing,

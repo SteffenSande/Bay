@@ -22,7 +22,7 @@ public class SearchController {
 
     public String doQueryProducts(){
         queryResult = searchService.searchProductsByTitleAndDescription(query);
-        return "product_search.xhtml";
+        return "/index?faces_redirect=true";
     }
 
     /**
@@ -39,6 +39,7 @@ public class SearchController {
         }
         return normalisedResults;
     }
+
 
     public String getQuery() {
         return query;
