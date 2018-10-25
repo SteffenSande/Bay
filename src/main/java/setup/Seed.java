@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-//@Startup
+@Startup
 @Singleton
 public class Seed {
 
@@ -44,9 +44,12 @@ public class Seed {
     @PostConstruct
     void init() {
 
-        User bidder = createUser("Arvid");
+        User bidder = createUser("bob");
+
         bidder.addProductCatalog(createProductCatalog());
-        User seller = createUser("Berit");
+
+        User seller = createUser("alice");
+
         seller.addProductCatalog(createProductCatalog());
 
 
@@ -158,7 +161,7 @@ public class Seed {
 
 
     User createUser(String name) {
-        User user = new User();
+        User user = new User((name + "@epost.no"), name, (name.charAt(0)+"").toUpperCase() + name.substring(1) + "123");
         userDao.persist(user);
         user.setContactInformation(createContactinformation(name));
         return user;
@@ -167,7 +170,6 @@ public class Seed {
 
     ContactInformation createContactinformation(String name) {
         ContactInformation ci = new ContactInformation();
-        ci.setName(name);
         ci.setPhone("12345678");
         ci.setAddress(createAdress());
         return ci;
