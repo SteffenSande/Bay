@@ -14,6 +14,8 @@ public abstract class AbstractDao<T, IdType> implements IDao<T, IdType> {
 
     protected Class<T> tClass;
 
+    public AbstractDao() {}
+
     public AbstractDao(Class<T> tClass) {
         this.tClass = tClass;
     }
@@ -41,5 +43,21 @@ public abstract class AbstractDao<T, IdType> implements IDao<T, IdType> {
     @Override
     public void flush() {
         em.flush();
+    }
+
+    public EntityManager getEm() {
+        return em;
+    }
+
+    public void setEm(EntityManager em) {
+        this.em = em;
+    }
+
+    public Class<T> gettClass() {
+        return tClass;
+    }
+
+    public void settClass(Class<T> tClass) {
+        this.tClass = tClass;
     }
 }

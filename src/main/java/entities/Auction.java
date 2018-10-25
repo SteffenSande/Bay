@@ -4,13 +4,16 @@ import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @XmlRootElement
 @XmlAccessorType(value = XmlAccessType.FIELD)
-public class Auction {
+public class Auction implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue

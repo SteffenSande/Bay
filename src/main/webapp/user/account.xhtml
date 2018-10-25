@@ -18,19 +18,19 @@
                         <tbody>
                         <tr>
                             <th scope="row">Name:</th>
-                            <td>#{loginView.authenticatedUser.name}</td>
+                            <td>#{loginController.authenticatedUser.contactInformation.name}</td>
                         </tr>
                         <tr>
                             <th scope="row">Email:</th>
-                            <td>#{loginView.authenticatedUser.email}</td>
+                            <td>#{loginController.authenticatedUser.email}</td>
                         </tr>
                         <tr>
                             <th scope="row">Number of products:</th>
-                            <td>${accountView.number}</td>
+                            <td>${loginController.authenticatedUser.productCatalog.products.size()}</td>
                         </tr>
                         <tr>
                             <th scope="row">Number of bids:</th>
-                            <td>46</td>
+                            <td>#{loginController.authenticatedUser.bids.size()}</td>
                         </tr>
                         </tbody>
                     </table>
@@ -45,22 +45,15 @@
                 <div class="first-one-inner">
                     <h3 class="tittle">My Products</h3>
                     <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-action">A Cat</a>
-                        <a href="#" class="list-group-item list-group-item-action">A Dog</a>
-                        <a href="#" class="list-group-item list-group-item-action">A Bear</a>
-                        <a href="#" class="list-group-item list-group-item-action disabled">A Panda</a>
+                        <ui:repeat value="#{loginController.authenticatedUser.productCatalog.products}" var="product" >
+                            <a href="#" class="list-group-item list-group-item-action">#{product.description.title}</a>
+                        </ui:repeat>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="first-one-inner">
                     <h3 class="tittle">Products You've Bid On</h3>
-                    <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-action">Macbook Air</a>
-                        <a href="#" class="list-group-item list-group-item-action">Macbook Pro</a>
-                        <a href="#" class="list-group-item list-group-item-action">Macbook</a>
-                        <a href="#" class="list-group-item list-group-item-action disabled">iMac</a>
-                    </div>
                 </div>
             </div>
             <div class="col-lg-2"/>
