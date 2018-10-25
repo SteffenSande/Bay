@@ -7,7 +7,7 @@ http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
     <persistence-unit name="derby" transaction-type="JTA">
         <jta-data-source>jdbc/Bay</jta-data-source>
         <properties>
-            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+            <property name="javax.persistence.schema-generation.database.action" value="create"/>
             <property name="eclipslink.ddl-generation" value="create-tables" />
             <property name="toplink.logging.level" value="INFO"/>
         </properties>
