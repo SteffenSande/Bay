@@ -7,6 +7,7 @@ import entities.Product;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -30,11 +31,9 @@ public class productDisplayController {
 
     public String showCategory(String category){
         this.category = category;
-       // this.products = productDao.getAll();
         this.products = productDao.getByCategory(category);
-
-        //return "product_display?faces_redirect=true";
         return "index?faces_redirect=true";
+
     }
 
     public List<Product> getProducts() {
