@@ -18,18 +18,16 @@
         <ui:repeat value="#{searchController.normalisedResults}" var="row">
             <div class="card-deck product_catalog-productrow">
                 <ui:repeat value="#{row}" var="product">
-                <div class="card">
-                    <img class="card-img-top"
-                         src="https://cdn.vox-cdn.com/thumbor/qZdDl3n1ctNCLpwVYlqOuz4Utyg=/0x0:1024x683/1820x1213/filters:focal(431x261:593x423)/cdn.vox-cdn.com/uploads/chorus_image/image/59318659/iphone8red_1024.1523277341.jpg"
-                         alt="Product image"/>
-                    <div class="card-body">
-                        <h5 class="card-title">#{product.description.title}</h5>
-                        <p class="card-text">#{product.description.content}</p>
-                    </div>
-                </div>
+                    <h:panelGroup styleClass="card" rendered="#{product != null}">
+                        <img class="card-img-top"
+                             src="https://cdn.vox-cdn.com/thumbor/qZdDl3n1ctNCLpwVYlqOuz4Utyg=/0x0:1024x683/1820x1213/filters:focal(431x261:593x423)/cdn.vox-cdn.com/uploads/chorus_image/image/59318659/iphone8red_1024.1523277341.jpg"
+                             alt="Product image"/>
+                        <div class="card-body">
+                            <h5 class="card-title">#{product.description.title}</h5>
+                            <p class="card-text">#{product.description.content}</p>
+                        </div>
+                    </h:panelGroup>
                 </ui:repeat>
-                <div class="card"></div>
-                <div class="card"></div>
             </div>
         </ui:repeat>
 

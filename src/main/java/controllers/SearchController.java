@@ -20,8 +20,9 @@ public class SearchController {
     private List<Product> queryResult = new ArrayList<>();
     private List<List<Product>> normalisedResults = new ArrayList<>();
 
-    public void doQueryProducts(){
+    public String doQueryProducts(){
         queryResult = searchService.searchProductsByTitleAndDescription(query);
+        return "product_search.xhtml";
     }
 
     /**
@@ -29,14 +30,14 @@ public class SearchController {
      */
     public List<List<Product>> getNormalisedResults() {
         int columns = 3;
-        List<List<Product>> results = new ArrayList<>();
+        normalisedResults = new ArrayList<>();
         for (int i = 0; i < queryResult.size(); i++) {
             if (i % columns == 0) {
-                results.add(new ArrayList<>());
+                normalisedResults.add(new ArrayList<>());
             }
-            results.get(results.size() - 1).add(queryResult.get(i));
+            normalisedResults.get(normalisedResults.size() - 1).add(queryResult.get(i));
         }
-        return results;
+        return normalisedResults;
     }
 
     public String getQuery() {
