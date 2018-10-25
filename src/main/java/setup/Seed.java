@@ -1,6 +1,7 @@
 package setup;
 
 import dao.IDao;
+import dao.UserDao;
 import entities.*;
 import sun.security.krb5.internal.crypto.Des;
 
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-//@Startup
+@Startup
 @Singleton
 public class Seed {
 
@@ -31,7 +32,7 @@ public class Seed {
     IDao<Feedback, Integer> feedbackDao;
 
     @Inject
-    IDao<User, String> userDao;
+    UserDao userDao;
 
     @Inject
     IDao<ProductCatalog, Integer> productCatalogDao;
@@ -44,9 +45,10 @@ public class Seed {
     @PostConstruct
     void init() {
 
-        User bidder = createUser("Arvid");
+        User bidder = createUser("bob");
         bidder.addProductCatalog(createProductCatalog());
-        User seller = createUser("Berit");
+
+        User seller = createUser("alice");
         seller.addProductCatalog(createProductCatalog());
 
 
@@ -158,16 +160,16 @@ public class Seed {
 
 
     User createUser(String name) {
-        User user = new User();
-        userDao.persist(user);
+        User user = new User((name + "@epost.no"), name, (name.charAt(0)+"").toUpperCase() + name.substring(1) + "123");
+        userDao.createUser(user);
         user.setContactInformation(createContactinformation(name));
+        user.getContactInformation().setName(name);
         return user;
     }
 
 
     ContactInformation createContactinformation(String name) {
         ContactInformation ci = new ContactInformation();
-        ci.setName(name);
         ci.setPhone("12345678");
         ci.setAddress(createAdress());
         return ci;
