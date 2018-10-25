@@ -24,6 +24,7 @@ public class User implements Serializable {
     private String email;
 
     @Column(name="password", nullable=false, length=64)
+    @XmlTransient
     private String password;
 
     @Embedded

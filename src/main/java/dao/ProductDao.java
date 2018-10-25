@@ -4,6 +4,7 @@ import entities.Product;
 
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequestScoped
@@ -20,5 +21,9 @@ public class ProductDao extends AbstractDao<Product, Integer> {
 
     public List<Product> getByCategory(String cat) {
         return em.createQuery("SELECT item FROM Product item WHERE item.category = :cat", tClass).setParameter("cat", cat).getResultList();
+    }
+
+    public List<String> getUniqueCategories(){
+        return em.createQuery("select distinct p.category from Product p", String.class).getResultList();
     }
 }
