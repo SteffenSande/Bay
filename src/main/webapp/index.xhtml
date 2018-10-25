@@ -16,27 +16,29 @@
         <h:commandLink action = "#{productDisplayController.showCategory('Electronics')}" value="Electronics"/>
     </h:form>
 
+
+
     <div class="div-container">
         <div class="div-container-title">
             <h2>#{productDisplayController.category}</h2>
         </div>
-        <div class="div-container-tweets">
             <h:form>
                 <div class="d-flex flex-wrap">
+                <div class="card-deck">
                     <ui:repeat value="#{productDisplayController.products}" var="product">
                         <div class="card order-4">
                             <img class="card-img-top" src="https://cdn.vox-cdn.com/thumbor/qZdDl3n1ctNCLpwVYlqOuz4Utyg=/0x0:1024x683/1820x1213/filters:focal(431x261:593x423)/cdn.vox-cdn.com/uploads/chorus_image/image/59318659/iphone8red_1024.1523277341.jpg" alt="Product image"/>
                             <div class="card-body">
                                 <h5 class="card-title">#{product.description.title}</h5>
-                                <p class="card-text">#{product.description}</p>
+                                <p class="card-text">#{product.description.content}</p>
                             </div>
                             <br/>
                         </div>
                     </ui:repeat>
                 </div>
+                </div>
             </h:form>
         </div>
-    </div>
 
 </h:body>
 </ui:define>
