@@ -4,22 +4,27 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 <ui:include src="head.xhtml"/>
 <h:body styleClass="text-center">
 
     <h:form styleClass="form-signin">
-        <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"/>
+        <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72"
+             height="72"/>
         <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
         <label for="email" class="sr-only">Email address</label>
-        <h:inputText id="email" class="form-control" value="#{loginView.email}" required="true" requiredMessage="Please enter your e-mail address"></h:inputText>
+        <h:inputText id="email" class="form-control" value="#{loginView.email}" required="true"
+                     requiredMessage="Please enter your e-mail address" a:placeholder="Email"></h:inputText>
         <label for="password" class="sr-only">Password</label>
-        <h:inputSecret id="password" class="form-control" value="#{loginView.password}" required="true" requiredMessage="Please enter password"></h:inputSecret>
-        <h:commandButton class="btn btn-lg btn-primary btn-block" action="#{loginView.login}" value="Sign in"></h:commandButton>
-        <p class="mt-5 mb-3 text-muted">© 2017-2018</p>
+        <h:inputSecret id="password" class="form-control" value="#{loginView.password}" required="true"
+                       requiredMessage="Please enter password" a:placeholder="Password"></h:inputSecret>
+        <h:commandButton class="btn btn-lg btn-primary btn-block" action="#{loginView.login}"
+                         value="Sign in"></h:commandButton>
+        <p class="mt-5 mb-3 text-muted">© 2018</p>
     </h:form>
 
-    <h:link value="Create new account" outcome="register" />
+    <h:link value="Create new account" outcome="register"/>
 
 </h:body>
 </html>
