@@ -11,6 +11,7 @@ import entities.User;
 import services.AuctionService;
 import services.IAuctionService;
 import util.Pair;
+import util.Session;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -68,10 +69,8 @@ public class BidController implements Serializable {
 
     @PostConstruct
     public void init(){
-        FacesContext context = FacesContext.getCurrentInstance();
-        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        this.user = userDao.findUserById(request.getUserPrincipal().getName());
-        this.auction = auctionDao.findOrThrow(Integer.parseInt(request.getParameter("id")));
+        this.user = userDao.findUserById(Session.getUserName());
+        this.auction = auctionDao.findOrThrow(Integer.parseInt(Session.getRequest().getParameter("id")));
     }
 
     public User getUser() {

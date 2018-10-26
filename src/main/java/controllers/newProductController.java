@@ -1,8 +1,11 @@
 package controllers;
 
 import dao.ProductDao;
+import dao.UserDao;
 import entities.Description;
 import entities.Product;
+import entities.User;
+import util.Session;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -23,6 +26,8 @@ public class newProductController {
     private Date endDate;
     private List<String> categories;
 
+    private User user;
+
     @Inject
     ProductDao productDao;
 
@@ -41,7 +46,7 @@ public class newProductController {
         description.setRating(0);
         description.setTitle(title);
         description.setContent(content);
-        Product product = new Product(false, picturePath, extras,category, description);
+        Product product = new Product(true, picturePath, extras,category, description);
         productDao.persist(product);
     }
 
