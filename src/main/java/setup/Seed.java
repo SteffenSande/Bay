@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -120,7 +121,7 @@ public class Seed {
     Description createDescription(String content, double rating) {
         Description description = new Description();
         description.setRating(rating);
-        description.setEndDate(new Date());
+        description.setEndDate(addDays(new Date(), 6));
         description.setTitle("Kult produkt");
         description.setContent(content);
         return description;
@@ -186,5 +187,13 @@ public class Seed {
         ad.setStreet("Ene gata uten regn");
         ad.setCity("Bergen");
         return ad;
+    }
+
+    Date addDays(Date date, int days)
+    {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        return cal.getTime();
     }
 }
