@@ -4,14 +4,19 @@ import dao.AuctionDao;
 import dao.ProductDao;
 
 import entities.Auction;
+import entities.Bid;
 import entities.Product;
+import services.AuctionService;
+import services.IAuctionService;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.core.Response;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,10 +25,14 @@ import java.util.Optional;
 @RequestScoped
 public class productDisplayController implements Serializable {
 
+    @EJB
+    IAuctionService auctionService;
+
     private List<Product> products;
     private String category;
     private Auction auction;
     private Product product;
+    private int id;
 
     public Auction getAuction() {
         return auction;
@@ -52,15 +61,23 @@ public class productDisplayController implements Serializable {
     @Inject
     private ProductDao productDao;
 
+    public void findAuction() {
+        this.product = productDao.find(id).get();
+        auction = product.getAuction();
+    }
+
+    public boolean getAuctionDone() {
+        Date now = new Date();
+        return product.getDescription().getEndDate().before(now);
+    }
+
     public String showCategory(String category){
         this.category = category;
         this.products = productDao.getByCategory(category);
         return "index?faces_redirect=true";
     }
 
-    public Auction showAuction(int id){
-        this.product = productDao.find(id).get();
-        auction = product.getAuction();
+    public Auction showAuction(){
         return auction;
     }
 
@@ -70,5 +87,23 @@ public class productDisplayController implements Serializable {
 
     public void setProducts(List<Product> products) {
         this.products = products;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getWinner() {
+        if (!getAuctionDone()) {
+            return "The auction is still ongoing";
+        }
+        Optional<Bid> winnerBid = auctionService.getHighestBid(auction);
+        return winnerBid
+                .map(b -> b.getUser().getContactInformation().getName() + " with his/her bid on " + b.getValue())
+                .orElse("There was no bids!");
     }
 }

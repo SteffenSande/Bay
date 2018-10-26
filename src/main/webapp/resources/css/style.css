@@ -44,3 +44,7 @@
 .card-deck .card {
     max-width: calc(33.333% - 30px);
 }
+
+.navbar {
+    margin-bottom: 40px;
+}
