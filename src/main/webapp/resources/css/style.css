@@ -48,3 +48,7 @@
 .navbar {
     margin-bottom: 40px;
 }
+
+.auction_product-image {
+    max-width: 600px;
+}

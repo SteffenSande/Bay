@@ -17,7 +17,7 @@
         <h:body>
             <h2>#{productDisplayController.getProduct().getDescription().title}</h2>
             <!--<p>#{ProductDisplayController.showAuction(param['id']).getProduct().getPicturePath()}</p>-->
-            <img class="card-img-top"
+            <img class="card-img-top auction_product-image"
                  src="https://cdn.vox-cdn.com/thumbor/qZdDl3n1ctNCLpwVYlqOuz4Utyg=/0x0:1024x683/1820x1213/filters:focal(431x261:593x423)/cdn.vox-cdn.com/uploads/chorus_image/image/59318659/iphone8red_1024.1523277341.jpg"
                  alt="Product image"/>
             <p>#{productDisplayController.getProduct().getDescription().content}</p>
@@ -31,7 +31,7 @@
             </h:panelGroup>
 
             <h:panelGroup rendered="#{productDisplayController.auctionDone}">
-                <p>This auction finished #{productDisplayController.product.description.endDate}</p>
+                <p>This auction finished #{productDisplayController.endTime}</p>
                 <p>The winner was: #{productDisplayController.winner}</p>
             </h:panelGroup>
         </h:body>

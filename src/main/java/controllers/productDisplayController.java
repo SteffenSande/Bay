@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.core.Response;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -105,5 +106,12 @@ public class productDisplayController implements Serializable {
         return winnerBid
                 .map(b -> b.getUser().getContactInformation().getName() + " with his/her bid on " + b.getValue())
                 .orElse("There was no bids!");
+    }
+
+    public String getEndTime() {
+        if (!getAuctionDone()) {
+            return "The auction is still ongoing";
+        }
+        return new SimpleDateFormat("dd.MM.yyyy hh:mm:ss").format(product.getDescription().getEndDate());
     }
 }
