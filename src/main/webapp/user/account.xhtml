@@ -18,19 +18,19 @@
                         <tbody>
                         <tr>
                             <th scope="row">Name:</th>
-                            <td>#{loginController.authenticatedUser.contactInformation.name}</td>
+                            <td>#{userController.authenticatedUser.contactInformation.name}</td>
                         </tr>
                         <tr>
                             <th scope="row">Email:</th>
-                            <td>#{loginController.authenticatedUser.email}</td>
+                            <td>#{userController.authenticatedUser.email}</td>
                         </tr>
                         <tr>
                             <th scope="row">Number of products:</th>
-                            <td>${loginController.authenticatedUser.productCatalog.products.size()}</td>
+                            <td>${userController.authenticatedUser.productCatalog.products.size()}</td>
                         </tr>
                         <tr>
                             <th scope="row">Number of bids:</th>
-                            <td>#{loginController.authenticatedUser.bids.size()}</td>
+                            <td>#{userController.authenticatedUser.bids.size()}</td>
                         </tr>
                         </tbody>
                     </table>
@@ -45,8 +45,10 @@
                 <div class="first-one-inner">
                     <h3 class="tittle">My Products</h3>
                     <div class="list-group">
-                        <ui:repeat value="#{loginController.authenticatedUser.productCatalog.products}" var="product" >
-                            <a href="#" class="list-group-item list-group-item-action">#{product.description.title}</a>
+                        <ui:repeat value="#{userController.authenticatedUser.productCatalog.products}" var="product">
+                            <h:link styleClass="list-group-item list-group-item-action" value="#{product.description.title}" outcome="/auction">
+                                <f:param name="id" value="#{product.id}"/>
+                            </h:link>
                         </ui:repeat>
                     </div>
                 </div>
@@ -54,6 +56,11 @@
             <div class="col-lg-4">
                 <div class="first-one-inner">
                     <h3 class="tittle">Products You've Bid On</h3>
+                    <div class="list-group">
+                        <ui:repeat value="#{userController.productsBidOn}" var="product">
+                            <a href="#" class="list-group-item list-group-item-action">#{product.description.title}</a>
+                        </ui:repeat>
+                    </div>
                 </div>
             </div>
             <div class="col-lg-2"/>

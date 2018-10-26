@@ -1,11 +1,13 @@
 package services;
 
 import dao.IDao;
-import entities.Address;
-import entities.ContactInformation;
-import entities.ProductCatalog;
-import entities.User;
+import entities.*;
 
+import javax.ejb.Stateless;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Stateless
 public class UserService implements IUserService {
     private IDao<User, String> userDao;
 
@@ -19,5 +21,14 @@ public class UserService implements IUserService {
         ProductCatalog productCatalog = new ProductCatalog();
         User user = new User(username, contactInformation, productCatalog);
         return userDao.save(user);
+    }
+
+    @Override
+    public List<Product> productsBidOn(User user) {
+        return user.getBids().stream()
+                .map(Bid::getAuction)
+                .map(Auction::getProduct)
+                .distinct()
+                .collect(Collectors.toList());
     }
 }

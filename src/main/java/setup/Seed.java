@@ -45,11 +45,11 @@ public class Seed {
     @PostConstruct
     void init() {
 
-        User bidder = createUser("bob");
-        bidder.addProductCatalog(createProductCatalog());
+        User bob = createUser("bob");
+        bob.addProductCatalog(createProductCatalog());
 
-        User seller = createUser("alice");
-        seller.addProductCatalog(createProductCatalog());
+        User alice = createUser("alice");
+        alice.addProductCatalog(createProductCatalog());
 
 
         Auction auction = createAuction();
@@ -75,12 +75,12 @@ public class Seed {
 
 
         for (int i = 0; i < bids.size(); i++) {
-            bidder.addBid(bids.get(i));
+            bob.addBid(bids.get(i));
             auction.addBid(bids.get(i));
         }
 
         Feedback feed = createFeedback();
-        bidder.addFeedback(feed);
+        bob.addFeedback(feed);
         product.addFeedback(feed);
 
         double rating = 0;
@@ -90,18 +90,23 @@ public class Seed {
         rating /= product.getFeedbacks().size();
         product.setDescription(createDescription("This is the sporty description", rating));
         product.setCategory("Sport");
+        product.setProductCatalog(bob.getProductCatalog());
 
         product2.setDescription(createDescription("This is some electronics description ", rating));
         product2.setCategory("Electronics");
+        product.setProductCatalog(bob.getProductCatalog());
 
         product3.setDescription(createDescription("This is the second sporty description", rating));
         product3.setCategory("Sport");
+        product.setProductCatalog(alice.getProductCatalog());
 
         product4.setDescription(createDescription("This is another electronics description ", rating));
         product4.setCategory("Electronics");
+        product.setProductCatalog(alice.getProductCatalog());
 
         product5.setDescription(createDescription("This is the third electronics description ", rating));
         product5.setCategory("Electronics");
+        product.setProductCatalog(alice.getProductCatalog());
     }
 
 

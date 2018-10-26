@@ -7,10 +7,10 @@
 	<ui:define name="content">
 		<h2>Hrrreihtw</h2>
 		<h:form>
-			<h:commandLink action="#{loginController.logout}" value="Logout" />
+			<h:commandLink action="#{userController.logout}" value="Logout" />
 		</h:form>
-		<h3>Hello #{loginController.authenticatedUser.contactInformation.name}</h3>
-		<p>Your user id is #{loginController.authenticatedUser.email}</p>
+		<h3>Hello #{userController.authenticatedUser.contactInformation.name}</h3>
+		<p>Your user id is #{userController.authenticatedUser.email}</p>
 		<p>This is a private page, which requires login to access.</p>
 	</ui:define>
 </ui:composition>
