@@ -50,8 +50,6 @@ public class newProductController {
         productDao.persist(product);
     }
 
-
-
     public List<String> getCategories(){
         return this.categories;
     }

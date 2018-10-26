@@ -11,6 +11,8 @@ import services.IAuctionService;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.core.Response;
@@ -22,8 +24,8 @@ import java.util.List;
 import java.util.Optional;
 
 
-@Named
-@RequestScoped
+@ManagedBean
+@SessionScoped
 public class productDisplayController implements Serializable {
 
     @EJB
@@ -34,6 +36,7 @@ public class productDisplayController implements Serializable {
     private Auction auction;
     private Product product;
     private int id;
+
 
     public Auction getAuction() {
         return auction;
@@ -76,6 +79,11 @@ public class productDisplayController implements Serializable {
         this.category = category;
         this.products = productDao.getByCategory(category);
         return "index?faces_redirect=true";
+    }
+
+    public productDisplayController() {
+
+
     }
 
     public Auction showAuction(){

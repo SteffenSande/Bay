@@ -11,7 +11,6 @@ import entities.User;
 import services.AuctionService;
 import services.IAuctionService;
 import util.Pair;
-import util.Session;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -44,6 +43,7 @@ public class BidController implements Serializable {
 
     @Inject
     UserDao userDao;
+    private int id;
 
 
     public int getAmount() {
@@ -69,8 +69,10 @@ public class BidController implements Serializable {
 
     @PostConstruct
     public void init(){
-        this.user = userDao.findUserById(Session.getUserName());
-        this.auction = auctionDao.findOrThrow(Integer.parseInt(Session.getRequest().getParameter("id")));
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        this.user = userDao.findUserById(request.getUserPrincipal().getName());
+        this.auction = auctionDao.findOrThrow(Integer.parseInt(request.getParameter("id")));
     }
 
     public User getUser() {
@@ -99,7 +101,15 @@ public class BidController implements Serializable {
     }
 
     public String placeBid() {
-        auctionService.placeBid(auction.getId(), user, this.amount);
-        return "/auction.xhtml?faces-redirect=true&id="+auction.getId();
+        auctionService.placeBid(id, user, amount);
+        return "/auction.xhtml?faces-redirect=true&id="+id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
