@@ -69,7 +69,7 @@ public class UserController implements Serializable {
         sessionMap.put("Users", user);
 
         if (request.isUserInRole("users")) {
-            return "/user/privatepage?faces-redirect=true";
+            return "/user/account?faces-redirect=true";
         } else {
             return "signin";
         }
